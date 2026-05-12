@@ -1,0 +1,413 @@
+<html lang="id">
+  <head>
+    <title>Tentang Kami | Green Justice Indonesia - Hutan Sumut</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Halaman profil institusi Green Justice Indonesia (GJI) untuk inisiatif Hutan Sumut: visi, misi, nilai, area kerja, pendekatan, dan informasi kelembagaan."/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link rel="icon" type="image/png" href="img-new/Logo-GJI.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+    <style>
+      :root{--ink:#0f2d27;--ink-soft:#27453f;--forest:#143c34;--forest-deep:#081f1a;--lime:#b8ef42;--lime-soft:#e8f7be;--mist:#f2f8f4;--sand:#f6efe5;--line:#d7e5df;--card:#ffffff;--shadow:0 24px 70px rgba(9,34,28,.12)}
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;background:linear-gradient(180deg,#f8fbf8 0%,#eff6f2 100%);color:var(--ink);font-family:"Figtree",sans-serif;line-height:1.7}
+      a{text-decoration:none}
+      .about-shell{position:relative;overflow:hidden}
+      .about-shell::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 12%, rgba(184,239,66,.17), transparent 24%),radial-gradient(circle at 84% 20%, rgba(20,60,52,.11), transparent 22%),radial-gradient(circle at bottom right, rgba(7,82,67,.08), transparent 26%);pointer-events:none}
+      .hero-overlay{background:linear-gradient(126deg, rgba(8,31,26,.93), rgba(8,31,26,.81) 45%, rgba(16,58,48,.63))}
+      .section-kicker{display:inline-flex;align-items:center;gap:.75rem;font-size:.82rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#4f6f67}
+      .section-kicker::before{content:"";width:2.5rem;height:2px;background:var(--lime)}
+      .hero-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.7rem}
+      .hero-highlight{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1rem;margin-top:2rem}
+      .glass-card{position:relative;padding:1.25rem 1.3rem;border:1px solid rgba(255,255,255,.18);border-radius:1.25rem;background:rgba(255,255,255,.10);backdrop-filter:blur(17px);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.15)}
+      .glass-card strong{display:block;margin-bottom:.2rem;font-size:1.9rem;line-height:1.05}
+      .glass-card span{display:block;color:rgba(255,255,255,.84);font-size:.93rem}
+      .hero-note{padding:1.6rem;border:1px solid rgba(255,255,255,.16);border-radius:1.45rem;background:rgba(255,255,255,.11);backdrop-filter:blur(16px);color:#fff}
+      .hero-note h3{margin:0 0 .95rem;font-size:1.2rem;line-height:1.35}
+      .hero-note p{margin:0;color:rgba(255,255,255,.84)}
+      .overview-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.2rem}
+      .overview-card{padding:1.55rem;border:1px solid var(--line);border-radius:1.35rem;background:#fff;box-shadow:var(--shadow)}
+      .overview-card h3{margin:0 0 .7rem;font-size:1.2rem;line-height:1.35}
+      .overview-card p{margin:0;color:#5b726b}
+      .split-band{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.2rem}
+      .band-panel{padding:1.75rem;border:1px solid var(--line);border-radius:1.5rem;background:linear-gradient(180deg,#ffffff,#f7fbf8);box-shadow:var(--shadow)}
+      .band-panel h3{margin:0 0 .85rem;font-size:1.45rem;line-height:1.35}
+      .band-panel p{margin:0;color:#5b726b}
+      .band-image{min-height:18rem;border-radius:1.5rem;overflow:hidden;box-shadow:var(--shadow)}
+      .band-image img{width:100%;height:100%;object-fit:cover}
+      .pill-list{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
+      .pill{display:inline-flex;align-items:center;padding:.45rem .8rem;border-radius:999px;background:#ecf5ef;color:#355149;font-size:.82rem;font-weight:700}
+      .vision-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.2rem}
+      .vision-card{padding:1.65rem;border-radius:1.45rem;color:#fff;box-shadow:var(--shadow)}
+      .vision-primary{background:linear-gradient(160deg,#113932,#0a221d)}
+      .vision-secondary{background:linear-gradient(160deg,#2c6f61,#1a473f)}
+      .vision-card h3{margin:0 0 .85rem;font-size:1.3rem;line-height:1.35}
+      .vision-card p{margin:0;color:rgba(255,255,255,.87)}
+      .mission-list{margin:1rem 0 0;padding:0;list-style:none}
+      .mission-list li{display:flex;gap:.75rem;margin-bottom:.85rem;color:rgba(255,255,255,.9)}
+      .mission-list li::before{content:"";flex:0 0 .56rem;height:.56rem;margin-top:.5rem;border-radius:999px;background:var(--lime)}
+      .program-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.15rem}
+      .program-card{padding:1.5rem;border:1px solid var(--line);border-radius:1.35rem;background:#fff;box-shadow:var(--shadow)}
+      .program-card h3{margin:0 0 .7rem;font-size:1.2rem;line-height:1.3}
+      .program-card p{margin:0;color:#5b726b}
+      .program-card ul{margin:1rem 0 0;padding-left:1rem;color:#5b726b}
+      .program-card li{margin-bottom:.45rem}
+      .timeline{position:relative;display:grid;gap:1rem}
+      .timeline::before{content:"";position:absolute;left:1rem;top:.3rem;bottom:.3rem;width:2px;background:#d8e7e0}
+      .timeline-item{position:relative;padding:1rem 1rem 1rem 2.6rem;border:1px solid var(--line);border-radius:1rem;background:#fff;box-shadow:0 14px 30px rgba(9,34,28,.08)}
+      .timeline-item::before{content:"";position:absolute;left:.65rem;top:1.35rem;width:.72rem;height:.72rem;border-radius:999px;background:var(--forest)}
+      .timeline-item h4{margin:0 0 .35rem;font-size:1.02rem}
+      .timeline-item p{margin:0;color:#5b726b}
+      .value-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1rem}
+      .value-card{padding:1.3rem 1.35rem;border:1px solid var(--line);border-radius:1.1rem;background:#fff;box-shadow:0 14px 30px rgba(9,34,28,.07)}
+      .value-card h4{margin:0 0 .5rem;font-size:1rem}
+      .value-card p{margin:0;color:#5d746d}
+      .table-card{overflow:hidden;border:1px solid var(--line);border-radius:1.5rem;background:#fff;box-shadow:var(--shadow)}
+      .table-card table{width:100%;border-collapse:collapse}
+      .table-card th,.table-card td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid #e7efea;vertical-align:top}
+      .table-card th{background:#f3f8f4;color:#37524a;font-size:.84rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+      .table-card td{color:#435c55}
+      .contact-panel{padding:1.7rem;border:1px solid #cfe2da;border-radius:1.5rem;background:linear-gradient(140deg,#f1f9ef,#ffffff);box-shadow:var(--shadow)}
+      .contact-panel h3{margin:0 0 .7rem;font-size:1.35rem;line-height:1.35}
+      .contact-panel p{margin:0 0 1rem;color:#577069}
+      .contact-row{display:grid;gap:.85rem}
+      .contact-chip{padding:.85rem 1rem;border:1px solid #dbe8e2;border-radius:1rem;background:#fff;color:#39574f;font-weight:600}
+      .cta-band{padding:2rem;border-radius:1.6rem;background:linear-gradient(125deg,#103730,#0a221d);color:#fff;box-shadow:var(--shadow)}
+      .cta-band h3{margin:0 0 .8rem;font-size:1.5rem;line-height:1.3}
+      .cta-band p{margin:0;color:rgba(255,255,255,.85)}
+      .footer-insight{max-width:25rem;padding:1.75rem;background:#022c22;border-radius:.75rem}
+      .footer-insight h5{margin-bottom:.85rem;color:#fff;font-size:1.1rem;font-weight:600;line-height:1.35}
+      .footer-insight p{margin-bottom:1.25rem;color:rgba(255,255,255,.82);font-size:.95rem;line-height:1.65}
+      .footer-insight input{height:3rem;width:100%;padding:0 1rem;border-radius:.5rem;background:#fff;outline:none}
+      .footer-insight a{display:inline-flex;height:3rem;margin-top:.75rem;border-radius:.5rem}
+      .reveal{opacity:0;transform:translateY(14px);animation:rise .65s ease forwards}
+      .delay-1{animation-delay:.08s}
+      .delay-2{animation-delay:.16s}
+      .delay-3{animation-delay:.24s}
+      .delay-4{animation-delay:.32s}
+      @keyframes rise{to{opacity:1;transform:translateY(0)}}
+      [x-cloak]{display:none!important}
+      @media (min-width:768px){
+        .hero-highlight{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .split-band{grid-template-columns:1.05fr .95fr}
+        .vision-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .program-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .value-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .contact-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+      }
+      @media (min-width:1024px){
+        .hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(22rem,.85fr);align-items:end}
+        .hero-highlight{grid-template-columns:repeat(4,minmax(0,1fr))}
+        .overview-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+        .program-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+        .value-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      }
+      @media (max-width:767px){
+        .table-card{overflow:auto}
+        .table-card table{min-width:42rem}
+      }
+    </style>
+  </head>
+  <body class="antialiased font-body" x-data="{ mobileNavOpen: false }">
+    <div class="about-shell">
+      <section class="relative overflow-hidden">
+        <img class="absolute inset-0 w-full h-full object-cover" src="img-new/Background-Header.jpg" alt="Lanskap hutan Sumatera Utara"/>
+        <div class="absolute inset-0 hero-overlay"></div>
+        <nav class="relative py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between gap-6"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="hidden sm:block text-white font-bold text-lg">Green Justice Indonesia | Hutan Sumut</span></a>
+              <ul class="hidden lg:flex items-center">
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="index.html">Home</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="peta.html">Peta</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="berita.html">Berita</a></li>
+                <li class="mr-8"><a class="inline-block text-lime-300 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-white hover:text-lime-400 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+              <div class="flex items-center justify-end"><a class="hidden md:inline-flex py-2.5 px-4 items-center justify-center text-sm font-medium text-white hover:text-teal-900 border border-white hover:bg-white rounded-lg transition duration-200" href="contact.html">Hubungi Tim</a>
+                <button class="lg:hidden text-white hover:text-lime-400 ml-4" x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Buka navigasi">Menu</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="relative container mx-auto px-4 pt-8 pb-16 lg:pt-16 lg:pb-24">
+          <div class="hero-grid">
+            <div class="reveal">
+              <span class="inline-flex py-2 px-4 mb-6 bg-lime-400 text-teal-950 font-bold rounded-full">Profil Institusi</span>
+              <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">Green Justice Indonesia: lembaga riset, advokasi, dan kolaborasi untuk keadilan ekologis.</h1>
+              <p class="max-w-3xl text-lg lg:text-xl text-white opacity-90 leading-relaxed">Green Justice Indonesia (GJI) adalah lembaga independen yang bekerja di persimpangan ilmu pengetahuan, kebijakan, dan pemberdayaan masyarakat. Melalui inisiatif Hutan Sumut, kami mendorong tata kelola lingkungan yang adil, perlindungan keanekaragaman hayati, dan keputusan publik berbasis bukti.</p>
+              <div class="hero-highlight">
+                <article class="glass-card reveal delay-1"><strong>2019</strong><span>Tahun penguatan inisiatif kelembagaan</span></article>
+                <article class="glass-card reveal delay-2"><strong>4 Pilar</strong><span>Riset, advokasi, data, dan kolaborasi publik</span></article>
+                <article class="glass-card reveal delay-3"><strong>8+ Lanskap</strong><span>Fokus kerja di Sumatera Utara dan wilayah terkait</span></article>
+                <article class="glass-card reveal delay-4"><strong>Medan</strong><span>Pusat koordinasi dan pengembangan program</span></article>
+              </div>
+            </div>
+            <aside class="hero-note reveal delay-2">
+              <h3>Mandat utama kami</h3>
+              <p>Kami membantu menerjemahkan data dan temuan lapangan menjadi percakapan kebijakan yang dapat ditindaklanjuti, sekaligus menjaga agar suara komunitas lokal tetap menjadi pusat dalam pengambilan keputusan lingkungan.</p>
+              <p class="mt-4">Dalam praktiknya, kerja GJI mencakup produksi pengetahuan, fasilitasi dialog multipihak, penguatan literasi spasial, dan pengembangan strategi advokasi yang terukur.</p>
+            </aside>
+          </div>
+        </div>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-full xs:w-5/6 xs:max-w-md z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}" x-cloak>
+          <div class="fixed inset-0 bg-black opacity-40" x-on:click="mobileNavOpen = false"></div>
+          <nav class="relative flex flex-col py-7 px-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="text-teal-900 font-bold">Hutan Sumut</span></a>
+              <button x-on:click="mobileNavOpen = false" aria-label="Tutup navigasi">Tutup</button>
+            </div>
+            <div class="pt-16 pb-12 mb-auto">
+              <ul class="flex-col">
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="index.html">Home</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="peta.html">Peta</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="berita.html">Berita</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 font-semibold" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+            </div>
+            <a class="inline-flex py-3 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 bg-lime-400 rounded-lg" href="contact.html" x-on:click="mobileNavOpen = false">Hubungi Tim</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="py-14 lg:py-20">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Identitas Lembaga</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Lembaga independen untuk mendorong kebijakan lingkungan yang lebih adil.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">GJI bekerja untuk memastikan bahwa perlindungan ekosistem, hak komunitas lokal, dan kualitas kebijakan publik bergerak ke arah yang sama. Fokus kami tidak hanya pada kritik kebijakan, tetapi juga penyusunan jalan keluar yang operasional dan bisa dijalankan lintas pihak.</p>
+          </div>
+          <div class="overview-grid">
+            <article class="overview-card"><h3>Siapa kami</h3><p>Think tank independen yang menggabungkan riset, advokasi, dan komunikasi publik untuk isu lingkungan strategis.</p></article>
+            <article class="overview-card"><h3>Di mana kami bekerja</h3><p>Berbasis di Medan, dengan fokus utama pada bentang alam Sumatera Utara dan wilayah yang berkaitan langsung dengan dinamika hutan.</p></article>
+            <article class="overview-card"><h3>Untuk siapa kami bekerja</h3><p>Komunitas lokal, publik luas, pembuat kebijakan, media, dan mitra sipil yang membutuhkan rujukan berbasis bukti.</p></article>
+            <article class="overview-card"><h3>Bagaimana kami bekerja</h3><p>Melalui data, pemetaan, dialog multipihak, pendampingan narasi kebijakan, dan penguatan kapasitas lokal.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-4 lg:py-8">
+        <div class="container mx-auto px-4">
+          <div class="split-band">
+            <div class="band-panel">
+              <span class="section-kicker mb-4">Narasi Kerja</span>
+              <h3>Menjembatani data lapangan dengan keputusan publik yang berdampak.</h3>
+              <p>Dalam banyak kasus, persoalan lingkungan bukan karena tidak ada data, tetapi karena data tidak terhubung dengan proses keputusan. GJI membangun jembatan itu: dari temuan lapangan, analisis spasial, hingga advokasi kebijakan yang dapat dipahami publik dan dipakai pengambil keputusan.</p>
+              <div class="pill-list">
+                <span class="pill">Riset kebijakan</span>
+                <span class="pill">Analisis spasial</span>
+                <span class="pill">Advokasi lingkungan</span>
+                <span class="pill">Kolaborasi komunitas</span>
+              </div>
+            </div>
+            <div class="band-image"><img src="fauna-assets/about/about-image-right.png" alt="Tim Green Justice Indonesia di lapangan"/></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Visi Dan Misi</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Arah jangka panjang yang kami pegang dalam setiap program.</h2>
+          </div>
+          <div class="vision-grid">
+            <article class="vision-card vision-primary">
+              <h3>Visi</h3>
+              <p>Terwujudnya tata kelola sumber daya alam yang adil, transparan, dan berbasis ilmu pengetahuan untuk menjamin keberlanjutan ekosistem dan martabat masyarakat.</p>
+            </article>
+            <article class="vision-card vision-secondary">
+              <h3>Misi</h3>
+              <ul class="mission-list">
+                <li>Menghasilkan riset yang relevan untuk isu lingkungan strategis dan kebutuhan kebijakan.</li>
+                <li>Mendorong keputusan publik berbasis bukti melalui advokasi yang kolaboratif.</li>
+                <li>Memperkuat kapasitas komunitas dan mitra lokal dalam membaca serta menggunakan data lingkungan.</li>
+                <li>Mengembangkan komunikasi publik yang jernih agar isu ekologis lebih mudah dipahami masyarakat.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-4 lg:py-8 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Area Kerja Utama</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Program yang menyatukan data, advokasi, dan aksi lapangan.</h2>
+          </div>
+          <div class="program-grid">
+            <article class="program-card">
+              <h3>Pemantauan hutan dan tata ruang</h3>
+              <p>Menganalisis perubahan tutupan hutan, dinamika penggunaan lahan, dan implikasinya terhadap keberlanjutan ekosistem.</p>
+              <ul>
+                <li>Interpretasi data spasial dan citra</li>
+                <li>Brief kebijakan kawasan prioritas</li>
+                <li>Penguatan narasi tata ruang berbasis bukti</li>
+              </ul>
+            </article>
+            <article class="program-card">
+              <h3>Perlindungan satwa dan bentang alam</h3>
+              <p>Menghubungkan isu keanekaragaman hayati dengan konteks sosial-ekonomi dan tata kelola wilayah.</p>
+              <ul>
+                <li>Identifikasi koridor habitat penting</li>
+                <li>Dukungan komunikasi untuk isu satwa prioritas</li>
+                <li>Kolaborasi lintas pihak untuk mitigasi tekanan</li>
+              </ul>
+            </article>
+            <article class="program-card">
+              <h3>Restorasi dan keadilan ekologis</h3>
+              <p>Mendorong pemulihan ekosistem yang bukan hanya luasannya bertambah, tetapi juga fungsi ekologisnya pulih.</p>
+              <ul>
+                <li>Perencanaan restorasi berbasis lanskap</li>
+                <li>Pendekatan partisipatif dengan komunitas lokal</li>
+                <li>Kerangka monitoring dampak ekologis</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Jejak Kerja</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Perjalanan program yang terus kami perkuat dari tahun ke tahun.</h2>
+          </div>
+          <div class="timeline">
+            <article class="timeline-item"><h4>2019 - Fondasi inisiatif</h4><p>Penguatan jaringan kerja riset dan advokasi lingkungan di Sumatera Utara.</p></article>
+            <article class="timeline-item"><h4>2021 - Integrasi data dan narasi publik</h4><p>Mulai mengembangkan pendekatan visual data untuk memperkuat komunikasi kebijakan.</p></article>
+            <article class="timeline-item"><h4>2023 - Penguatan kolaborasi multipihak</h4><p>Memperluas kerja bersama komunitas, organisasi sipil, akademisi, dan mitra kebijakan.</p></article>
+            <article class="timeline-item"><h4>2026 - Hutan Sumut sebagai platform bersama</h4><p>Menghadirkan peta, statistik, dan newsroom sebagai ruang kerja dan ruang belajar publik.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-4 lg:py-8 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Nilai Dasar</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Prinsip yang menjadi standar kerja kelembagaan.</h2>
+          </div>
+          <div class="value-grid">
+            <article class="value-card"><h4>Integritas ilmiah</h4><p>Setiap klaim publik harus ditopang data dan penalaran yang dapat diuji.</p></article>
+            <article class="value-card"><h4>Keberpihakan pada keadilan</h4><p>Kebijakan lingkungan harus mempertimbangkan dampaknya pada kelompok rentan dan komunitas lokal.</p></article>
+            <article class="value-card"><h4>Kolaborasi terbuka</h4><p>Perubahan besar hanya mungkin jika lintas aktor dapat bekerja dengan tujuan yang sama.</p></article>
+            <article class="value-card"><h4>Transparansi</h4><p>Proses, asumsi, dan batasan analisis perlu dikomunikasikan secara jernih kepada publik.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Struktur Informasi</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Ringkasan fungsi kelembagaan dan fokus tanggung jawab.</h2>
+          </div>
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Unit kerja</th>
+                  <th>Fokus utama</th>
+                  <th>Luaran kunci</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Riset dan analisis</td>
+                  <td>Analisis kebijakan, spasial, dan isu lingkungan strategis.</td>
+                  <td>Policy brief, catatan analisis, dan rekomendasi berbasis bukti.</td>
+                </tr>
+                <tr>
+                  <td>Advokasi dan kemitraan</td>
+                  <td>Fasilitasi dialog lintas pihak dan penguatan agenda kolaboratif.</td>
+                  <td>Forum multipihak, agenda tindak lanjut, dan penguatan jejaring.</td>
+                </tr>
+                <tr>
+                  <td>Komunikasi publik</td>
+                  <td>Penerjemahan isu kompleks menjadi informasi yang mudah dipahami.</td>
+                  <td>Newsroom, dashboard tematik, dan materi literasi publik.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-12 lg:py-16">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <article class="contact-panel">
+              <h3>Kontak institusi</h3>
+              <p>Untuk kolaborasi program, diskusi riset, atau tindak lanjut kebijakan, silakan hubungi tim Green Justice Indonesia.</p>
+              <div class="contact-row">
+                <div class="contact-chip">Kantor: Medan, Sumatera Utara</div>
+                <div class="contact-chip">Email: info@greenjustice.id</div>
+                <div class="contact-chip">Program: Hutan Sumut Initiative</div>
+                <div class="contact-chip">Respon: Senin-Jumat, 09.00-17.00 WIB</div>
+              </div>
+            </article>
+            <article class="cta-band">
+              <h3>Mari bangun keputusan lingkungan yang lebih kuat bersama.</h3>
+              <p>Jika Anda dari komunitas, media, akademisi, atau institusi publik, kami terbuka untuk kolaborasi berbasis data yang memperkuat keadilan ekologis di Sumatera Utara.</p>
+              <div class="mt-6"><a class="inline-flex py-3 px-6 items-center justify-center text-base font-semibold text-teal-950 bg-lime-400 hover:bg-lime-300 rounded-full transition duration-200" href="contact.html">Mulai Kolaborasi</a></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative py-10 lg:py-16 bg-orange-50 overflow-hidden"><img class="absolute bottom-0 left-0" src="fauna-assets/footer/waves-lines-left-bottom.png" alt=""/>
+        <div class="container px-4 mx-auto relative">
+          <div class="flex flex-wrap mb-10 -mx-4">
+            <div class="w-full lg:w-2/12 xl:w-2/12 px-10 mb-10 lg:mb-0"><a class="inline-block mb-4" href="index.html"><img class="h-32 w-auto" src="img-new/Green Justice Indonesia  Hutan Sumut.svg" alt="Green Justice Indonesia Hutan Sumut"/></a></div>
+            <div class="w-full md:w-7/12 lg:w-6/12 px-4 mb-10 lg:mb-0">
+              <div class="flex flex-wrap -mx-4">
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Sarana</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="peta.html">Peta</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="statistik.html">Data Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="berita.html">Berita</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Organisasi</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="about.html">Tentang</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="contact.html">Kontak</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="register.html">Kolaborasi</a></li>
+                  </ul>
+                </div>
+                <div class="w-full xs:w-1/3 px-4">
+                  <h3 class="mb-6 font-bold">Akses Cepat</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="peta.html">Dashboard Peta</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="statistik.html">Dashboard Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="berita.html">Newsroom</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-5/12 lg:w-4/12 px-4">
+              <div class="footer-insight">
+                <h5>Dapatkan pembaruan kerja lembaga</h5>
+                <p>Ikuti perkembangan riset, advokasi, dan agenda kolaborasi Green Justice Indonesia melalui pembaruan berkala.</p>
+                <input type="email" placeholder="Masukkan email Anda"/>
+                <a class="w-full items-center justify-center text-sm font-medium text-teal-900 bg-lime-500 hover:bg-lime-400 transition duration-200" href="contact.html">Terhubung Dengan Tim</a>
+              </div>
+            </div>
+          </div>
+          <div class="pt-8 border-t border-gray-200 text-sm text-gray-500 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <p class="mb-0">© 2026 Green Justice Indonesia - Hutan Sumut. Semua hak cipta dilindungi.</p>
+            <p class="mb-0">Halaman ini menyajikan profil institusi untuk kebutuhan informasi publik dan kolaborasi.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

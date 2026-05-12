@@ -1,0 +1,909 @@
+<html lang="id">
+  <head>
+    <title>Peta Hutan Sumut | Green Justice Indonesia</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Halaman peta Hutan Sumut dengan input dan visualisasi Leaflet untuk Sumatera Utara dan Taman Nasional Gunung Leuser, memuat indikasi penggundulan hutan, sawit, dan restorasi hutan."/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link rel="icon" type="image/png" href="img-new/Logo-GJI.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+    <style>
+      :root{--ink:#0f2d27;--forest:#143c34;--forest-deep:#08211c;--lime:#b8ef42;--lime-soft:#e8f7be;--mist:#f3f8f5;--line:#d7e6df;--card:#ffffff;--alert:#e07144;--amber:#f1b744;--teal:#2d7b6c;--shadow:0 24px 70px rgba(9,34,28,.12)}
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;background:linear-gradient(180deg,#f9fcf9,#eff6f2);color:var(--ink);font-family:"Figtree",sans-serif;line-height:1.68}
+      a{text-decoration:none}
+      .map-shell{position:relative;overflow:hidden}
+      .map-shell::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 12%, rgba(184,239,66,.18), transparent 24%),radial-gradient(circle at 84% 20%, rgba(45,123,108,.12), transparent 22%),radial-gradient(circle at bottom right, rgba(20,60,52,.08), transparent 26%);pointer-events:none}
+      .hero-layer{background:linear-gradient(120deg, rgba(8,29,24,.93), rgba(8,29,24,.82) 45%, rgba(16,56,48,.62))}
+      .section-kicker{display:inline-flex;align-items:center;gap:.75rem;font-size:.82rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#4d6e66}
+      .section-kicker::before{content:"";width:2.4rem;height:2px;background:var(--lime)}
+      .hero-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.75rem}
+      .hero-panel{padding:1.55rem;border:1px solid rgba(255,255,255,.18);border-radius:1.5rem;background:rgba(255,255,255,.10);backdrop-filter:blur(18px);color:#fff;box-shadow:0 18px 40px rgba(0,0,0,.14)}
+      .hero-panel h3{margin:0 0 .9rem;font-size:1.2rem;line-height:1.35}
+      .hero-panel p{margin:0;color:rgba(255,255,255,.84)}
+      .hero-metrics{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1rem;margin-top:1.8rem}
+      .hero-metric{position:relative;padding:1.2rem 1.25rem;border:1px solid rgba(255,255,255,.16);border-radius:1.25rem;background:rgba(255,255,255,.08);color:#fff}
+      .hero-metric strong{display:block;margin-top:.3rem;font-size:2rem;line-height:1.05}
+      .hero-metric span{display:block;color:rgba(255,255,255,.82);font-size:.92rem}
+      .hero-metric::after{content:"";position:absolute;inset:auto 1.25rem .25rem 1.25rem;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--lime),rgba(255,255,255,.06))}
+      .overview-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.15rem}
+      .overview-card{padding:1.45rem;border:1px solid var(--line);border-radius:1.35rem;background:#fff;box-shadow:var(--shadow)}
+      .overview-card strong{display:block;margin-bottom:.4rem;font-size:2rem;line-height:1;color:var(--forest)}
+      .overview-card span{display:block;margin-bottom:.8rem;color:#43625a;font-size:.86rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+      .overview-card p{margin:0;color:#59716a}
+      .workspace-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.4rem}
+      .map-card,.sidebar-card,.note-card,.table-card{border:1px solid var(--line);border-radius:1.5rem;background:#fff;box-shadow:var(--shadow)}
+      .map-card{overflow:hidden}
+      .map-toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;border-bottom:1px solid #e6efe9;background:#f5faf7}
+      .map-badge{display:inline-flex;align-items:center;padding:.48rem .85rem;border-radius:999px;background:#edf5f0;color:#355149;font-size:.82rem;font-weight:700}
+      .map-frame{position:relative}
+      .leaflet-map{height:42rem;min-height:42rem;width:100%;z-index:1}
+      .map-atlas{position:absolute;right:1rem;top:1rem;z-index:401;display:grid;gap:.5rem;max-width:18rem;pointer-events:none}
+      .atlas-card{background:rgba(255,255,255,.92);border:1px solid #d8e6df;border-radius:.8rem;padding:.7rem .8rem;box-shadow:0 12px 30px rgba(5,26,22,.14)}
+      .atlas-title{font-size:.82rem;font-weight:900;line-height:1.3;color:#163c34;text-transform:uppercase;letter-spacing:.06em}
+      .atlas-sub{margin-top:.25rem;font-size:.78rem;color:#4a6760;line-height:1.4}
+      .atlas-row{display:flex;justify-content:space-between;gap:.6rem;font-size:.76rem;color:#3e5c55}
+      .atlas-legend{display:grid;gap:.4rem;margin-top:.45rem}
+      .atlas-legend span{display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:#3f5f57;line-height:1.35}
+      .atlas-dot{width:.7rem;height:.7rem;border-radius:.15rem;display:inline-block;flex:0 0 .7rem}
+      .map-overlay-controls{margin-top:.8rem;padding:.9rem;border:1px dashed #d6e6df;border-radius:1rem;background:#f8fcf9}
+      .map-overlay-controls label{display:block;margin-bottom:.5rem;color:#355149;font-size:.78rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+      .map-overlay-controls input[type='range']{width:100%;accent-color:#143c34}
+      .overlay-status{margin-top:.55rem;font-size:.8rem;color:#4f6b64}
+      .sidebar-card{padding:1.35rem}
+      .sidebar-card h3{margin:0 0 .9rem;font-size:1.2rem;line-height:1.3}
+      .sidebar-card p{margin:0 0 1rem;color:#58706a}
+      .input-grid{display:grid;gap:1rem}
+      .field-group label{display:block;margin-bottom:.45rem;color:#42625a;font-size:.85rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+      .field-group input,.field-group select,.field-group textarea{width:100%;padding:.9rem 1rem;border:1px solid #d9e7e0;border-radius:1rem;background:#fbfdfb;color:var(--ink);font:inherit;outline:none}
+      .field-group textarea{min-height:7rem;resize:vertical}
+      .field-group input:focus,.field-group select:focus,.field-group textarea:focus{border-color:#7db79f;box-shadow:0 0 0 3px rgba(184,239,66,.18)}
+      .toggle-list{display:grid;gap:.75rem;margin-top:1rem}
+      .toggle-item{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1rem;border:1px solid #e1ece6;border-radius:1rem;background:#f8fbf9}
+      .toggle-item strong{display:block;font-size:1rem;line-height:1.3}
+      .toggle-item span{display:block;color:#647b74;font-size:.92rem;line-height:1.55}
+      .toggle-item input{margin-top:.35rem;accent-color:#143c34}
+      .map-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}
+      .primary-btn,.ghost-btn{display:inline-flex;align-items:center;justify-content:center;padding:.9rem 1.1rem;border-radius:1rem;font-weight:700;transition:.2s ease}
+      .primary-btn{background:var(--forest);color:#fff}
+      .primary-btn:hover{background:#0b2822}
+      .ghost-btn{border:1px solid #d7e6df;color:var(--forest);background:#fff}
+      .ghost-btn:hover{background:#f5faf7}
+      .insight-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.15rem}
+      .note-card{padding:1.5rem}
+      .note-card h3{margin:0 0 .85rem;font-size:1.15rem;line-height:1.35}
+      .note-card p{margin:0;color:#58706a}
+      .legend-list{display:grid;gap:.7rem}
+      .legend-item{display:flex;align-items:center;gap:.8rem;color:#48665e}
+      .legend-swatch{width:1rem;height:1rem;border-radius:.25rem;flex:0 0 1rem}
+      .region-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.2rem}
+      .region-card{padding:1.4rem;border:1px solid var(--line);border-radius:1.35rem;background:linear-gradient(180deg,#ffffff,#f8fbf9);box-shadow:var(--shadow)}
+      .region-card h3{margin:0 0 .6rem;font-size:1.15rem;line-height:1.35}
+      .region-card p{margin:0;color:#5a726b}
+      .table-card{overflow:hidden}
+      .table-card table{width:100%;border-collapse:collapse}
+      .table-card th,.table-card td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid #e7efea;vertical-align:top}
+      .table-card th{background:#f3f8f4;color:#37524a;font-size:.84rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+      .table-card td{color:#435c55}
+      .pill{display:inline-flex;align-items:center;padding:.32rem .7rem;border-radius:999px;font-size:.8rem;font-weight:800}
+      .pill-alert{background:rgba(224,113,68,.13);color:#a54b27}
+      .pill-amber{background:rgba(241,183,68,.19);color:#8a6414}
+      .pill-good{background:rgba(45,123,108,.14);color:#245f53}
+      .footer-insight{max-width:25rem;padding:1.75rem;background:#022c22;border-radius:.75rem}
+      .footer-insight h5{margin-bottom:.85rem;color:#fff;font-size:1.1rem;font-weight:600;line-height:1.35}
+      .footer-insight p{margin-bottom:1.25rem;color:rgba(255,255,255,.82);font-size:.95rem;line-height:1.65}
+      .footer-insight input{height:3rem;width:100%;padding:0 1rem;border-radius:.5rem;background:#fff;outline:none}
+      .footer-insight a{display:inline-flex;height:3rem;margin-top:.75rem;border-radius:.5rem}
+      .leaflet-popup-content-wrapper{border-radius:1rem}
+      .leaflet-popup-content{margin:.9rem 1rem;line-height:1.55;color:#365148}
+      .custom-popup-title{display:block;margin-bottom:.25rem;color:#102f28;font-weight:800}
+      [x-cloak]{display:none!important}
+      @media (min-width:768px){
+        .hero-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .region-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      }
+      @media (min-width:1024px){
+        .hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(22rem,.85fr);align-items:end}
+        .hero-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}
+        .overview-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+        .workspace-grid{grid-template-columns:minmax(0,1.5fr) minmax(23rem,.75fr)}
+        .region-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      }
+      @media (max-width:767px){
+        .leaflet-map{height:31rem;min-height:31rem}
+        .map-atlas{position:static;max-width:none;padding:1rem;pointer-events:auto;background:#fff;border-top:1px solid #e6efe9}
+        .atlas-card{box-shadow:none}
+        .table-card{overflow:auto}
+        .table-card table{min-width:44rem}
+      }
+    </style>
+  </head>
+  <body class="antialiased font-body" x-data="{ mobileNavOpen: false }">
+    <div class="map-shell">
+      <section class="relative overflow-hidden">
+        <img class="absolute inset-0 w-full h-full object-cover" src="img-new/Background-Header.jpg" alt="Kanopi hutan Sumatera Utara"/>
+        <div class="absolute inset-0 hero-layer"></div>
+        <nav class="relative py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between gap-6"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="hidden sm:block text-white font-bold text-lg">Green Justice Indonesia | Hutan Sumut</span></a>
+              <ul class="hidden lg:flex items-center">
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="index.html">Home</a></li>
+                <li class="mr-8"><a class="inline-block text-lime-300 font-medium" href="peta.html">Peta</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="berita.html">Berita</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-white hover:text-lime-400 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+              <div class="flex items-center justify-end"><a class="hidden md:inline-flex py-2.5 px-4 items-center justify-center text-sm font-medium text-white hover:text-teal-900 border border-white hover:bg-white rounded-lg transition duration-200" href="#workspace">Buka Peta</a>
+                <button class="lg:hidden text-white hover:text-lime-400 ml-4" x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Buka navigasi">Menu</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="relative container mx-auto px-4 pt-8 pb-16 lg:pt-16 lg:pb-24">
+          <div class="hero-grid">
+            <div>
+              <span class="inline-flex py-2 px-4 mb-6 bg-lime-400 text-teal-950 font-bold rounded-full">Peta Hutan Sumatera Utara</span>
+              <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">Halaman input peta untuk membaca Sumut dan Taman Nasional Gunung Leuser dengan lebih terarah.</h1>
+              <p class="max-w-3xl text-lg lg:text-xl text-white opacity-90 leading-relaxed">Halaman ini memadukan peta Leaflet, kontrol layer, dan form input pantauan agar informasi lapangan tentang penggundulan hutan, ekspansi sawit, dan restorasi hutan bisa dibaca dalam satu alur yang rapi dan jelas.</p>
+              <div class="hero-metrics">
+                <article class="hero-metric">
+                  <span>Lanskap pantau utama</span>
+                  <strong>2 wilayah</strong>
+                  <span>Sumatera Utara dan TN Gunung Leuser sebagai fokus awal pembacaan.</span>
+                </article>
+                <article class="hero-metric">
+                  <span>Layer tematik</span>
+                  <strong>3 layer</strong>
+                  <span>Deforestasi, sawit, dan restorasi bisa diaktifkan terpisah.</span>
+                </article>
+                <article class="hero-metric">
+                  <span>Titik input demo</span>
+                  <strong>5 titik</strong>
+                  <span>Contoh catatan lapangan indikatif yang bisa diganti data riil.</span>
+                </article>
+                <article class="hero-metric">
+                  <span>Mode pembacaan</span>
+                  <strong>1 dashboard</strong>
+                  <span>Dibuat untuk publik, media, dan tim advokasi sekaligus.</span>
+                </article>
+              </div>
+            </div>
+            <aside class="hero-panel mt-8 lg:mt-0">
+              <h3>Apa fungsi utama halaman ini?</h3>
+              <p>Halaman ini bukan hanya peta tampilan. Ia juga berfungsi sebagai workspace input ringkas untuk menyimpan catatan indikatif dari lapangan, sambil tetap menjaga visualisasi isu utama tetap mudah dibaca.</p>
+              <p class="mt-4">Pembacaan dasar yang diprioritaskan:</p>
+              <ul class="mt-3 pl-5 text-white opacity-90">
+                <li class="mb-2">Di mana indikasi penggundulan hutan paling dekat dengan habitat prioritas?</li>
+                <li class="mb-2">Kawasan sawit mana yang perlu dibaca sebagai tekanan terhadap bentang alam?</li>
+                <li>Area restorasi mana yang paling penting untuk memperkuat konektivitas hutan?</li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-full xs:w-5/6 xs:max-w-md z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}" x-cloak>
+          <div class="fixed inset-0 bg-teal-900 opacity-40" x-on:click="mobileNavOpen = false"></div>
+          <nav class="relative flex flex-col py-7 px-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="text-teal-900 font-bold">Hutan Sumut</span></a>
+              <button x-on:click="mobileNavOpen = false" aria-label="Tutup navigasi">Tutup</button>
+            </div>
+            <div class="pt-16 pb-12 mb-auto">
+              <ul class="flex-col">
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="index.html">Home</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#workspace" x-on:click="mobileNavOpen = false">Peta</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="berita.html">Berita</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+            </div>
+            <a class="inline-flex py-3 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 bg-lime-500 rounded-lg" href="#workspace" x-on:click="mobileNavOpen = false">Mulai Dari Peta</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="py-14 lg:py-20" id="workspace">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Ringkasan Wilayah</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Pembacaan cepat sebelum masuk ke layer peta.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">Empat kartu ini membantu memberi konteks sebelum pengguna membuka layer. Fokusnya bukan sekadar lokasi, tetapi relasi antara tekanan lahan dan peluang pemulihan.</p>
+          </div>
+          <div class="overview-grid">
+            <article class="overview-card"><span>Restorasi</span><strong>5 blok</strong><p>Barak Induk, Cinta Raja III, Sei Betung-Halaban, Bukit Mas, dan Selamanya Hutan.</p></article>
+            <article class="overview-card"><span>Lokasi Detail</span><strong>3 titik</strong><p>Titik BPC, SAL, dan SRA divisualkan sebagai simpul monitoring prioritas.</p></article>
+            <article class="overview-card"><span>Batas Kawasan</span><strong>3 zona</strong><p>TNGL, KEL, serta wilayah monitoring HOCRU ditampilkan sebagai layer batas.</p></article>
+            <article class="overview-card"><span>Kelas Tutupan</span><strong>5 kelas</strong><p>Kawasan hutan dan area penggunaan lahan disajikan sesuai legenda peta kerja.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-4 lg:py-8">
+        <div class="container mx-auto px-4">
+          <div class="workspace-grid">
+            <article class="map-card">
+              <div class="map-toolbar">
+                <div class="flex flex-wrap gap-2">
+                  <span class="map-badge">Base map: OSM + Satelit</span>
+                  <span class="map-badge">Overlay: Peta Kerja YOSL-OIC</span>
+                  <span class="map-badge">Sub Lanskap Pantai Timur Leuser</span>
+                </div>
+                <div class="text-sm text-gray-600">Mode atlas aktif: peta kerja raster dipadukan dengan layer vektor tematik agar tampilan mendekati layout peta referensi.</div>
+              </div>
+              <div class="map-frame">
+                <div id="sumut-map" class="leaflet-map"></div>
+                <div class="map-atlas" aria-hidden="true">
+                  <div class="atlas-card">
+                    <div class="atlas-title">Peta Wilayah Kerja YOSL-OIC</div>
+                    <div class="atlas-sub">Sub Lanskap Pantai Timur Leuser</div>
+                  </div>
+                  <div class="atlas-card">
+                    <div class="atlas-row"><strong>Skala Referensi</strong><span>1 : 450.000</span></div>
+                    <div class="atlas-row"><strong>Grid</strong><span>96°E - 99°E</span></div>
+                  </div>
+                  <div class="atlas-card">
+                    <div class="atlas-title">Keterangan Ringkas</div>
+                    <div class="atlas-legend">
+                      <span><i class="atlas-dot" style="background:#903bd8"></i>Restorasi utama</span>
+                      <span><i class="atlas-dot" style="background:#90c06c"></i>Kawasan hutan</span>
+                      <span><i class="atlas-dot" style="background:#f39a3d"></i>Batas kawasan</span>
+                      <span><i class="atlas-dot" style="background:#1a76d2"></i>Titik BPC, SAL, SRA</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <aside class="sidebar-card">
+              <h3>Input dan kontrol peta</h3>
+              <p>Panel ini menampilkan kontrol layer peta kerja YOSL-OIC. Aktifkan atau nonaktifkan layer untuk membaca restorasi, kawasan hutan, dan lokasi kunci di sub lanskap Pantai Timur Leuser.</p>
+
+              <form class="input-grid" id="mapObservationForm">
+                <div class="field-group">
+                  <label for="observation-title">Judul pengamatan</label>
+                  <input id="observation-title" name="observation-title" type="text" placeholder="Contoh: Pembukaan lahan baru di tepian koridor"/>
+                </div>
+                <div class="field-group">
+                  <label for="observation-category">Kategori isu</label>
+                  <select id="observation-category" name="observation-category">
+                    <option value="Deforestasi">Deforestasi</option>
+                    <option value="Sawit">Sawit</option>
+                    <option value="Restorasi">Restorasi</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="observation-area">Wilayah fokus</label>
+                  <select id="observation-area" name="observation-area">
+                    <option value="Taman Nasional Gunung Leuser">Taman Nasional Gunung Leuser</option>
+                    <option value="Batang Toru">Batang Toru</option>
+                    <option value="Langkat">Langkat</option>
+                    <option value="Tapanuli Selatan">Tapanuli Selatan</option>
+                    <option value="Pesisir Timur Sumut">Pesisir Timur Sumut</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="observation-notes">Catatan lapangan</label>
+                  <textarea id="observation-notes" name="observation-notes" placeholder="Tulis indikasi, konteks lokasi, atau kebutuhan tindak lanjut."></textarea>
+                </div>
+              </form>
+
+              <div class="toggle-list">
+                <label class="toggle-item"><span><strong>Layer restorasi inti</strong><span>Menampilkan Restorasi Barak Induk, Sei Betung-Halaban, Cinta Raja III, Bukit Mas, dan Selamanya Hutan.</span></span><input id="toggle-deforestation" type="checkbox" checked="checked"/></label>
+                <label class="toggle-item"><span><strong>Layer kawasan hutan</strong><span>Menampilkan kelas penggunaan lahan: hutan lindung, produksi, area penggunaan lain, air, dan kawasan konservasi.</span></span><input id="toggle-palm" type="checkbox" checked="checked"/></label>
+                <label class="toggle-item"><span><strong>Layer batas kawasan</strong><span>Menampilkan batas TNGL, KEL, dan wilayah monitoring HOCRU.</span></span><input id="toggle-restoration" type="checkbox" checked="checked"/></label>
+                <label class="toggle-item"><span><strong>Titik lokasi detail</strong><span>Menampilkan titik BPC, SAL, SRA, dan simpul restorasi utama.</span></span><input id="toggle-observations" type="checkbox" checked="checked"/></label>
+              </div>
+
+              <div class="map-overlay-controls">
+                <label for="overlay-opacity">Transparansi overlay peta kerja</label>
+                <input id="overlay-opacity" type="range" min="15" max="100" step="1" value="78"/>
+                <div class="overlay-status" id="overlay-status">Mengecek file overlay peta kerja...</div>
+              </div>
+
+              <div class="map-actions">
+                <button class="primary-btn" id="saveObservationButton" type="button">Simpan Catatan Demo</button>
+                <button class="ghost-btn" id="focusLeuserButton" type="button">Fokus Wilayah Kerja</button>
+                <button class="ghost-btn" id="focusSumutButton" type="button">Lihat Sumut</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-20">
+        <div class="container mx-auto px-4">
+          <div class="insight-grid">
+            <article class="note-card">
+              <h3>Legenda dan cara baca layer</h3>
+              <div class="legend-list">
+                <div class="legend-item"><span class="legend-swatch" style="background:#903bd8"></span><span>Restorasi Barak Induk dan blok restorasi utama</span></div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#90c06c"></span><span>Kawasan hutan (lindung, produksi, dan konservasi)</span></div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#f39a3d"></span><span>Batas kawasan: TNGL, KEL, dan wilayah monitoring</span></div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#1a76d2"></span><span>Titik BPC, SAL, SRA, dan lokasi restorasi detail</span></div>
+              </div>
+            </article>
+            <article class="note-card">
+              <h3>Arah pembacaan yang disarankan</h3>
+              <p>Mulai dari skala Sumatera Utara untuk melihat distribusi tekanan. Setelah itu, pindah ke Taman Nasional Gunung Leuser untuk menilai kedekatan hotspot terhadap kawasan inti, penyangga, dan area restorasi. Pendekatan ini membuat peta lebih berguna untuk komunikasi publik maupun briefing kebijakan.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-10 lg:py-16 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Zona Prioritas</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Wilayah yang paling penting dibaca bersama layer peta.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">Kartu wilayah ini membantu menjelaskan kenapa satu lokasi penting, apa tekanannya, dan intervensi apa yang paling masuk akal untuk dibahas.</p>
+          </div>
+          <div class="region-grid">
+            <article class="region-card">
+              <h3>Taman Nasional Gunung Leuser</h3>
+              <p>Kawasan inti dan penyangga yang relevan untuk membaca hubungan antara perlindungan habitat, tekanan pembukaan lahan, dan restorasi koridor.</p>
+            </article>
+            <article class="region-card">
+              <h3>Langkat - Bukit Lawang</h3>
+              <p>Pintu masuk pembacaan publik yang baik karena dekat dengan lanskap Leuser dan mudah diterjemahkan sebagai narasi perlindungan kawasan.</p>
+            </article>
+            <article class="region-card">
+              <h3>Batang Toru</h3>
+              <p>Wilayah krusial untuk memadukan isu tutupan hutan, fragmentasi habitat, dan kebutuhan restorasi yang lebih strategis.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Tabel Pantau</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Contoh daftar area yang bisa diprioritaskan untuk tindak lanjut.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">Tabel ini menyambungkan peta ke pembacaan operasional: isu dominan, urgensi, dan jenis aksi lanjutan yang bisa dibahas bersama tim lapangan.</p>
+          </div>
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Wilayah</th>
+                  <th>Isu Dominan</th>
+                  <th>Status</th>
+                  <th>Aksi Lanjutan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tepi TNGL - Langkat</td>
+                  <td>Deforestasi dekat penyangga kawasan</td>
+                  <td><span class="pill pill-alert">Tinggi</span></td>
+                  <td>Validasi lapangan dan overlay dengan jalur akses baru.</td>
+                </tr>
+                <tr>
+                  <td>Pesisir Timur Sumut</td>
+                  <td>Ekspansi sawit dan perubahan tutupan</td>
+                  <td><span class="pill pill-amber">Sedang</span></td>
+                  <td>Bandingkan dengan sempadan sungai dan area lindung sekitar.</td>
+                </tr>
+                <tr>
+                  <td>Batang Toru</td>
+                  <td>Koridor habitat dan restorasi prioritas</td>
+                  <td><span class="pill pill-good">Peluang Intervensi</span></td>
+                  <td>Perkuat pembacaan konektivitas dan survival rate area pulih.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative py-10 lg:py-16 bg-orange-50 overflow-hidden"><img class="absolute bottom-0 left-0" src="fauna-assets/footer/waves-lines-left-bottom.png" alt=""/>
+        <div class="container px-4 mx-auto relative">
+          <div class="flex flex-wrap mb-10 -mx-4">
+            <div class="w-full lg:w-2/12 xl:w-2/12 px-10 mb-10 lg:mb-0"><a class="inline-block mb-4" href="index.html"><img class="h-32 w-auto" src="img-new/Green Justice Indonesia  Hutan Sumut.svg" alt="Green Justice Indonesia Hutan Sumut"/></a></div>
+            <div class="w-full md:w-7/12 lg:w-6/12 px-4 mb-10 lg:mb-0">
+              <div class="flex flex-wrap -mx-4">
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Sarana</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="peta.html">Peta</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="statistik.html">Data Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="berita.html">Berita</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Organisasi</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="about.html">Tentang</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="contact.html">Kontak</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="register.html">Kolaborasi</a></li>
+                  </ul>
+                </div>
+                <div class="w-full xs:w-1/3 px-4">
+                  <h3 class="mb-6 font-bold">Akses Cepat</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#workspace">Workspace Peta</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="statistik.html">Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="berita.html">Newsroom</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-5/12 lg:w-4/12 px-4">
+              <div class="footer-insight">
+                <h5>Butuh layer data yang lebih detail?</h5>
+                <p>Hubungi tim untuk sinkronisasi data lapangan, layer GeoJSON, atau integrasi basis data spasial yang lebih lengkap ke halaman peta ini.</p>
+                <input type="email" placeholder="Masukkan email Anda"/>
+                <a class="w-full items-center justify-center text-sm font-medium text-teal-900 bg-lime-500 hover:bg-lime-400 transition duration-200" href="contact.html">Hubungi Tim Peta</a>
+              </div>
+            </div>
+          </div>
+          <div class="pt-8 border-t border-gray-200 text-sm text-gray-500 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <p class="mb-0">© 2026 Green Justice Indonesia - Hutan Sumut. Semua hak cipta dilindungi.</p>
+            <p class="mb-0">Peta disusun untuk komunikasi publik dan input pantauan berbasis lokasi.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var mapElement = document.getElementById('sumut-map');
+        if (!mapElement || typeof L === 'undefined') return;
+
+        var sumutCenter = [3.96, 97.74];
+        var workAreaCenter = [4.10, 98.02];
+        var workAreaZoom = 9;
+
+        var map = L.map('sumut-map', {
+          scrollWheelZoom: false,
+          zoomControl: true,
+          minZoom: 7,
+          maxZoom: 13
+        }).setView(sumutCenter, 8);
+
+        var osmBase = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var satBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          maxZoom: 18,
+          attribution: 'Tiles &copy; Esri'
+        });
+
+        var sumutBounds = [
+          [2.85, 95.85],
+          [5.12, 99.25]
+        ];
+        map.setMaxBounds(sumutBounds);
+
+        var kerjaBounds = [
+          [3.01, 96.02],
+          [4.99, 98.98]
+        ];
+
+        map.createPane('rasterPane');
+        map.getPane('rasterPane').style.zIndex = 330;
+        map.createPane('kawasanPane');
+        map.getPane('kawasanPane').style.zIndex = 410;
+        map.createPane('batasPane');
+        map.getPane('batasPane').style.zIndex = 420;
+        map.createPane('restorasiPane');
+        map.getPane('restorasiPane').style.zIndex = 430;
+        map.createPane('pointPane');
+        map.getPane('pointPane').style.zIndex = 440;
+
+        var petaKerjaOverlay = null;
+        var overlayStatus = document.getElementById('overlay-status');
+        var overlayCandidates = [
+          'img-new/peta-yosl-oic.jpg',
+          'img-new/peta-yosl-oic.png',
+          'img-new/Peta-YOSL-OIC.jpg',
+          'img-new/Peta-YOSL-OIC.png'
+        ];
+
+        var createOverlay = function (src) {
+          petaKerjaOverlay = L.imageOverlay(src, kerjaBounds, {
+            pane: 'rasterPane',
+            opacity: 0.78,
+            interactive: false
+          }).addTo(map);
+          if (overlayStatus) {
+            overlayStatus.textContent = 'Overlay aktif: ' + src;
+          }
+
+          var slider = document.getElementById('overlay-opacity');
+          if (slider) {
+            slider.addEventListener('input', function () {
+              if (petaKerjaOverlay) {
+                petaKerjaOverlay.setOpacity(Number(slider.value) / 100);
+              }
+            });
+          }
+        };
+
+        var tryOverlay = function (index) {
+          if (index >= overlayCandidates.length) {
+            console.warn('File overlay peta kerja tidak ditemukan. Tambahkan img-new/peta-yosl-oic.jpg agar tampilan sesuai peta referensi.');
+            if (overlayStatus) {
+              overlayStatus.textContent = 'Overlay belum ditemukan. Simpan file di img-new/peta-yosl-oic.jpg';
+            }
+            return;
+          }
+
+          var probe = new Image();
+          probe.onload = function () {
+            createOverlay(overlayCandidates[index]);
+          };
+          probe.onerror = function () {
+            tryOverlay(index + 1);
+          };
+          probe.src = overlayCandidates[index];
+        };
+        tryOverlay(0);
+
+        var popup = function (title, body) {
+          return '<span class="custom-popup-title">' + title + '</span><span>' + body + '</span>';
+        };
+
+        var sumutOutline = {
+          type: 'Feature',
+          properties: {
+            name: 'Sumatera Utara',
+            description: 'Batas tampilan regional untuk pembacaan konteks kerja peta.'
+          },
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[
+              [96.00, 4.98],
+              [96.95, 4.99],
+              [97.88, 4.88],
+              [98.72, 4.66],
+              [99.02, 4.32],
+              [98.92, 3.44],
+              [98.40, 3.02],
+              [97.52, 2.95],
+              [96.58, 3.30],
+              [96.04, 4.12],
+              [96.00, 4.98]
+            ]]
+          }
+        };
+
+        var restorasiFeatures = {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Restorasi Barak Induk',
+                note: 'Blok restorasi inti dalam peta kerja YOSL-OIC.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[96.86, 3.96], [97.12, 3.95], [97.10, 3.79], [96.88, 3.77], [96.86, 3.96]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Restorasi Cinta Raja III',
+                note: 'Blok restorasi prioritas untuk penguatan habitat.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[97.04, 3.81], [97.30, 3.80], [97.28, 3.64], [97.06, 3.63], [97.04, 3.81]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Restorasi Sei Betung - Halaban',
+                note: 'Wilayah restorasi di bagian timur laut lanskap kerja.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[97.46, 4.47], [97.72, 4.46], [97.70, 4.24], [97.48, 4.25], [97.46, 4.47]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Restorasi Bukit Mas',
+                note: 'Blok restorasi dekat klaster BPC, SAL, dan SRA.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[97.20, 4.22], [97.68, 4.23], [97.66, 3.92], [97.22, 3.90], [97.20, 4.22]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Restorasi Selamanya Hutan',
+                note: 'Salah satu area restorasi prioritas dalam peta kerja.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[97.20, 3.70], [97.46, 3.70], [97.44, 3.52], [97.22, 3.51], [97.20, 3.70]]]
+              }
+            }
+          ]
+        };
+
+        var kawasanHutanFeatures = {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Hutan Lindung',
+                kelas: 'Hutan Lindung',
+                color: '#95c477',
+                note: 'Kawasan hutan lindung dalam lanskap kerja.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[96.15, 4.82], [97.12, 4.84], [97.30, 4.48], [96.72, 4.20], [96.18, 4.34], [96.15, 4.82]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Hutan Produksi Tetap',
+                kelas: 'Hutan Produksi Tetap',
+                color: '#cad96a',
+                note: 'Kawasan produksi tetap dalam peta kerja.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[96.82, 4.52], [98.30, 4.54], [98.72, 4.04], [98.28, 3.63], [97.16, 3.75], [96.82, 4.52]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Hutan Produksi Konversi',
+                kelas: 'Hutan Produksi Konversi',
+                color: '#dce67f',
+                note: 'Kawasan produksi konversi yang beririsan dengan area pemanfaatan lain.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[98.08, 3.56], [98.87, 3.66], [98.97, 3.32], [98.16, 3.20], [98.08, 3.56]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Area Penggunaan Lain',
+                kelas: 'Area Penggunaan Lain',
+                color: '#d7d7d7',
+                note: 'Area penggunaan lain di luar blok hutan utama.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[98.25, 4.52], [99.00, 4.48], [99.00, 3.56], [98.54, 3.32], [98.25, 3.72], [98.25, 4.52]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Tubuh Air',
+                kelas: 'Tubuh Air',
+                color: '#7ecce2',
+                note: 'Danau, rawa, dan elemen perairan utama dalam lanskap kerja.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[97.65, 3.05], [98.18, 3.05], [98.28, 2.90], [97.74, 2.90], [97.65, 3.05]]]
+              }
+            }
+          ]
+        };
+
+        var batasKawasanFeatures = {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Gunung Leuser National Park',
+                tipe: 'TNGL',
+                color: '#f39a3d',
+                note: 'Batas indikatif kawasan taman nasional.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[96.26, 4.64], [97.46, 4.60], [97.98, 4.18], [97.84, 3.46], [97.04, 3.26], [96.34, 3.70], [96.26, 4.64]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Kawasan Ekosistem Leuser',
+                tipe: 'KEL',
+                color: '#ff7b7b',
+                note: 'Batas indikatif kawasan ekosistem Leuser.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[96.56, 4.94], [98.24, 4.84], [98.54, 4.16], [98.42, 3.42], [97.18, 3.06], [96.52, 3.42], [96.56, 4.94]]]
+              }
+            },
+            {
+              type: 'Feature',
+              properties: {
+                title: 'Wilayah Monitoring HOCRU',
+                tipe: 'Monitoring',
+                color: '#e0aa57',
+                note: 'Batas wilayah monitoring HOCRU sesuai peta kerja.'
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[98.08, 4.78], [98.98, 4.66], [98.98, 3.36], [98.44, 3.20], [98.08, 3.70], [98.08, 4.78]]]
+              }
+            }
+          ]
+        };
+
+        var observationPoints = [
+          { title: 'BPC', coords: [4.18, 97.62], body: 'Titik lokasi BPC di dalam kawasan TNGL.' },
+          { title: 'SAL', coords: [4.07, 97.43], body: 'Titik lokasi SAL di dalam kawasan TNGL.' },
+          { title: 'SRA', coords: [3.96, 97.24], body: 'Titik lokasi SRA di dalam kawasan TNGL.' },
+          { title: 'Restorasi Barak Induk', coords: [3.86, 96.98], body: 'Simpul restorasi Barak Induk di dalam kawasan TNGL.' },
+          { title: 'Restorasi Cinta Raja III', coords: [3.72, 97.16], body: 'Simpul restorasi Cinta Raja III di dalam kawasan TNGL.' },
+          { title: 'Restorasi Sei Betung - Halaban', coords: [4.34, 97.58], body: 'Simpul restorasi Sei Betung - Halaban di dalam kawasan TNGL.' },
+          { title: 'Restorasi Bukit Mas', coords: [4.02, 97.52], body: 'Simpul restorasi Bukit Mas di dalam kawasan TNGL.' }
+        ];
+
+        var outlineLayer = L.geoJSON(sumutOutline, {
+          style: {
+            color: '#143c34',
+            weight: 1.8,
+            fillColor: '#dff1d3',
+            fillOpacity: 0.05
+          }
+        }).addTo(map).bindPopup(popup('Sumatera Utara', 'Batas konteks regional untuk peta kerja YOSL-OIC.'));
+
+        var restorasiLayer = L.geoJSON(restorasiFeatures, {
+          pane: 'restorasiPane',
+          style: function () {
+            return {
+              color: '#6a1fb0',
+              weight: 1.8,
+              fillColor: '#903bd8',
+              fillOpacity: 0.56
+            };
+          },
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup(popup(feature.properties.title, feature.properties.note));
+          }
+        }).addTo(map);
+
+        var kawasanLayer = L.geoJSON(kawasanHutanFeatures, {
+          pane: 'kawasanPane',
+          style: function (feature) {
+            return {
+              color: '#4f7e35',
+              weight: 1.1,
+              fillColor: feature.properties.color,
+              fillOpacity: 0.30
+            };
+          },
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup(popup(feature.properties.title, feature.properties.kelas + ' - ' + feature.properties.note));
+          }
+        }).addTo(map);
+
+        var batasLayer = L.geoJSON(batasKawasanFeatures, {
+          pane: 'batasPane',
+          style: function (feature) {
+            return {
+              color: feature.properties.color,
+              weight: 2.4,
+              dashArray: '7 5',
+              fillOpacity: 0.02
+            };
+          },
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup(popup(feature.properties.title, feature.properties.note));
+          }
+        }).addTo(map);
+
+        var observationLayer = L.layerGroup();
+        observationPoints.forEach(function (point) {
+          L.circleMarker(point.coords, {
+            pane: 'pointPane',
+            radius: 6,
+            color: '#ffffff',
+            weight: 2,
+            fillColor: '#1a76d2',
+            fillOpacity: 1
+          }).bindPopup(popup(point.title, point.body)).addTo(observationLayer);
+        });
+        observationLayer.addTo(map);
+
+        var allFeatureBounds = L.featureGroup([outlineLayer, restorasiLayer, kawasanLayer, batasLayer, observationLayer]);
+        map.fitBounds(allFeatureBounds.getBounds().pad(0.03));
+
+        var baseMaps = {
+          'OpenStreetMap': osmBase,
+          'Satelit (Esri)': satBase
+        };
+        var overlayMaps = {
+          'Layer Restorasi Inti': restorasiLayer,
+          'Layer Kawasan Hutan': kawasanLayer,
+          'Layer Batas Kawasan': batasLayer,
+          'Titik Lokasi Detail': observationLayer
+        };
+        L.control.layers(baseMaps, overlayMaps, { collapsed: true }).addTo(map);
+
+        var toggleDeforestation = document.getElementById('toggle-deforestation');
+        var togglePalm = document.getElementById('toggle-palm');
+        var toggleRestoration = document.getElementById('toggle-restoration');
+        var toggleObservations = document.getElementById('toggle-observations');
+
+        var syncLayer = function (checkbox, layer) {
+          if (!checkbox) return;
+          checkbox.addEventListener('change', function () {
+            if (checkbox.checked) {
+              layer.addTo(map);
+            } else {
+              map.removeLayer(layer);
+            }
+          });
+        };
+
+        syncLayer(toggleDeforestation, restorasiLayer);
+        syncLayer(togglePalm, kawasanLayer);
+        syncLayer(toggleRestoration, batasLayer);
+        syncLayer(toggleObservations, observationLayer);
+
+        var focusLeuserButton = document.getElementById('focusLeuserButton');
+        var focusSumutButton = document.getElementById('focusSumutButton');
+        if (focusLeuserButton) {
+          focusLeuserButton.addEventListener('click', function () {
+            map.flyTo(workAreaCenter, workAreaZoom, { duration: 0.8 });
+          });
+        }
+        if (focusSumutButton) {
+          focusSumutButton.addEventListener('click', function () {
+            map.fitBounds(allFeatureBounds.getBounds().pad(0.08));
+          });
+        }
+
+        var form = document.getElementById('mapObservationForm');
+        var saveButton = document.getElementById('saveObservationButton');
+        if (form && saveButton) {
+          saveButton.addEventListener('click', function () {
+            var title = document.getElementById('observation-title').value.trim();
+            var category = document.getElementById('observation-category').value;
+            var area = document.getElementById('observation-area').value;
+            var notes = document.getElementById('observation-notes').value.trim();
+
+            if (!title || !notes) {
+              window.alert('Isi judul pengamatan dan catatan lapangan terlebih dahulu.');
+              return;
+            }
+
+            L.popup()
+              .setLatLng(map.getCenter())
+              .setContent(popup('Catatan demo tersimpan', '<strong>' + title + '</strong><br/>' + category + ' - ' + area + '<br/>' + notes))
+              .openOn(map);
+
+            form.reset();
+          });
+        }
+
+      });
+    </script>
+  </body>
+</html>

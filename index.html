@@ -1,0 +1,736 @@
+<html lang="id">
+  <head>
+    <title>Hutan Sumut | Green Justice Indonesia</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Dashboard informasi hutan Sumatera Utara berbasis data spasial, peta interaktif, statistik, dan berita lingkungan dari Green Justice Indonesia."/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;family=Cormorant+Garamond:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link rel="icon" type="image/png" href="img-new/Logo-GJI.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+    <style>
+      .grid{display:grid}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.gap-6{gap:1.5rem}.rounded-lg{border-radius:.5rem}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-90{opacity:.9}.pt-24{padding-top:6rem}.pb-28{padding-bottom:7rem}.py-20{padding-top:5rem;padding-bottom:5rem}.h-72{height:18rem}.w-1\/6{width:16.666667%}.max-w-3xl{max-width:48rem}.max-w-5xl{max-width:56rem}.border-gray-200{--tw-border-opacity:1;border-color:rgb(217 222 221/var(--tw-border-opacity))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(245 250 249/var(--tw-bg-opacity))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity))}.bg-teal-700{--tw-bg-opacity:1;background-color:rgb(6 95 70/var(--tw-bg-opacity))}.text-teal-700{--tw-text-opacity:1;color:rgb(6 95 70/var(--tw-text-opacity))}.hover\:bg-teal-800:hover{--tw-bg-opacity:1;background-color:rgb(6 78 59/var(--tw-bg-opacity))}.stat-card{padding:1.75rem 2rem;border:1px solid #d9dedd;border-radius:.5rem;background:#fff}.stat-card h2{margin-bottom:.85rem;font-size:2.75rem;font-weight:700;line-height:1}.stat-card p{color:#4c524f;font-size:1rem;line-height:1.65}.stat-card-bg{min-height:11rem;border-color:transparent;background-size:cover;background-position:center;color:#fff}.stat-card-bg h2{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35)}.stat-card-bg p{color:rgba(255,255,255,.92);text-shadow:0 1px 8px rgba(0,0,0,.32)}.region-tag{display:inline-flex;align-items:center;margin:0 .75rem .75rem 0;padding:.75rem 1rem;border-radius:.5rem;background:#fff;color:#1d1f1e;font-size:.95rem;font-weight:600;line-height:1.35;white-space:nowrap}.info-card{display:flex;min-height:10rem;flex-direction:column;padding:1.75rem 2rem;background:#fff;border-radius:.5rem}.info-card h3{margin-bottom:.85rem;font-size:1.55rem;font-weight:600;line-height:1.25}.info-card p{margin-bottom:1.5rem;color:#4c524f;line-height:1.7}.info-card a{margin-top:auto;font-size:1.05rem;font-weight:700;color:#022c22}.leaflet-map{height:430px;min-height:430px;width:100%;border-radius:.5rem;z-index:1}.map-note{font-size:.875rem;line-height:1.5;color:#4c524f}.chart-panel{padding:1.75rem 2rem;border:1px solid #d9dedd;border-radius:.5rem;background:#fff}.chart-track{height:1rem;width:100%;overflow:hidden;border-radius:9999px;background:#edf2f1}.chart-fill{display:block;height:100%;border-radius:9999px}.chart-item{padding:1.15rem 0;border-bottom:1px solid #d9dedd}.chart-label{display:flex;justify-content:space-between;gap:1rem;margin-bottom:.75rem;font-weight:600;line-height:1.45}.chart-note{padding-top:1rem;color:#4c524f;font-size:.95rem;line-height:1.6}.priority-panel{padding:1.75rem 2rem;border-radius:.5rem;background:#022c22;color:#fff}.priority-panel h3{margin-bottom:1.25rem;font-size:1.65rem;font-weight:600;line-height:1.25}.priority-panel li{margin-bottom:1rem;color:rgba(255,255,255,.88);line-height:1.55}.news-kicker{font-size:1rem;line-height:1.35}.news-image-frame{max-width:34rem}.news-image-frame img{width:100%;height:auto;min-height:0;object-fit:contain}.footer-insight{max-width:25rem;padding:1.75rem;background:#022c22;border-radius:.75rem}.footer-insight h5{margin-bottom:.85rem;color:#fff;font-size:1.1rem;font-weight:600;line-height:1.35}.footer-insight p{margin-bottom:1.25rem;color:rgba(255,255,255,.82);font-size:.95rem;line-height:1.65}.footer-insight input{height:3rem;width:100%;padding:0 1rem;border-radius:.5rem;background:#fff;outline:none}.footer-insight a{height:3rem;margin-top:.75rem;border-radius:.5rem}@media (min-width:640px){.sm\:block{display:block}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:768px){.md\:inline-flex{display:inline-flex}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:hidden{display:none}.lg\:flex{display:flex}.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:col-span-2{grid-column:span 2/span 2}.lg\:w-3\/12{width:25%}.lg\:w-5\/12{width:41.666667%}.lg\:w-7\/12{width:58.333333%}.lg\:py-20{padding-top:5rem;padding-bottom:5rem}.lg\:pb-48{padding-bottom:12rem}.lg\:text-8xl{font-size:6rem;line-height:.95}}
+    </style>
+    <style>
+      .map-layout{display:grid;grid-template-columns:1fr;gap:1.5rem}
+      .map-aside{padding:1.75rem;background:#022c22;color:#fff;border-radius:.5rem}
+      .map-eyebrow{display:inline-block;margin-bottom:.85rem;padding:.45rem .7rem;background:rgba(190,242,100,.18);color:#d9f99d;border-radius:.5rem;font-size:.8rem;font-weight:700;letter-spacing:.02em}
+      .map-aside h3{margin-bottom:1rem;font-size:1.85rem;line-height:1.15;font-weight:700}
+      .map-aside p{margin-bottom:1.25rem;color:rgba(255,255,255,.88);line-height:1.7}
+      .map-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1.25rem}
+      .map-metric{padding:1rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:.5rem}
+      .map-metric strong{display:block;margin-bottom:.35rem;font-size:1.35rem;line-height:1;color:#fff}
+      .map-metric span{display:block;color:rgba(255,255,255,.8);font-size:.9rem;line-height:1.45}
+      .map-tags{display:flex;flex-wrap:wrap;gap:.65rem}
+      .map-tag{display:inline-flex;align-items:center;padding:.55rem .8rem;background:#fff;color:#022c22;border-radius:.5rem;font-size:.9rem;font-weight:600}
+      .map-stage{position:relative;overflow:hidden;border-radius:.5rem;border:1px solid rgba(2,44,34,.12);background:#eef3ee}
+      .map-stage-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.1rem;border-bottom:1px solid #d9dedd;background:#f7faf9}
+      .map-stage-title strong{display:block;font-size:1.05rem;line-height:1.3}
+      .map-stage-title span{display:block;color:#4c524f;font-size:.9rem;line-height:1.5}
+      .map-toolbar{display:flex;flex-wrap:wrap;gap:.6rem}
+      .map-toolbar button{padding:.55rem .9rem;border:1px solid #c7cfcd;border-radius:.5rem;background:#fff;color:#022c22;font-size:.9rem;font-weight:600}
+      .map-canvas-wrap{position:relative;padding:1rem 1rem 0}
+      .leaflet-map-enhanced{height:620px;min-height:620px;border:1px solid rgba(2,44,34,.14);border-radius:.35rem}
+      .map-floating{position:absolute;z-index:500;padding:1rem 1.05rem;border-radius:.5rem;background:rgba(255,255,255,.96);box-shadow:0 16px 30px rgba(2,44,34,.12)}
+      .map-inset{top:1.9rem;left:1.9rem;width:14rem;padding:.9rem 1rem;background:rgba(2,44,34,.9);color:#fff}
+      .map-inset h4{margin-bottom:.4rem;font-size:.92rem;font-weight:700;line-height:1.3}
+      .map-inset p{margin-bottom:.7rem;color:rgba(255,255,255,.8);font-size:.82rem;line-height:1.5}
+      .map-inset-grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+      .map-inset-chip{padding:.55rem .6rem;border:1px solid rgba(255,255,255,.12);border-radius:.45rem;background:rgba(255,255,255,.08)}
+      .map-inset-chip strong{display:block;margin-bottom:.25rem;font-size:.85rem;line-height:1.2}
+      .map-inset-chip span{display:block;font-size:.76rem;line-height:1.4;color:rgba(255,255,255,.72)}
+      .map-legend{top:1.9rem;right:1.9rem;width:15rem}
+      .map-legend h4,.map-corner h4{margin-bottom:.7rem;font-size:.95rem;font-weight:700;line-height:1.3;color:#022c22}
+      .legend-item{display:flex;align-items:center;gap:.6rem;margin-bottom:.55rem;font-size:.88rem;line-height:1.45;color:#1d1f1e}
+      .legend-swatch{width:.95rem;height:.95rem;border-radius:9999px;flex:0 0 auto}
+      .map-corner{left:1.9rem;bottom:4.6rem;max-width:16rem}
+      .map-corner p{color:#4c524f;font-size:.84rem;line-height:1.55}
+      .map-north{top:50%;right:1.9rem;transform:translateY(-50%);width:3.2rem;height:4.5rem;padding:.5rem .4rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;background:rgba(255,255,255,.96)}
+      .map-north strong{font-size:1rem;line-height:1;color:#022c22}
+      .map-north span{display:block;width:0;height:0;border-left:.6rem solid transparent;border-right:.6rem solid transparent;border-bottom:1.25rem solid #022c22}
+      .map-statusbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem;padding:.85rem 1rem 1rem;color:#35514b;font-size:.82rem;line-height:1.5}
+      .map-statusbar strong{color:#022c22}
+      .map-text-label{background:transparent;border:none}
+      .map-text-label span{display:inline-flex;align-items:center;padding:.2rem .45rem;border:1px solid rgba(2,44,34,.18);border-radius:999px;background:rgba(255,255,255,.95);color:#022c22;font-size:.76rem;font-weight:700;line-height:1.2;box-shadow:0 6px 12px rgba(2,44,34,.12)}
+      .stats-shell{display:grid;grid-template-columns:1fr;gap:1.5rem}
+      .chart-panel{padding:2rem;border:1px solid #d9e1de;border-radius:.75rem;background:linear-gradient(160deg,#ffffff 0%,#f2f8f5 100%);box-shadow:0 14px 38px rgba(2,44,34,.08)}
+      .chart-header{margin-bottom:1.25rem}
+      .chart-header span{display:inline-flex;padding:.35rem .7rem;border-radius:999px;background:#e8f5ef;color:#0f766e;font-size:.78rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+      .chart-header h3{margin:.9rem 0 .45rem;font-size:1.85rem;font-weight:700;line-height:1.2;color:#022c22}
+      .chart-header p{margin:0;color:#4c5f5a;line-height:1.65}
+      .stats-kpi-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:.9rem;margin:1.25rem 0 1.15rem}
+      .kpi-card{display:flex;align-items:center;gap:.9rem;padding:.9rem 1rem;border:1px solid #dbe6e1;border-radius:.65rem;background:#fff}
+      .metric-ring{--ring-value:70;--ring-color:#0f766e;position:relative;display:inline-flex;align-items:center;justify-content:center;width:3.65rem;height:3.65rem;border-radius:999px;background:conic-gradient(var(--ring-color) calc(var(--ring-value) * 1%), #e5eeea 0)}
+      .metric-ring::after{content:"";position:absolute;inset:.45rem;border-radius:999px;background:#fff}
+      .metric-ring strong{position:relative;z-index:1;font-size:.74rem;line-height:1;color:#1a3f37}
+      .kpi-copy strong{display:block;margin-bottom:.15rem;font-size:1rem;color:#022c22;line-height:1.25}
+      .kpi-copy span{display:block;color:#5d6f6a;font-size:.84rem;line-height:1.45}
+      .chart-series{margin-top:.5rem}
+      .chart-item{padding:1rem 0;border-bottom:1px solid #deebe5}
+      .chart-label{display:flex;justify-content:space-between;gap:1rem;margin-bottom:.7rem;font-weight:600;line-height:1.45;color:#123a32}
+      .chart-label strong{color:#022c22;font-size:.95rem}
+      .chart-track{height:.78rem;width:100%;overflow:hidden;border-radius:999px;background:#e5eeea}
+      .chart-fill{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--fill-start,#0f766e),var(--fill-end,#34d399));transform-origin:left center;animation:bar-grow 1s ease both}
+      .chart-note{padding-top:.95rem;color:#4b625c;font-size:.9rem;line-height:1.6}
+      .trend-card{margin-top:1.35rem;padding:1rem;border:1px solid #dce7e2;border-radius:.65rem;background:#f9fcfa}
+      .trend-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:.5rem}
+      .trend-head strong{font-size:1rem;color:#022c22}
+      .trend-head span{font-size:.82rem;color:#5f726d}
+      .trend-svg{width:100%;height:120px}
+      .trend-grid{stroke:#d8e5df;stroke-width:1}
+      .trend-line{fill:none;stroke:#0f766e;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+      .trend-area{fill:url(#trendGradient)}
+      .trend-dot{fill:#0f766e;stroke:#fff;stroke-width:2}
+      .priority-panel{padding:1.85rem 1.95rem;border-radius:.75rem;background:linear-gradient(175deg,#022c22 0%,#0a4b3d 100%);color:#fff;box-shadow:0 16px 32px rgba(2,44,34,.2)}
+      .priority-panel h3{margin-bottom:.75rem;font-size:1.65rem;font-weight:700;line-height:1.2}
+      .priority-panel p{margin-bottom:1.15rem;color:rgba(255,255,255,.82);line-height:1.65}
+      .priority-panel ul{margin-bottom:1.15rem}
+      .priority-panel li{margin-bottom:.8rem;color:rgba(255,255,255,.9);line-height:1.55}
+      .priority-chip-wrap{display:flex;flex-wrap:wrap;gap:.55rem}
+      .priority-chip{display:inline-flex;padding:.38rem .7rem;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);font-size:.78rem;font-weight:600;color:#e9fff6}
+      .story-shell{position:relative;overflow:hidden;background:radial-gradient(circle at 15% 0%,#f2f8f4 0%,#eef5f1 34%,#f7fbf9 100%)}
+      .story-shell::before{content:"";position:absolute;left:-9rem;top:-8rem;width:20rem;height:20rem;border-radius:999px;background:radial-gradient(circle at center,rgba(10,37,30,.14) 0%,rgba(10,37,30,0) 72%);pointer-events:none}
+      .story-shell::after{content:"";position:absolute;right:-9rem;bottom:-10rem;width:21rem;height:21rem;border-radius:999px;background:radial-gradient(circle at center,rgba(177,130,65,.2) 0%,rgba(177,130,65,0) 72%);pointer-events:none}
+      .story-shell .container{position:relative;z-index:1}
+      .story-intro{position:relative;max-width:68rem;margin:0 auto 1.25rem;padding:1.7rem 1.2rem 1.5rem;border:1px solid #d8e4df;border-radius:1rem;background:linear-gradient(165deg,#ffffff 0%,#f3f8f5 100%);box-shadow:0 20px 42px rgba(2,44,34,.09);text-align:center;overflow:hidden}
+      .story-intro::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:11rem;height:.22rem;border-radius:999px;background:linear-gradient(90deg,#8f6a3b 0%,#0f766e 100%)}
+      .story-eyebrow{display:inline-flex;align-items:center;gap:.42rem;margin-bottom:.52rem;padding:.3rem .66rem;border-radius:999px;border:1px solid #cfddd7;background:#f2f7f4;color:#173a31;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+      .story-eyebrow i{display:inline-flex;width:.38rem;height:.38rem;border-radius:999px;background:linear-gradient(180deg,#c49a62 0%,#8f6a3b 100%)}
+      .story-intro h2{margin:0 0 .42rem;font-family:"Cormorant Garamond",serif;font-size:clamp(2.15rem,5vw,4rem);line-height:1;color:#12211c}
+      .story-script{font-family:"Cormorant Garamond",serif;font-style:italic;color:#8f6a3b}
+      .story-intro p{max-width:43rem;margin:0 auto .9rem;color:#586863;line-height:1.72}
+      .story-actions{display:flex;align-items:center;justify-content:center;gap:.56rem;flex-wrap:wrap}
+      .story-cta{display:inline-flex;align-items:center;justify-content:center;padding:.64rem 1.08rem;border-radius:999px;background:#111916;color:#fff;font-size:.8rem;font-weight:700;box-shadow:0 10px 18px rgba(0,0,0,.16);transition:all .25s ease}
+      .story-cta:hover{background:#0f766e;transform:translateY(-2px)}
+      .story-ghost{display:inline-flex;align-items:center;justify-content:center;padding:.6rem 1rem;border-radius:999px;border:1px solid #cad9d2;background:rgba(255,255,255,.8);color:#1b3a32;font-size:.78rem;font-weight:700;transition:all .25s ease}
+      .story-ghost:hover{border-color:#8f6a3b;color:#8f6a3b;background:#fff}
+      .story-stage{position:relative;max-width:64rem;margin:0 auto}
+      .story-slider-shell{overflow:hidden;border-radius:1rem;padding:.28rem;border:1px solid #d4e2dc;background:linear-gradient(145deg,#f8fcfa 0%,#eaf3ef 100%);box-shadow:0 22px 42px rgba(2,44,34,.11)}
+      .story-surface{overflow:hidden;border-radius:.8rem;background:#fff}
+      .story-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1);will-change:transform}
+      .story-slide{min-width:100%;padding:.72rem}
+      .story-card{display:grid;grid-template-columns:1fr;gap:.78rem;align-items:stretch}
+      .story-media{position:relative;overflow:hidden;border-radius:.72rem;min-height:clamp(10.5rem,28vw,15rem);background:#dbe7e2}
+      .story-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1),filter .3s ease;filter:saturate(1.08) contrast(1.02)}
+      .story-media:hover img{transform:scale(1.06);filter:saturate(1.16) contrast(1.06)}
+      .story-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,44,34,.08) 12%,rgba(2,44,34,.58) 100%)}
+      .story-content{display:flex;flex-direction:column;justify-content:center;padding:.34rem .4rem .12rem}
+      .story-tag{display:inline-flex;align-self:flex-start;margin-bottom:.42rem;padding:.27rem .56rem;border-radius:999px;background:#eef6f1;color:#0f766e;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+      .story-content h3{margin:0 0 .32rem;font-family:"Cormorant Garamond",serif;font-size:1.72rem;line-height:1.05;color:#153229;font-weight:600}
+      .story-content p{margin:0;color:#5a6a65;font-size:.86rem;line-height:1.62}
+      .story-image-hint{display:inline-flex;align-self:flex-start;margin-top:.52rem;padding:.23rem .48rem;border-radius:.38rem;background:#f3f8f6;border:1px solid #d8e5e0;color:#4e625c;font-size:.68rem}
+      .story-nav{display:flex;align-items:center;justify-content:center;gap:.58rem;margin-top:.82rem}
+      .story-nav-btn{display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;border-radius:999px;border:1px solid #cadcd4;background:#fff;color:#0f766e;transition:all .24s ease}
+      .story-nav-btn:hover{background:#0f766e;border-color:#0f766e;color:#fff;transform:translateY(-1px)}
+      .story-dots{display:flex;align-items:center;gap:.36rem}
+      .story-dot{width:.48rem;height:.48rem;border:none;border-radius:999px;background:#bcd5cb;transition:all .24s ease}
+      .story-dot.is-active{width:1.15rem;background:#0f766e}
+      .story-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.44rem;margin-top:.68rem}
+      .story-thumb{display:flex;align-items:center;gap:.42rem;padding:.34rem .44rem;border-radius:.64rem;border:1px solid #d3e1dc;background:#fff;color:#24433b;transition:all .24s ease}
+      .story-thumb:hover{border-color:#9ecab8;transform:translateY(-1px)}
+      .story-thumb.is-active{border-color:#0f766e;box-shadow:0 8px 16px rgba(15,118,110,.14)}
+      .story-thumb img{width:2.6rem;height:1.95rem;object-fit:cover;border-radius:.34rem;flex:0 0 auto}
+      .story-thumb strong{font-size:.69rem;line-height:1.35;font-weight:700;text-align:left}
+      .news-shell{background:linear-gradient(135deg,#f0f9f7 0%,#f3faf8 100%)}
+      .news-grid-shell{display:grid;grid-template-columns:1fr;gap:1.5rem}
+      .news-card-item{display:flex;flex-direction:column;height:100%;border:1px solid #d6e8e5;border-radius:.85rem;background:#fff;overflow:hidden;box-shadow:0 12px 28px rgba(2,44,34,.08);transition:all .35s cubic-bezier(.4,0,.2,1)}
+      .news-card-item:hover{border-color:#bef264;box-shadow:0 24px 48px rgba(2,44,34,.15);transform:translateY(-6px)}
+      .news-card-media{position:relative;width:100%;height:15rem;overflow:hidden;background:#e5eeea}
+      .news-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+      .news-card-item:hover .news-card-media img{transform:scale(1.08)}
+      .news-badge{position:absolute;top:.85rem;left:.85rem;display:inline-flex;padding:.45rem .75rem;border-radius:.5rem;background:#022c22;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.04em;z-index:2}
+      .news-card-body{display:flex;flex:1 1 auto;flex-direction:column;padding:1.5rem}
+      .news-meta-bar{display:flex;align-items:center;gap:.5rem;margin-bottom:.85rem;font-size:.78rem;color:#5f6f6a}
+      .news-meta-item{display:flex;align-items:center;gap:.35rem}
+      .news-meta-dot{width:.3rem;height:.3rem;border-radius:999px;background:#bef264}
+      .news-card-title{margin:0 0 .75rem;font-size:1.25rem;font-weight:700;line-height:1.3;color:#022c22;transition:color .3s ease}
+      .news-card-item:hover .news-card-title{color:#0f766e}
+      .news-card-desc{margin:0 0 1rem;color:#5f6f6a;font-size:.95rem;line-height:1.7;flex:1 1 auto}
+      .news-read-link{display:inline-flex;align-items:center;gap:.45rem;margin-top:auto;font-weight:700;color:#0f766e;font-size:.92rem;transition:all .3s ease}
+      .news-read-link:hover{color:#022c22;gap:.7rem}
+      .news-read-link svg{width:1.1rem;height:1.1rem;opacity:.7}
+      @keyframes bar-grow{from{transform:scaleX(.08)}to{transform:scaleX(1)}}
+      @media (max-width:767px){.leaflet-map-enhanced{height:560px;min-height:560px}.map-inset,.map-legend,.map-corner,.map-north{position:static;transform:none;width:auto;margin:1rem 1rem 0}.map-canvas-wrap{padding:1rem}.map-statusbar{padding:1rem}}
+      @media (max-width:639px){.story-thumb{justify-content:center;padding:.3rem .24rem}.story-thumb strong{display:none}.story-thumb img{width:100%;height:2.1rem}}
+      @media (min-width:640px){.story-intro{padding:1.95rem 1.8rem}.story-slide{padding:.9rem}}
+      @media (min-width:768px){.stats-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+      @media (min-width:768px){.story-card{grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:1rem}.story-content{padding:.34rem .2rem}.story-content h3{font-size:2rem}.story-media{min-height:clamp(11.8rem,23vw,16.5rem)}}
+      @media (min-width:768px){.news-grid-shell{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media (min-width:1024px){.map-layout{grid-template-columns:minmax(0,22rem) minmax(0,1fr)}}
+      @media (min-width:1024px){.stats-shell{grid-template-columns:minmax(0,1.65fr) minmax(0,.95fr)}}
+      @media (min-width:1024px){.story-stage{max-width:66rem}.story-media{min-height:clamp(12.5rem,20vw,17rem)}}
+      @media (min-width:1024px){.news-grid-shell{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    </style>
+  </head>
+  <body class="antialiased bg-body text-body font-body">
+    <div>
+      <section class="relative bg-teal-900 overflow-hidden" x-data="{ mobileNavOpen: false }"><img class="absolute top-0 left-0 w-full h-full object-cover opacity-70" src="img-new/Background-Header.jpg" alt="Hutan Sumatera Utara"/>
+        <div class="absolute top-0 left-0 w-full h-full bg-teal-900 opacity-60"></div>
+        <nav class="relative py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="hidden sm:block text-white font-bold text-lg">Green Justice Indonesia | Hutan Sumut</span></a>
+              <ul class="hidden lg:flex items-center">
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="index.html">Home</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="peta.html">Peta</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="berita.html">Berita</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-white hover:text-lime-500 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+              <div class="flex items-center justify-end"><a class="hidden md:inline-flex py-2.5 px-4 items-center justify-center text-sm font-medium text-white hover:text-teal-900 border border-white hover:bg-white rounded-lg transition duration-200" href="#peta">Buka Dashboard</a>
+                <button class="lg:hidden text-white hover:text-lime-500 ml-4" x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Buka navigasi">Menu</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="relative pt-24 pb-28 lg:pt-36 lg:pb-48">
+          <div class="container mx-auto px-4">
+            <div class="max-w-5xl"><span class="inline-block py-2 px-4 mb-8 bg-lime-500 text-teal-900 font-bold rounded-lg">Dashboard Hutan Sumatera Utara</span>
+              <h1 class="font-heading text-5xl sm:text-6xl lg:text-8xl text-white mb-8">Data hutan yang lebih mudah dibaca, dipantau, dan ditindaklanjuti.</h1>
+              <p class="max-w-3xl text-lg lg:text-xl text-white opacity-90 mb-10">Platform visualisasi spasial untuk membantu pemantauan kawasan hutan, perubahan tutupan lahan, restorasi, dan isu lingkungan strategis di Sumatera Utara.</p>
+              <div class="flex flex-wrap"><a class="inline-flex py-4 px-6 mr-4 mb-4 items-center justify-center text-lg font-medium text-teal-900 border border-lime-500 hover:border-white bg-lime-500 hover:bg-white rounded-lg transition duration-200" href="#peta">Jelajahi Peta</a><a class="inline-flex py-4 px-6 mb-4 items-center justify-center text-lg font-medium text-white border border-white hover:text-teal-900 hover:bg-white rounded-lg transition duration-200" href="#berita">Lihat Berita</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-full xs:w-5/6 xs:max-w-md z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}">
+          <div class="fixed inset-0 bg-teal-900 opacity-40" x-on:click="mobileNavOpen = !mobileNavOpen"></div>
+          <nav class="relative flex flex-col py-7 px-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="text-teal-900 font-bold">Hutan Sumut</span></a>
+              <button x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Tutup navigasi">Tutup</button>
+            </div>
+            <div class="pt-16 pb-12 mb-auto">
+              <ul class="flex-col">
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="index.html">Home</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#peta" x-on:click="mobileNavOpen = false">Peta</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#grafik" x-on:click="mobileNavOpen = false">Statistik</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#berita" x-on:click="mobileNavOpen = false">Berita</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+            </div><a class="inline-flex py-3 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 bg-lime-500 rounded-lg" href="#peta" x-on:click="mobileNavOpen = false">Buka Dashboard</a>
+          </nav>
+        </div>
+      </section>
+      <section class="py-12 lg:py-20">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="stat-card">
+              <h2>52</h2>
+              <p>Kasus illegal wildlife trade yang telah terdokumentasi.</p>
+            </div>
+            <div class="stat-card">
+              <h2>20,5+ Ha</h2>
+              <p>Luas kehilangan tutupan hutan yang terpantau.</p>
+            </div>
+            <div class="stat-card">
+              <h2>150,6+ Ha</h2>
+              <p>Area restorasi hutan dalam proses pemantauan.</p>
+            </div>
+            <div class="stat-card">
+              <h2>15%</h2>
+              <p>Indikasi perubahan tutupan hutan pada area prioritas.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="p-4 bg-white" id="peta">
+        <div class="py-16 lg:py-24 px-5 xs:px-8 xl:px-12 bg-lime-500 rounded-lg">
+          <div class="container mx-auto px-4">
+            <div class="flex flex-wrap mb-4 items-center"><span class="region-tag">Sumatera Utara</span><span class="region-tag">Aceh</span><span class="region-tag">Ekosistem Leuser</span><span class="region-tag">SM Rawa Singkil</span></div>
+            <div class="border-t border-teal-900 border-opacity-25 pt-12">
+              <div class="flex flex-wrap -mx-4 items-end mb-12">
+                <div class="w-full lg:w-7/12 px-4 mb-6 lg:mb-0">
+                  <h2 class="font-heading text-4xl sm:text-6xl mb-6">Peta Kawasan Hutan</h2>
+                  <p class="text-lg max-w-3xl">Peta difokuskan ke lanskap Singkil, Bengkung, dan Trumon untuk memberi tampilan yang lebih kuat, rapi, dan relevan dengan kebutuhan pemantauan lapangan.</p>
+                </div>
+                <div class="w-full lg:w-5/12 px-4 lg:text-right"><a class="inline-flex py-3 px-5 items-center justify-center font-medium text-white bg-teal-900 hover:bg-teal-800 rounded-lg transition duration-200" href="peta.html">Buka Peta Interaktif</a></div>
+              </div>
+              <div class="map-layout mb-12">
+                <div class="map-aside"><span class="map-eyebrow">Fokus Lanskap</span>
+                  <h3>Wilayah Singkil, Bengkung, Trumon</h3>
+                  <p>Tampilan peta dirapikan agar terasa seperti layout peta kerja: ada konteks kawasan, fokus visual yang jelas, dan legenda yang mudah dibaca saat analisis cepat.</p>
+                  <div class="map-metrics">
+                    <div class="map-metric"><strong>SBT</strong><span>Lanskap fokus pemantauan</span></div>
+                    <div class="map-metric"><strong>3</strong><span>Zona perhatian utama</span></div>
+                    <div class="map-metric"><strong>2</strong><span>Titik referensi lapangan</span></div>
+                    <div class="map-metric"><strong>1</strong><span>Wilayah fokus indikatif</span></div>
+                  </div>
+                  <div class="map-tags"><span class="map-tag">Singkil</span><span class="map-tag">Bengkung</span><span class="map-tag">Trumon</span><span class="map-tag">Safeguard</span></div>
+                </div>
+                <div class="map-stage">
+                  <div class="map-stage-bar">
+                    <div class="map-stage-title"><strong>Peta Fokus Safeguard SBT</strong><span>Leaflet interaktif dengan basemap, area fokus, dan titik referensi utama.</span></div>
+                    <div class="map-toolbar">
+                      <button id="toggle-basemap" type="button">Basemap</button>
+                      <button id="toggle-legend" type="button">Legenda</button>
+                      <button id="toggle-coords" type="button">Koordinat</button>
+                    </div>
+                  </div>
+                  <div class="map-canvas-wrap">
+                    <div id="sbt-map" class="leaflet-map leaflet-map-enhanced"></div>
+                    <div class="map-floating map-inset">
+                      <h4>Indeks Lokasi</h4>
+                      <p>Lanskap kerja berada di koridor Singkil, Bengkung, dan Trumon pada transisi Aceh - Sumatera Utara.</p>
+                      <div class="map-inset-grid">
+                        <div class="map-inset-chip"><strong>Utara</strong><span>Trumon</span></div>
+                        <div class="map-inset-chip"><strong>Tengah</strong><span>Bengkung</span></div>
+                        <div class="map-inset-chip"><strong>Selatan</strong><span>Singkil</span></div>
+                        <div class="map-inset-chip"><strong>Sistem</strong><span>WGS 84</span></div>
+                      </div>
+                    </div>
+                    <div class="map-floating map-legend" id="map-legend-box">
+                      <h4>Legenda Ringkas</h4>
+                      <div class="legend-item"><span class="legend-swatch" style="background:#022c22"></span><span>Batas fokus SBT</span></div>
+                      <div class="legend-item"><span class="legend-swatch" style="background:#bef264"></span><span>Wilayah prioritas pantau</span></div>
+                      <div class="legend-item"><span class="legend-swatch" style="background:#0f766e"></span><span>Titik referensi lapangan</span></div>
+                      <div class="legend-item"><span class="legend-swatch" style="background:#94a3b8"></span><span>Garis referensi koordinat</span></div>
+                    </div>
+                    <div class="map-floating map-corner">
+                      <h4>Catatan Peta</h4>
+                      <p>Layout peta ini disusun agar terasa seperti lembar kerja GIS. Data batas masih indikatif dan siap diganti langsung saat SHP atau GeoJSON final tersedia.</p>
+                    </div>
+                    <div class="map-floating map-north" aria-hidden="true"><strong>N</strong><span></span></div>
+                  </div>
+                  <div class="map-statusbar" id="map-statusbar">
+                    <span><strong>Fokus:</strong> Safeguard SBT</span>
+                    <span><strong>Datum:</strong> WGS 84</span>
+                    <span id="map-coords">Arahkan kursor ke peta untuk melihat koordinat.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="info-card">
+                  <h3>Peta Kawasan Hutan Sumut</h3>
+                  <p>Menampilkan batas kawasan, area berhutan, serta titik pemantauan yang perlu diperiksa secara berkala.</p><a href="#!">Lihat layer</a>
+                </div>
+                <div class="info-card">
+                  <h3>Peta Kehilangan Tutupan Hutan</h3>
+                  <p>Meringkas perubahan tutupan hutan untuk membantu membaca risiko dan menentukan prioritas lapangan.</p><a href="#grafik">Lihat grafik</a>
+                </div>
+                <div class="info-card">
+                  <h3>Peta Restorasi</h3>
+                  <p>Memetakan area pemulihan sebagai dasar evaluasi ekologis, sosial, dan perkembangan kegiatan restorasi.</p><a href="#!">Telusuri area</a>
+                </div>
+                <div class="info-card">
+                  <h3>Database Lapangan</h3>
+                  <p>Menghimpun catatan spasial, dokumentasi visual, dan indikator penting untuk pengembangan basis data.</p><a href="contact.html">Hubungi tim</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 lg:py-24" id="grafik">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mb-14"><span class="inline-block mb-4 text-sm font-bold text-teal-700">Statistik</span>
+            <h2 class="font-heading text-4xl sm:text-6xl mb-6">Grafik yang lebih hidup untuk membaca arah perubahan lanskap.</h2>
+            <p class="text-lg text-gray-700">Visual diperbarui agar indikator cepat dipahami: ring capaian, bar komparasi, dan tren bulanan dalam satu panel.</p>
+          </div>
+          <div class="stats-shell">
+            <div class="chart-panel">
+              <div class="chart-header"><span>Snapshot 2026</span>
+                <h3>Indikator Kawasan Hutan Sumut</h3>
+                <p>Panel ini menyorot kesehatan tutupan hutan, progres restorasi, dan tekanan kehilangan hutan dalam format yang lebih visual.</p>
+              </div>
+              <div class="stats-kpi-grid">
+                <div class="kpi-card">
+                  <div class="metric-ring" style="--ring-value:84;--ring-color:#0f766e"><strong>84%</strong></div>
+                  <div class="kpi-copy"><strong>Tutupan Hutan</strong><span>Kondisi area prioritas</span></div>
+                </div>
+                <div class="kpi-card">
+                  <div class="metric-ring" style="--ring-value:68;--ring-color:#65a30d"><strong>68%</strong></div>
+                  <div class="kpi-copy"><strong>Restorasi Aktif</strong><span>150,6 Ha terpantau</span></div>
+                </div>
+                <div class="kpi-card">
+                  <div class="metric-ring" style="--ring-value:24;--ring-color:#0ea5a4"><strong>24%</strong></div>
+                  <div class="kpi-copy"><strong>Tekanan Hilang</strong><span>20,5 Ha terdampak</span></div>
+                </div>
+              </div>
+              <div class="chart-series">
+                <div class="chart-item">
+                  <div class="chart-label"><span>Sisa tutupan hutan</span><strong>84%</strong></div>
+                  <div class="chart-track"><span class="chart-fill" style="width:84%;--fill-start:#0f766e;--fill-end:#34d399"></span></div>
+                </div>
+                <div class="chart-item">
+                  <div class="chart-label"><span>Area restorasi terpantau</span><strong>150,6 Ha</strong></div>
+                  <div class="chart-track"><span class="chart-fill" style="width:68%;--fill-start:#65a30d;--fill-end:#bef264"></span></div>
+                </div>
+                <div class="chart-item">
+                  <div class="chart-label"><span>Kehilangan tutupan hutan</span><strong>20,5 Ha</strong></div>
+                  <div class="chart-track"><span class="chart-fill" style="width:24%;--fill-start:#0ea5a4;--fill-end:#67e8f9"></span></div>
+                </div>
+              </div>
+              <div class="trend-card">
+                <div class="trend-head"><strong>Tren Laporan Lapangan (Jan - Jun)</strong><span>naik 12% dari semester lalu</span></div>
+                <svg class="trend-svg" viewBox="0 0 520 140" aria-label="Grafik tren laporan lapangan">
+                  <defs>
+                    <linearGradient id="trendGradient" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.3"></stop>
+                      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <line class="trend-grid" x1="0" y1="116" x2="520" y2="116"></line>
+                  <line class="trend-grid" x1="0" y1="78" x2="520" y2="78"></line>
+                  <line class="trend-grid" x1="0" y1="40" x2="520" y2="40"></line>
+                  <path class="trend-area" d="M20,98 L106,88 L192,94 L278,70 L364,62 L500,30 L500,126 L20,126 Z"></path>
+                  <polyline class="trend-line" points="20,98 106,88 192,94 278,70 364,62 500,30"></polyline>
+                  <circle class="trend-dot" cx="20" cy="98" r="5"></circle>
+                  <circle class="trend-dot" cx="106" cy="88" r="5"></circle>
+                  <circle class="trend-dot" cx="192" cy="94" r="5"></circle>
+                  <circle class="trend-dot" cx="278" cy="70" r="5"></circle>
+                  <circle class="trend-dot" cx="364" cy="62" r="5"></circle>
+                  <circle class="trend-dot" cx="500" cy="30" r="5"></circle>
+                </svg>
+              </div>
+              <div class="chart-note">Semakin panjang bar menunjukkan bobot indikator yang lebih besar. Ring persentase memberi pembacaan cepat untuk kondisi terkini.</div>
+            </div>
+            <div class="priority-panel">
+              <h3>Prioritas data</h3>
+              <p>Fokus pembaruan statistik diarahkan untuk keputusan cepat: deteksi kehilangan, validasi restorasi, dan tindak lanjut lapangan.</p>
+              <ul>
+                <li>Perubahan tutupan hutan tahunan</li>
+                <li>Luas restorasi dan pemulihan</li>
+                <li>Sebaran kasus perdagangan satwa</li>
+                <li>Risiko konflik ruang dan ekologi</li>
+              </ul>
+              <div class="priority-chip-wrap"><span class="priority-chip">Monitoring</span><span class="priority-chip">Restorasi</span><span class="priority-chip">Safeguard</span><span class="priority-chip">Early Warning</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 lg:py-24 story-shell" x-data="{ active: 0, total: 3, timer: null, next(){ this.active = (this.active + 1) % this.total }, prev(){ this.active = this.active > 0 ? this.active - 1 : this.total - 1 }, go(i){ this.active = i } }" x-init="timer = setInterval(() => next(), 5000)" x-on:mouseenter="clearInterval(timer)" x-on:mouseleave="timer = setInterval(() => next(), 5000)">
+        <div class="container mx-auto px-4">
+          <div class="story-intro">
+            <span class="story-eyebrow"><i></i>Luxury Gallery</span>
+            <h2>Ruang hidup, hutan, dan <span class="story-script">narasi visual</span> yang elegan.</h2>
+            <p>Galeri ini dirancang seperti showcase premium: komposisi bersih, transisi halus, dan ukuran foto proporsional agar nyaman dilihat di semua ukuran layar.</p>
+            <div class="story-actions"><a class="story-cta" href="#berita">Lihat Koleksi</a></div>
+          </div>
+          <div class="story-stage">
+            <div class="story-slider-shell">
+              <div class="story-track" :style="'transform: translateX(-' + (active * 100) + '%)'">
+                <div class="story-slide">
+                  <article class="story-card">
+                    <div class="story-media"><img src="img-new/hutan-hujan-tropis-sumatera-2_169.jpeg" alt="Jejak Lanskap Sumatera Utara"/></div>
+                    <div class="story-content"><span class="story-tag">Featured</span>
+                      <h3>Jejak Lanskap Sumatera Utara</h3>
+                      <p>Topografi hijau menjadi pembacaan awal tentang tekanan kawasan dan ruang pemulihan yang harus dijaga lintas generasi.</p><span class="story-image-hint">Ganti foto: featured-lanskap.jpg</span>
+                    </div>
+                  </article>
+                </div>
+                <div class="story-slide">
+                  <article class="story-card">
+                    <div class="story-media"><img src="img-new/kazuend-19SC2oaVZW0-unsplash (1).jpg" alt="Kanopi dan ketahanan ekosistem"/></div>
+                    <div class="story-content"><span class="story-tag">Canopy</span>
+                      <h3>Kanopi dan Ketahanan Ekosistem</h3>
+                      <p>Kerapatan vegetasi berperan menjaga suhu mikro, siklus air, dan daya lenting ekosistem di wilayah prioritas konservasi.</p><span class="story-image-hint">Ganti foto: canopy-detail.jpg</span>
+                    </div>
+                  </article>
+                </div>
+                <div class="story-slide">
+                  <article class="story-card">
+                    <div class="story-media"><img src="img-new/Background-Header.jpg" alt="Koridor hijau dari udara"/></div>
+                    <div class="story-content"><span class="story-tag">Aerial</span>
+                      <h3>Koridor Hijau dari Udara</h3>
+                      <p>Pandangan udara memperjelas konektivitas lanskap sehingga strategi perlindungan bisa lebih tepat sasaran dan terukur.</p><span class="story-image-hint">Ganti foto: aerial-corridor.jpg</span>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="story-nav">
+              <button class="story-nav-btn" x-on:click="prev()" aria-label="Slide sebelumnya"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+              <div class="story-dots">
+                <template x-for="dot in total" :key="dot"><button :class="active === (dot - 1) ? 'story-dot is-active' : 'story-dot'" x-on:click="go(dot - 1)" :aria-label="'Buka slide ' + dot"></button></template>
+              </div>
+              <button class="story-nav-btn" x-on:click="next()" aria-label="Slide berikutnya"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 lg:py-24 news-shell" id="berita">
+        <div class="container mx-auto px-4">
+          <div class="max-w-5xl mx-auto mb-16 text-center">
+            <span class="inline-block mb-4 text-sm font-bold text-teal-700">Berita Terkini</span>
+            <h2 class="font-heading text-4xl sm:text-6xl mb-8">Kabar terbaru dari kerja advokasi dan pemantauan.</h2>
+            <p class="text-lg text-gray-700 mb-8">Liputan terkini tentang isu hutan, restorasi, dan advokasi lingkungan dari Green Justice Indonesia.</p>
+            <a class="inline-flex py-3 px-6 items-center justify-center font-medium text-white bg-teal-900 hover:bg-lime-500 hover:text-teal-900 rounded-lg transition duration-200" href="berita.html">Baca Semua Berita →</a>
+          </div>
+          <div class="news-grid-shell max-w-6xl mx-auto">
+            <article class="news-card-item">
+              <div class="news-card-media">
+                <img src="img-new/news/Desain tanpa judul (24).png" alt="Pusat Adat Simardangiang"/>
+                <span class="news-badge">Advokasi</span>
+              </div>
+              <div class="news-card-body">
+                <div class="news-meta-bar">
+                  <span class="news-meta-item">22 April 2026</span>
+                  <span class="news-meta-dot"></span>
+                  <span class="news-meta-item">Baca 8 menit</span>
+                </div>
+                <h3 class="news-card-title">Pusat Adat Simardangiang sebagai simbol kedaulatan ruang hidup.</h3>
+                <p class="news-card-desc">Bangunan adat ini bukan hanya simbol budaya, tetapi pernyataan publik mengenai hak masyarakat untuk menentukan arah hidupnya sendiri.</p>
+                <a href="berita.html" class="news-read-link">Baca selengkapnya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+              </div>
+            </article>
+            <article class="news-card-item">
+              <div class="news-card-media">
+                <img src="img-new/news/Desain tanpa judul (25).png" alt="Data spasial hutan"/>
+                <span class="news-badge">Data & Peta</span>
+              </div>
+              <div class="news-card-body">
+                <div class="news-meta-bar">
+                  <span class="news-meta-item">18 April 2026</span>
+                  <span class="news-meta-dot"></span>
+                  <span class="news-meta-item">Baca 6 menit</span>
+                </div>
+                <h3 class="news-card-title">Data spasial membantu masyarakat membaca perubahan lanskap.</h3>
+                <p class="news-card-desc">Visualisasi peta interaktif dan grafik statistik memberikan gambaran jelas tentang perubahan hutan dan risiko ekologis.</p>
+                <a href="berita.html" class="news-read-link">Baca selengkapnya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+              </div>
+            </article>
+            <article class="news-card-item">
+              <div class="news-card-media">
+                <img src="img-new/news/Desain tanpa judul (26).png" alt="Restorasi hutan"/>
+                <span class="news-badge">Restorasi</span>
+              </div>
+              <div class="news-card-body">
+                <div class="news-meta-bar">
+                  <span class="news-meta-item">15 April 2026</span>
+                  <span class="news-meta-dot"></span>
+                  <span class="news-meta-item">Baca 10 menit</span>
+                </div>
+                <h3 class="news-card-title">Restorasi hutan membutuhkan kolaborasi lintas pihak.</h3>
+                <p class="news-card-desc">Catatan lapangan, peta, dan kerja sama masyarakat, pemerintah, dan LSM menjadi fondasi kesuksesan pemulihan ekosistem.</p>
+                <a href="berita.html" class="news-read-link">Baca selengkapnya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="relative py-10 lg:py-16 bg-orange-50 overflow-hidden"><img class="absolute bottom-0 left-0" src="fauna-assets/footer/waves-lines-left-bottom.png" alt=""/>
+        <div class="container px-4 mx-auto relative">
+          <div class="flex flex-wrap mb-10 -mx-4">
+            <div class="w-full lg:w-2/12 xl:w-2/12 px-10 mb-10 lg:mb-0"><a class="inline-block mb-4" href="index.html"><img class="h-32 w-auto" src="img-new/Green Justice Indonesia  Hutan Sumut.svg" alt="Green Justice Indonesia Hutan Sumut"/></a></div>
+            <div class="w-full md:w-7/12 lg:w-6/12 px-4 mb-10 lg:mb-0">
+              <div class="flex flex-wrap -mx-4">
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Sarana</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#peta">Peta</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#grafik">Data Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#!">Database</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Pustaka</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="blog.html">Berita</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#berita">Foto &amp; Video</a></li>
+                  </ul>
+                </div>
+                <div class="w-full xs:w-1/3 px-4">
+                  <h3 class="mb-6 font-bold">Profil</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="about.html">About</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#!">Misi</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="contact.html">Kontak</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-5/12 lg:w-4/12 px-4">
+              <div class="footer-insight mx-auto md:mr-0">
+                <h5>Insight Kehutanan &amp; Geospasial Berkelanjutan</h5>
+                <p>Tetap terdepan dengan update terbaru tentang analisis lanskap, teknologi GIS, dan inovasi pengelolaan lingkungan.</p>
+                <div class="flex flex-col">
+                  <input class="placeholder-gray-700 ring-offset-0 focus:ring-2 focus:ring-lime-500 shadow" type="email" placeholder="E-Mail Kamu...."/><a class="inline-flex py-1 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 hover:border-white bg-lime-500 hover:bg-white transition duration-200" href="contact.html">Mulai Kolaborasi</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap -mb-3 justify-between">
+            <div class="flex items-center mb-3"><a class="inline-block mr-4 text-black hover:text-lime-500" href="#!" aria-label="Facebook">
+                <svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.548 20V10.878H14.609L15.068 7.321H11.548V5.051C11.548 4.022 11.833 3.321 13.31 3.321L15.192 3.32V.139C14.867.097 13.75 0 12.45 0C9.735 0 7.876 1.657 7.876 4.699V7.321H4.806V10.878H7.876V20H11.548Z" fill="currentColor"></path>
+                </svg></a><a class="inline-block mr-4 text-black hover:text-lime-500" href="https://www.instagram.com/greenjustice_id?igsh=NXQ3cDgwM2QwamJl" aria-label="Instagram">
+                <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 17.738 21.389 19.214 20.301 20.301C19.214 21.389 17.738 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 6.262 2.611 4.786 3.699 3.699C4.786 2.611 6.262 2 7.8 2ZM7.6 4C6.645 4 5.73 4.379 5.054 5.054C4.379 5.73 4 6.645 4 7.6V16.4C4 18.39 5.61 20 7.6 20H16.4C17.355 20 18.27 19.621 18.946 18.946C19.621 18.27 20 17.355 20 16.4V7.6C20 5.61 18.39 4 16.4 4H7.6ZM17.25 5.5C17.582 5.5 17.899 5.632 18.134 5.866C18.368 6.101 18.5 6.418 18.5 6.75C18.5 7.082 18.368 7.399 18.134 7.634C17.899 7.868 17.582 8 17.25 8C16.918 8 16.601 7.868 16.366 7.634C16.132 7.399 16 7.082 16 6.75C16 6.418 16.132 6.101 16.366 5.866C16.601 5.632 16.918 5.5 17.25 5.5ZM12 7C13.326 7 14.598 7.527 15.536 8.464C16.473 9.402 17 10.674 17 12C17 13.326 16.473 14.598 15.536 15.536C14.598 16.473 13.326 17 12 17C10.674 17 9.402 16.473 8.464 15.536C7.527 14.598 7 13.326 7 12C7 10.674 7.527 9.402 8.464 8.464C9.402 7.527 10.674 7 12 7ZM12 9C11.204 9 10.441 9.316 9.879 9.879C9.316 10.441 9 11.204 9 12C9 12.796 9.316 13.559 9.879 14.121C10.441 14.684 11.204 15 12 15C12.796 15 13.559 14.684 14.121 14.121C14.684 13.559 15 12.796 15 12C15 11.204 14.684 10.441 14.121 9.879C13.559 9.316 12.796 9 12 9Z" fill="currentColor"></path>
+                </svg></a></div>
+            <div class="text-center">Created by <a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#!" target="_blank">GJI | Green Justice Indonesia</a><span> &bull; Distributed by </span><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#!" target="_blank">GJI | Green Justice Indonesia</a></div>
+            <p class="text-sm text-gray-500 mb-3">&copy; 2026 GJI - Green Justice Indonesia. All rights reserved.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+      var mapElement = document.getElementById('sbt-map');
+        if (!mapElement || typeof L === 'undefined') return;
+        var coordsDisplay = document.getElementById('map-coords');
+        var legendBox = document.getElementById('map-legend-box');
+        var statusBar = document.getElementById('map-statusbar');
+        var basemapButton = document.getElementById('toggle-basemap');
+        var legendButton = document.getElementById('toggle-legend');
+        var coordsButton = document.getElementById('toggle-coords');
+
+        var sbtBounds = [
+          [2.28, 97.08],
+          [3.18, 97.98]
+        ];
+
+      var map = L.map('sbt-map', {
+          scrollWheelZoom: false
+        }).fitBounds(sbtBounds, { padding: [30, 30] });
+        map.attributionControl.setPrefix(false);
+
+        var lightLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          maxZoom: 18,
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        }).addTo(map);
+
+        var imageryLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          maxZoom: 18,
+          attribution: 'Tiles &copy; Esri'
+        });
+
+        var focusPolygon = L.polygon([
+          [2.96, 97.14],
+          [3.08, 97.41],
+          [3.03, 97.78],
+          [2.74, 97.93],
+          [2.46, 97.83],
+          [2.34, 97.56],
+          [2.42, 97.19],
+          [2.66, 97.06]
+        ], {
+          color: '#022C22',
+          weight: 2.5,
+          dashArray: '10 6',
+          fillColor: '#BEF264',
+          fillOpacity: 0.32
+        }).addTo(map).bindPopup('<strong>Wilayah Fokus SBT</strong><br/>Batas indikatif Singkil, Bengkung, Trumon.');
+
+        var fieldPoints = L.layerGroup([
+          L.circleMarker([2.33, 97.79], {
+            radius: 7,
+            color: '#0f766e',
+            weight: 2,
+            fillColor: '#14b8a6',
+            fillOpacity: 0.95
+          }).bindPopup('<strong>Singkil</strong><br/>Titik referensi pesisir dan pemantauan safeguard.'),
+          L.circleMarker([2.87, 97.58], {
+            radius: 7,
+            color: '#0f766e',
+            weight: 2,
+            fillColor: '#14b8a6',
+            fillOpacity: 0.95
+          }).bindPopup('<strong>Bengkung</strong><br/>Titik fokus bentang alam.'),
+          L.circleMarker([3.05, 97.42], {
+            radius: 7,
+            color: '#0f766e',
+            weight: 2,
+            fillColor: '#14b8a6',
+            fillOpacity: 0.95
+          }).bindPopup('<strong>Trumon</strong><br/>Titik referensi koridor pemantauan.')
+        ]).addTo(map);
+
+        var corridorLine = L.polyline([
+          [2.33, 97.79],
+          [2.87, 97.58],
+          [3.05, 97.42]
+        ], {
+          color: '#134e4a',
+          weight: 3,
+          opacity: 0.85,
+          dashArray: '8 6'
+        }).addTo(map);
+
+        var gridLines = L.layerGroup([
+          L.polyline([[2.50, 97.08], [2.50, 97.98]], { color: '#94a3b8', weight: 1, opacity: 0.7, dashArray: '4 8' }),
+          L.polyline([[2.80, 97.08], [2.80, 97.98]], { color: '#94a3b8', weight: 1, opacity: 0.7, dashArray: '4 8' }),
+          L.polyline([[2.28, 97.30], [3.18, 97.30]], { color: '#94a3b8', weight: 1, opacity: 0.7, dashArray: '4 8' }),
+          L.polyline([[2.28, 97.65], [3.18, 97.65]], { color: '#94a3b8', weight: 1, opacity: 0.7, dashArray: '4 8' })
+        ]).addTo(map);
+
+        var labelLayer = L.layerGroup([
+          L.marker([2.36, 97.81], {
+            icon: L.divIcon({ className: 'map-text-label', html: '<span>Singkil</span>' })
+          }),
+          L.marker([2.90, 97.60], {
+            icon: L.divIcon({ className: 'map-text-label', html: '<span>Bengkung</span>' })
+          }),
+          L.marker([3.07, 97.44], {
+            icon: L.divIcon({ className: 'map-text-label', html: '<span>Trumon</span>' })
+          }),
+          L.marker([3.10, 97.31], {
+            icon: L.divIcon({ className: 'map-text-label', html: '<span>2.80 LU</span>' })
+          }),
+          L.marker([2.52, 97.67], {
+            icon: L.divIcon({ className: 'map-text-label', html: '<span>97.65 BT</span>' })
+          })
+        ]).addTo(map);
+
+        L.control.scale({
+          position: 'bottomleft',
+          imperial: false
+        }).addTo(map);
+
+        L.control.layers(
+          {
+            'Basemap Terang': lightLayer,
+            'Citra Satelit': imageryLayer
+          },
+          {
+            'Wilayah Fokus SBT': focusPolygon,
+            'Titik Referensi': fieldPoints,
+            'Koridor Pemantauan': corridorLine,
+            'Garis Koordinat': gridLines,
+            'Label Lokasi': labelLayer
+          },
+          {
+            collapsed: false,
+            position: 'bottomright'
+          }
+        ).addTo(map);
+
+        map.on('mousemove', function (event) {
+          if (!coordsDisplay) return;
+          coordsDisplay.textContent = 'Koordinat: ' + event.latlng.lat.toFixed(4) + ' LU, ' + event.latlng.lng.toFixed(4) + ' BT';
+        });
+
+        map.on('mouseout', function () {
+          if (!coordsDisplay) return;
+          coordsDisplay.textContent = 'Arahkan kursor ke peta untuk melihat koordinat.';
+        });
+
+        if (basemapButton) {
+          basemapButton.addEventListener('click', function () {
+            if (map.hasLayer(lightLayer)) {
+              map.removeLayer(lightLayer);
+              imageryLayer.addTo(map);
+            } else {
+              map.removeLayer(imageryLayer);
+              lightLayer.addTo(map);
+            }
+          });
+        }
+
+        if (legendButton && legendBox) {
+          legendButton.addEventListener('click', function () {
+            legendBox.style.display = legendBox.style.display === 'none' ? 'block' : 'none';
+          });
+        }
+
+        if (coordsButton && statusBar) {
+          coordsButton.addEventListener('click', function () {
+            statusBar.style.display = statusBar.style.display === 'none' ? 'flex' : 'none';
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

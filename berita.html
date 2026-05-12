@@ -1,0 +1,366 @@
+
+<html lang="id">
+  <head>
+    <title>Berita | Hutan Sumut | Green Justice Indonesia</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Halaman berita Hutan Sumut dari Green Justice Indonesia: liputan advokasi, tata ruang, transisi energi, dan perlindungan bentang alam di Sumatera Utara."/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link rel="icon" type="image/png" href="img-new/Logo-GJI.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+    <style>
+      :root{--ink:#0f2d27;--ink-soft:#27453f;--lime:#b8ef42;--mist:#f3f7f4;--sand:#f6efe5;--line:#dbe5df;--card:#ffffff;--shadow:0 22px 60px rgba(8,34,28,.12)}
+      body{background:#f7faf8;color:#16332d;line-height:1.68}
+      .news-shell{position:relative;overflow:hidden}
+      .news-shell::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top left, rgba(184,239,66,.15), transparent 34%),radial-gradient(circle at bottom right, rgba(15,45,39,.08), transparent 28%);pointer-events:none}
+      .hero-overlay{background:linear-gradient(135deg, rgba(8,34,28,.90), rgba(8,34,28,.68) 55%, rgba(8,34,28,.42))}
+      .glass-card{display:flex;flex-direction:column;justify-content:flex-start;min-height:11.75rem;padding:1.15rem 1.25rem 1.25rem;backdrop-filter:blur(18px);background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:1.4rem}
+      .glass-card h2{max-width:19ch;line-height:1.42;margin-bottom:1rem}
+      .glass-card p{max-width:40ch;line-height:1.95}
+      .hero-cards{display:grid;grid-template-columns:1fr;row-gap:2.75rem;column-gap:2rem;max-width:58rem;margin:0}
+      .section-kicker{display:inline-flex;align-items:center;gap:.75rem;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4f6b65}
+      .section-kicker::before{content:"";width:2.5rem;height:2px;background:#9dcc38}
+      .headline-card{background:#fff;border:1px solid var(--line);border-radius:1.5rem;box-shadow:var(--shadow);overflow:hidden}
+      .headline-media{position:relative;height:100%;min-height:22rem}
+      .headline-media img{width:100%;height:100%;object-fit:cover}
+      .story-chip{display:inline-flex;padding:.45rem .8rem;border-radius:999px;background:#edf6d7;color:#476123;font-size:.8rem;font-weight:700}
+      .story-meta{display:flex;flex-wrap:wrap;gap:1rem;color:#5b726c;font-size:.92rem}
+      .story-meta span{display:inline-flex;align-items:center;gap:.55rem}
+      .story-meta span::before{content:"";width:.42rem;height:.42rem;border-radius:999px;background:#b8ef42}
+      .news-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:2rem}
+      .news-card{display:flex;flex-direction:column;height:100%;background:#fff;border:1px solid var(--line);border-radius:1.25rem;overflow:hidden;box-shadow:0 18px 40px rgba(8,34,28,.08)}
+      .news-card img{width:100%;height:15rem;object-fit:cover}
+      .news-card-body{display:flex;flex:1 1 auto;flex-direction:column;padding:1.8rem}
+      .news-card-body h3{max-width:18ch;line-height:1.34}
+      .news-card-body p{max-width:35ch;color:#5c726c;line-height:1.82}
+      .feature-stack{display:grid;gap:1.35rem}
+      .feature-item{display:grid;grid-template-columns:190px minmax(0,1fr);gap:1.45rem;align-items:center;padding:1.35rem;background:#fff;border:1px solid var(--line);border-radius:1.1rem;transition:transform .2s ease,box-shadow .2s ease}
+      .feature-item:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(8,34,28,.09)}
+      .feature-item img{width:190px;height:190px;object-fit:cover;border-radius:1rem}
+      .feature-item h3{max-width:22ch;line-height:1.34}
+      .feature-item p{max-width:34ch}
+      .insight-panel{background:linear-gradient(180deg, #123a32, #0d2924);color:#fff;border-radius:1.5rem;padding:2.2rem;box-shadow:var(--shadow)}
+      .insight-panel li{margin-bottom:1rem;color:rgba(255,255,255,.82);line-height:1.7}
+      .photo-ribbon{display:grid;grid-template-columns:1.15fr .85fr .85fr;gap:1.25rem}
+      .photo-ribbon img{width:100%;height:100%;min-height:14rem;object-fit:cover;border-radius:1.25rem}
+      .topic-tabs{display:flex;flex-wrap:wrap;gap:.75rem}
+      .topic-button{padding:.85rem 1rem;border:1px solid var(--line);border-radius:999px;background:#fff;color:#22423b;font-weight:600;transition:all .2s ease}
+      .topic-button.active,.topic-button:hover{background:#123a32;color:#fff;border-color:#123a32}
+      .editorial-quote{position:relative;padding:2.35rem;background:linear-gradient(135deg,#eff7dd,#ffffff);border:1px solid #dfe9d5;border-radius:1.5rem}
+      .editorial-quote::before{content:"\201C";position:absolute;top:1rem;left:1.1rem;font-size:4rem;line-height:1;color:#b8ef42;font-weight:700}
+      .newsletter-card{background:#fff;border:1px solid var(--line);border-radius:1.5rem;box-shadow:var(--shadow)}
+      .bg-sand-50{background:var(--sand)}
+      [x-cloak]{display:none!important}
+      .footer-insight{max-width:25rem;padding:1.75rem;background:#022c22;border-radius:.75rem}
+      .footer-insight h5{margin-bottom:.85rem;color:#fff;font-size:1.1rem;font-weight:600;line-height:1.35}
+      .footer-insight p{margin-bottom:1.25rem;color:rgba(255,255,255,.82);font-size:.95rem;line-height:1.65}
+      .footer-insight input{height:3rem;width:100%;padding:0 1rem;border-radius:.5rem;background:#fff;outline:none}
+      .footer-insight a{height:3rem;margin-top:.75rem;border-radius:.5rem}
+      @media (min-width:768px){
+        .news-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      }
+      @media (min-width:1024px){
+        .headline-card{grid-template-columns:1.06fr .94fr}
+        .news-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+        .hero-cards{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:2.25rem;column-gap:2rem;max-width:50rem}
+        .glass-card{min-height:14.5rem}
+      }
+      @media (max-width:1023px){
+        .photo-ribbon{grid-template-columns:1fr}
+      }
+      @media (max-width:767px){
+        .glass-card{min-height:auto;padding:1.1rem 1.15rem 1.25rem}
+        .glass-card h2,.glass-card p,.news-card-body h3,.news-card-body p,.feature-item h3,.feature-item p{max-width:none}
+        .news-card-body{padding:1.45rem}
+        .feature-item{grid-template-columns:1fr}
+        .feature-item img{width:100%;height:16rem}
+      }
+    </style>
+  </head>
+  <body class="antialiased font-body" x-data="{ mobileNavOpen: false, activeTopic: 'advokasi' }">
+    <div class="news-shell">
+      <section class="relative overflow-hidden">
+        <img class="absolute inset-0 w-full h-full object-cover" src="img-new/Background-Header.jpg" alt="Kanopi hutan Sumatera Utara"/>
+        <div class="absolute inset-0 hero-overlay"></div>
+        <nav class="relative py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between gap-6"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="hidden sm:block text-white font-bold text-lg">Green Justice Indonesia | Hutan Sumut</span></a>
+              <ul class="hidden lg:flex items-center">
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="index.html">Home</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="peta.html">Peta</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mr-8"><a class="inline-block text-lime-300 font-medium" href="berita.html">Berita</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-white hover:text-lime-400 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+              <div class="flex items-center justify-end"><a class="hidden md:inline-flex py-2.5 px-4 items-center justify-center text-sm font-medium text-white hover:text-teal-900 border border-white hover:bg-white rounded-lg transition duration-200" href="peta.html">Buka Dashboard</a>
+                <button class="lg:hidden text-white hover:text-lime-400 ml-4" x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Buka navigasi">Menu</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="relative container mx-auto px-4 pt-8 pb-16 lg:pt-16 lg:pb-24">
+          <div class="max-w-4xl mb-10"><span class="inline-flex py-2 px-4 mb-6 bg-lime-400 text-teal-950 font-bold rounded-full">Newsroom Hutan Sumut</span>
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">Berita, analisis, dan kisah lapangan dari bentang alam Sumatera Utara.</h1>
+            <p class="max-w-3xl text-lg lg:text-xl text-white opacity-90 leading-relaxed">Halaman ini merangkum isu tata ruang, transisi energi, hak masyarakat adat, dan perlindungan ekosistem dengan pendekatan visual yang lebih editorial dan mudah dibaca.</p>
+          </div>
+        </div>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-full xs:w-5/6 xs:max-w-md z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}">
+          <div class="fixed inset-0 bg-black opacity-40" x-on:click="mobileNavOpen = !mobileNavOpen"></div>
+          <nav class="relative flex flex-col py-7 px-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="text-teal-900 font-bold">Hutan Sumut</span></a>
+              <button x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Tutup navigasi">Tutup</button>
+            </div>
+            <div class="pt-16 pb-12 mb-auto">
+              <ul class="flex-col">
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="index.html">Home</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="peta.html">Peta</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 font-semibold" href="berita.html">Berita</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+            </div><a class="inline-flex py-3 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 bg-lime-400 rounded-lg" href="peta.html" x-on:click="mobileNavOpen = false">Buka Dashboard</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="py-12 lg:py-16">
+        <div class="container mx-auto px-4">
+          <div class="headline-card grid grid-cols-1 lg:grid-cols-2">
+            <div class="headline-media order-2 lg:order-1"><img src="img-new/news/Bukan-Sekadar-Hijau-Transisi-Energi-Sumut-Harus-Berkeadilan-dan-Lindungi-Masyarakat-850x504.jpeg" alt="Transisi energi Sumut harus berkeadilan"/></div>
+            <div class="order-1 lg:order-2 p-8 lg:p-12 flex flex-col justify-center max-w-2xl">
+              <span class="story-chip mb-5">Headline Utama</span>
+              <h2 class="text-4xl lg:text-5xl font-bold leading-tight mb-5">Bukan sekadar hijau: transisi energi Sumut harus berkeadilan dan melindungi masyarakat.</h2>
+              <p class="text-lg text-gray-700 leading-relaxed mb-6">Narasi transisi energi tidak bisa hanya berhenti di angka investasi dan target bauran. Halaman berita ini menempatkan kepentingan masyarakat, keselamatan ekologi, dan transparansi kebijakan sebagai inti dari percakapan publik.</p>
+              <div class="story-meta mb-8"><span>22 April 2026</span><span>Investigasi</span><span>Sumatera Utara</span></div>
+              <div class="flex flex-wrap gap-4"><a class="inline-flex py-3 px-6 items-center justify-center text-base font-semibold text-teal-950 bg-lime-400 hover:bg-lime-300 rounded-full transition duration-200" href="#terbaru">Baca Sorotan</a><a class="inline-flex py-3 px-6 items-center justify-center text-base font-semibold text-teal-900 border border-teal-900 hover:bg-teal-900 hover:text-white rounded-full transition duration-200" href="#topik">Lihat Topik</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-12 lg:pb-20" id="terbaru">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-wrap items-end justify-between mb-10 gap-6">
+            <div class="max-w-3xl">
+              <span class="section-kicker mb-4">Sorotan Terkini</span>
+              <h2 class="text-3xl lg:text-5xl font-bold leading-tight">Laporan, keputusan, dan percakapan yang sedang membentuk arah bentang alam.</h2>
+            </div>
+            <p class="max-w-2xl text-gray-700 leading-relaxed">Struktur halaman ini disusun seperti newsroom: satu headline besar, beberapa cerita pengarah, lalu lapisan berita yang bisa dibaca cepat atau didalami lebih jauh.</p>
+          </div>
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <article class="news-card xl:col-span-2">
+              <img src="img-new/news/Menakar-Masa-Depan-Batang-Toru-Koalisi-Lingkungan-dan-Pemprov-Sumut-Rembuk-Tata-Ruang-Baru-850x504.jpeg" alt="Masa depan Batang Toru"/>
+              <div class="news-card-body">
+                <span class="story-chip mb-4">Tata Ruang</span>
+                <h3 class="text-3xl font-semibold leading-tight mb-4">Menakar masa depan Batang Toru saat koalisi lingkungan dan Pemprov Sumut duduk satu meja.</h3>
+                <p class="mb-6">Dialog tata ruang baru untuk Batang Toru menandai fase penting: bukan hanya soal peta, tetapi soal siapa yang menentukan masa depan habitat dan siapa yang menanggung risikonya.</p>
+                <div class="story-meta mt-auto"><span>Analisis</span><span>Batang Toru</span><span>Kebijakan</span></div>
+              </div>
+            </article>
+            <div class="feature-stack">
+              <article class="feature-item">
+                <img src="img-new/news/1.-Rio-Ardi-850x504.jpg" alt="Liputan lapangan Rio Ardi"/>
+                <div>
+                  <span class="story-chip mb-3">Lapangan</span>
+                  <h3 class="text-2xl font-semibold leading-snug mb-3">Suara dari lapangan: membongkar cerita yang sering hilang dari statistik resmi.</h3>
+                  <p class="text-gray-700 leading-relaxed">Berita yang berangkat dari lokasi, bukan sekadar meja rapat.</p>
+                </div>
+              </article>
+              <article class="feature-item">
+                <img src="img-new/news/Bappeda-Litbang-Sumut-Dokumen-R3P-Jadi-Panglima-Baru-Perencanaan-Ekosistem-Batang-Toru-850x504.jpeg" alt="Dokumen R3P Batang Toru"/>
+                <div>
+                  <span class="story-chip mb-3">Dokumen</span>
+                  <h3 class="text-2xl font-semibold leading-snug mb-3">R3P Batang Toru mulai diposisikan sebagai panglima baru perencanaan ekosistem.</h3>
+                  <p class="text-gray-700 leading-relaxed">Apa arti perubahan bahasa perencanaan ini untuk implementasi di lapangan.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-12 lg:py-16 bg-white" id="topik">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
+            <div class="max-w-3xl">
+              <span class="section-kicker mb-4">Topik Utama</span>
+              <h2 class="text-3xl lg:text-5xl font-bold leading-tight">Ruang baca yang dibagi berdasarkan isu, bukan sekadar urutan terbit.</h2>
+            </div>
+            <div class="topic-tabs">
+              <button class="topic-button" :class="{ 'active': activeTopic === 'advokasi' }" x-on:click="activeTopic = 'advokasi'">Advokasi</button>
+              <button class="topic-button" :class="{ 'active': activeTopic === 'energi' }" x-on:click="activeTopic = 'energi'">Transisi Energi</button>
+              <button class="topic-button" :class="{ 'active': activeTopic === 'tataruang' }" x-on:click="activeTopic = 'tataruang'">Tata Ruang</button>
+            </div>
+          </div>
+          <div x-show="activeTopic === 'advokasi'" class="news-grid">
+            <article class="news-card"><img src="img-new/news/Desain tanpa judul (24).png" alt="Visual advokasi ruang hidup"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Advokasi</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Pusat Adat Simardangiang dibaca sebagai pernyataan politik tentang kedaulatan ruang hidup.</h3>
+                <p class="mb-6">Bangunan ini bukan hanya simbol budaya, tetapi pernyataan publik mengenai hak masyarakat adat untuk terus menentukan arah hidupnya sendiri.</p>
+                <div class="story-meta mt-auto"><span>Masyarakat Adat</span><span>Tapanuli Utara</span></div>
+              </div>
+            </article>
+            <article class="news-card"><img src="img-new/news/Desain tanpa judul (25).png" alt="Visual advokasi hutan"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Advokasi</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Ketika cerita warga menjadi fondasi argumen ekologis yang lebih kuat.</h3>
+                <p class="mb-6">Liputan visual ini menempatkan kesaksian warga sebagai dokumen penting untuk menilai dampak pembangunan dan krisis iklim.</p>
+                <div class="story-meta mt-auto"><span>Hak Warga</span><span>Liputan Visual</span></div>
+              </div>
+            </article>
+            <article class="news-card"><img src="img-new/news/Desain tanpa judul (26).png" alt="Visual kolaborasi GJI"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Advokasi</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Kolaborasi advokasi membutuhkan data yang peka konteks, bukan sekadar peta yang indah.</h3>
+                <p class="mb-6">Pendekatan editorial baru ini memadukan visual, konteks kebijakan, dan bahan baca yang mudah dipakai ulang untuk kampanye publik.</p>
+                <div class="story-meta mt-auto"><span>Kolaborasi</span><span>Komunikasi Publik</span></div>
+              </div>
+            </article>
+          </div>
+          <div x-show="activeTopic === 'energi'" class="news-grid" x-cloak>
+            <article class="news-card"><img src="img-new/news/Bukan-Sekadar-Hijau-Transisi-Energi-Sumut-Harus-Berkeadilan-dan-Lindungi-Masyarakat-850x504.jpeg" alt="Transisi energi berkeadilan"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Energi</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Transisi energi perlu ukuran keberhasilan yang melampaui proyek dan investasi.</h3>
+                <p class="mb-6">Keadilan distribusi risiko, akses informasi, dan perlindungan wilayah hidup harus masuk sebagai indikator utama.</p>
+                <div class="story-meta mt-auto"><span>Transisi Energi</span><span>Keadilan Iklim</span></div>
+              </div>
+            </article>
+            <article class="news-card"><img src="img-new/news/1.-Rio-Ardi-850x504.jpg" alt="Cerita lapangan energi"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Energi</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Cerita dari lapangan menunjukkan bahwa istilah hijau bisa sangat berbeda artinya bagi warga.</h3>
+                <p class="mb-6">Berita tidak berhenti pada jargon. Ia harus menjelaskan siapa yang diuntungkan, siapa yang kehilangan, dan apa yang belum dijawab.</p>
+                <div class="story-meta mt-auto"><span>Lapangan</span><span>Warga Terdampak</span></div>
+              </div>
+            </article>
+            <article class="news-card"><img src="img-new/news/Desain tanpa judul (24).png" alt="Visual transisi energi"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Energi</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Desain newsroom baru membantu isu energi terasa lebih konkret dan dekat dengan pembaca.</h3>
+                <p class="mb-6">Asset visual dipakai sebagai jembatan masuk menuju isu kebijakan yang biasanya terasa berat dan berjarak.</p>
+                <div class="story-meta mt-auto"><span>Visual Story</span><span>Publikasi</span></div>
+              </div>
+            </article>
+          </div>
+          <div x-show="activeTopic === 'tataruang'" class="news-grid" x-cloak>
+            <article class="news-card"><img src="img-new/news/Menakar-Masa-Depan-Batang-Toru-Koalisi-Lingkungan-dan-Pemprov-Sumut-Rembuk-Tata-Ruang-Baru-850x504.jpeg" alt="Tata ruang Batang Toru"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Tata Ruang</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Rembuk tata ruang baru membuka peluang, tapi juga menuntut kewaspadaan publik yang lebih disiplin.</h3>
+                <p class="mb-6">Peta bisa mengubah nasib satu bentang alam. Karena itu setiap perubahan arah kebijakan perlu dibaca bersama data ekologis dan sosial.</p>
+                <div class="story-meta mt-auto"><span>Batang Toru</span><span>Perencanaan</span></div>
+              </div>
+            </article>
+            <article class="news-card"><img src="img-new/news/Bappeda-Litbang-Sumut-Dokumen-R3P-Jadi-Panglima-Baru-Perencanaan-Ekosistem-Batang-Toru-850x504.jpeg" alt="Dokumen R3P untuk Batang Toru"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Tata Ruang</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Ketika dokumen perencanaan berubah, bahasa kebijakan ikut menggeser prioritas lapangan.</h3>
+                <p class="mb-6">Halaman berita ini mengubah dokumen teknis menjadi bahan baca yang lebih jernih, terarah, dan tetap tajam secara substansi.</p>
+                <div class="story-meta mt-auto"><span>R3P</span><span>Governance</span></div>
+              </div>
+            </article>
+            <article class="news-card"><img src="img-new/news/Desain tanpa judul (26).png" alt="Visual tata ruang Sumut"/>
+              <div class="news-card-body"><span class="story-chip mb-4">Tata Ruang</span>
+                <h3 class="text-2xl font-semibold leading-snug mb-4">Newsroom yang baik tidak hanya mempublikasikan peta, tetapi menjelaskan taruhannya.</h3>
+                <p class="mb-6">Pembaca perlu tahu mengapa satu garis di peta bisa berarti keselamatan habitat, hak adat, dan masa depan ekonomi lokal.</p>
+                <div class="story-meta mt-auto"><span>Peta</span><span>Komunikasi Kebijakan</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-12 lg:py-16 bg-sand-50">
+        <div class="container mx-auto px-4">
+          <div class="photo-ribbon mb-10">
+            <img src="img-new/news/Desain tanpa judul (24).png" alt="Liputan visual pertama"/>
+            <img src="img-new/news/Desain tanpa judul (25).png" alt="Liputan visual kedua"/>
+            <img src="img-new/news/Desain tanpa judul (26).png" alt="Liputan visual ketiga"/>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+            <div class="insight-panel">
+              <span class="inline-flex mb-4 py-2 px-4 rounded-full bg-white bg-opacity-10 text-sm font-semibold text-lime-300">Catatan Redaksi</span>
+              <h2 class="text-3xl lg:text-4xl font-bold mb-5 leading-tight">Halaman berita ini dirancang untuk memberi ritme baca: cepat saat perlu, mendalam saat penting.</h2>
+              <ul>
+                <li>Headline besar dipakai untuk menonjolkan isu yang sedang menentukan arah percakapan publik.</li>
+                <li>Grid berita menjaga variasi ritme visual agar pembaca bisa memilih jalur baca sendiri.</li>
+                <li>Asset `news` dipakai secara maksimal agar halaman terasa hidup, dokumenter, dan tidak generik.</li>
+              </ul>
+            </div>
+            <div class="editorial-quote flex flex-col justify-center">
+              <p class="text-2xl lg:text-3xl font-semibold leading-relaxed text-teal-950 mb-6">Berita lingkungan yang baik bukan hanya mengabarkan peristiwa, tetapi membantu publik membaca relasi antara kebijakan, ruang hidup, dan masa depan ekologis.</p>
+              <div class="story-meta"><span>Green Justice Indonesia</span><span>Newsroom Hutan Sumut</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-12 lg:py-20">
+        <div class="container mx-auto px-4">
+          <div class="newsletter-card overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+              <div class="p-8 lg:p-12 bg-white">
+                <span class="section-kicker mb-4">Newsletter</span>
+                <h2 class="text-3xl lg:text-4xl font-bold leading-tight mb-5">Tetap dekat dengan isu yang bergerak cepat di Sumatera Utara.</h2>
+                <p class="text-gray-700 leading-relaxed mb-8">Dapatkan rangkuman berita, pembacaan isu, dan pembaruan kampanye dari Green Justice Indonesia untuk hutan, masyarakat adat, dan bentang alam prioritas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative py-10 lg:py-16 bg-orange-50 overflow-hidden"><img class="absolute bottom-0 left-0" src="fauna-assets/footer/waves-lines-left-bottom.png" alt=""/>
+        <div class="container px-4 mx-auto relative">
+          <div class="flex flex-wrap mb-10 -mx-4">
+            <div class="w-full lg:w-2/12 xl:w-2/12 px-10 mb-10 lg:mb-0"><a class="inline-block mb-4" href="index.html"><img class="h-32 w-auto" src="img-new/Green Justice Indonesia  Hutan Sumut.svg" alt="Green Justice Indonesia Hutan Sumut"/></a></div>
+            <div class="w-full md:w-7/12 lg:w-6/12 px-4 mb-10 lg:mb-0">
+              <div class="flex flex-wrap -mx-4">
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Sarana</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="peta.html">Peta</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="statistik.html">Data Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="contact.html">Database</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Pustaka</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="berita.html">Berita</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="about.html">Foto &amp; Video</a></li>
+                  </ul>
+                </div>
+                <div class="w-full xs:w-1/3 px-4">
+                  <h3 class="mb-6 font-bold">Profil</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="about.html">About</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="about.html">Misi</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="contact.html">Kontak</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-5/12 lg:w-4/12 px-4">
+              <div class="footer-insight mx-auto md:mr-0">
+                <h5>Insight Kehutanan &amp; Geospasial Berkelanjutan</h5>
+                <p>Tetap terdepan dengan update terbaru tentang analisis lanskap, teknologi GIS, dan inovasi pengelolaan lingkungan.</p>
+                <div class="flex flex-col">
+                  <input class="placeholder-gray-700 ring-offset-0 focus:ring-2 focus:ring-lime-500 shadow" type="email" placeholder="E-Mail Kamu...."/><a class="inline-flex py-1 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 hover:border-white bg-lime-500 hover:bg-white transition duration-200" href="contact.html">Mulai Kolaborasi</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap -mb-3 justify-between">
+            <div class="flex items-center mb-3"><a class="inline-block mr-4 text-black hover:text-lime-500" href="#" aria-label="Facebook">
+                <svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.548 20V10.878H14.609L15.068 7.321H11.548V5.051C11.548 4.022 11.833 3.321 13.31 3.321L15.192 3.32V.139C14.867.097 13.75 0 12.45 0C9.735 0 7.876 1.657 7.876 4.699V7.321H4.806V10.878H7.876V20H11.548Z" fill="currentColor"></path>
+                </svg></a><a class="inline-block mr-4 text-black hover:text-lime-500" href="https://www.instagram.com/greenjustice_id?igsh=NXQ3cDgwM2QwamJl" aria-label="Instagram">
+                <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 17.738 21.389 19.214 20.301 20.301C19.214 21.389 17.738 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 6.262 2.611 4.786 3.699 3.699C4.786 2.611 6.262 2 7.8 2ZM7.6 4C6.645 4 5.73 4.379 5.054 5.054C4.379 5.73 4 6.645 4 7.6V16.4C4 18.39 5.61 20 7.6 20H16.4C17.355 20 18.27 19.621 18.946 18.946C19.621 18.27 20 17.355 20 16.4V7.6C20 5.61 18.39 4 16.4 4H7.6ZM17.25 5.5C17.582 5.5 17.899 5.632 18.134 5.866C18.368 6.101 18.5 6.418 18.5 6.75C18.5 7.082 18.368 7.399 18.134 7.634C17.899 7.868 17.582 8 17.25 8C16.918 8 16.601 7.868 16.366 7.634C16.132 7.399 16 7.082 16 6.75C16 6.418 16.132 6.101 16.366 5.866C16.601 5.632 16.918 5.5 17.25 5.5ZM12 7C13.326 7 14.598 7.527 15.536 8.464C16.473 9.402 17 10.674 17 12C17 13.326 16.473 14.598 15.536 15.536C14.598 16.473 13.326 17 12 17C10.674 17 9.402 16.473 8.464 15.536C7.527 14.598 7 13.326 7 12C7 10.674 7.527 9.402 8.464 8.464C9.402 7.527 10.674 7 12 7ZM12 9C11.204 9 10.441 9.316 9.879 9.879C9.316 10.441 9 11.204 9 12C9 12.796 9.316 13.559 9.879 14.121C10.441 14.684 11.204 15 12 15C12.796 15 13.559 14.684 14.121 14.121C14.684 13.559 15 12.796 15 12C15 11.204 14.684 10.441 14.121 9.879C13.559 9.316 12.796 9 12 9Z" fill="currentColor"></path>
+                </svg></a></div>
+            <div class="text-center">Created by <a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#" target="_blank">GJI | Green Justice Indonesia</a><span> &bull; Distributed by </span><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#" target="_blank">GJI | Green Justice Indonesia</a></div>
+            <p class="text-sm text-gray-500 mb-3">&copy; 2026 GJI - Green Justice Indonesia. All rights reserved.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

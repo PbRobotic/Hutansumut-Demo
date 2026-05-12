@@ -1,0 +1,689 @@
+<html lang="id">
+  <head>
+    <title>Statistik Hutan Sumut | Green Justice Indonesia</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Halaman statistik Hutan Sumut yang menampilkan grafik dan ringkasan indikator penggundulan hutan, satwa prioritas, perdagangan satwa liar, dan restorasi hutan di Sumatera Utara."/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link rel="icon" type="image/png" href="img-new/Logo-GJI.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer="defer"></script>
+    <style>
+      :root{--ink:#0f2d27;--ink-soft:#27453f;--forest:#143c34;--forest-deep:#0a221e;--lime:#b8ef42;--lime-soft:#e8f7be;--sand:#f6efe5;--mist:#f4f8f5;--line:#d8e5df;--card:#ffffff;--alert:#d96c3f;--amber:#f2b941;--sky:#9ed8d2;--shadow:0 24px 70px rgba(9,34,28,.12)}
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;background:linear-gradient(180deg,#f8fbf8 0%,#eff6f2 100%);color:var(--ink);font-family:"Figtree",sans-serif;line-height:1.68}
+      a{text-decoration:none}
+      .stats-shell{position:relative;overflow:hidden}
+      .stats-shell::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top left, rgba(184,239,66,.16), transparent 28%),radial-gradient(circle at 85% 18%, rgba(20,60,52,.10), transparent 24%),radial-gradient(circle at bottom right, rgba(158,216,210,.16), transparent 28%);pointer-events:none}
+      .hero-layer{background:linear-gradient(125deg, rgba(8,30,25,.92), rgba(8,30,25,.80) 45%, rgba(12,52,44,.62) 100%)}
+      .section-kicker{display:inline-flex;align-items:center;gap:.75rem;font-size:.82rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#4e6f67}
+      .section-kicker::before{content:"";width:2.5rem;height:2px;background:var(--lime)}
+      .metric-strip{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1rem;margin-top:2rem}
+      .metric-card{position:relative;padding:1.4rem 1.5rem;border:1px solid rgba(255,255,255,.18);border-radius:1.35rem;background:rgba(255,255,255,.09);backdrop-filter:blur(18px);color:#fff;box-shadow:0 16px 32px rgba(0,0,0,.12)}
+      .metric-card::after{content:"";position:absolute;inset:auto 1.5rem 0 1.5rem;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--lime),rgba(255,255,255,.08))}
+      .metric-card strong{display:block;margin-top:.35rem;font-size:2rem;line-height:1.05}
+      .metric-card span{display:block;font-size:.92rem;color:rgba(255,255,255,.82)}
+      .hero-aside{padding:1.65rem;border:1px solid rgba(255,255,255,.16);border-radius:1.5rem;background:rgba(255,255,255,.10);backdrop-filter:blur(18px);color:#fff}
+      .hero-aside h3{margin:0 0 1rem;font-size:1.15rem;font-weight:700;line-height:1.35}
+      .hero-aside p{margin:0 0 1rem;color:rgba(255,255,255,.84)}
+      .hero-aside ul{margin:0;padding-left:1.1rem}
+      .hero-aside li{margin-bottom:.8rem;color:rgba(255,255,255,.88)}
+      .overview-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.25rem}
+      .overview-card{padding:1.6rem;border:1px solid var(--line);border-radius:1.35rem;background:var(--card);box-shadow:var(--shadow)}
+      .overview-card .label{display:block;margin-bottom:.6rem;color:#4c6961;font-size:.88rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+      .overview-card .value{display:block;margin-bottom:.65rem;font-size:2.6rem;font-weight:800;line-height:1;color:var(--forest)}
+      .overview-card .delta{display:inline-flex;padding:.35rem .7rem;border-radius:999px;background:var(--lime-soft);color:#476123;font-size:.82rem;font-weight:700}
+      .overview-card p{margin:1rem 0 0;color:#5e756e}
+      .story-band{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.5rem}
+      .story-panel{padding:1.75rem;border:1px solid var(--line);border-radius:1.5rem;background:linear-gradient(180deg,#ffffff,#f8fbf9);box-shadow:var(--shadow)}
+      .story-panel h3{margin:0 0 .8rem;font-size:1.5rem;line-height:1.3}
+      .story-panel p{margin:0;color:#55706a}
+      .story-image{min-height:18rem;border-radius:1.5rem;overflow:hidden;box-shadow:var(--shadow)}
+      .story-image img{width:100%;height:100%;object-fit:cover}
+      .charts-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.4rem}
+      .chart-card{display:flex;flex-direction:column;padding:1.5rem;border:1px solid var(--line);border-radius:1.5rem;background:#fff;box-shadow:var(--shadow)}
+      .chart-card h3{margin:0 0 .45rem;font-size:1.35rem;line-height:1.3}
+      .chart-card p{margin:0 0 1rem;color:#5c726c}
+      .chart-meta{display:flex;flex-wrap:wrap;gap:.65rem;margin-bottom:1rem}
+      .chart-chip{display:inline-flex;align-items:center;padding:.45rem .8rem;border-radius:999px;background:#edf5f0;color:#355149;font-size:.82rem;font-weight:700}
+      .chart-wrap{position:relative;min-height:18rem}
+      .insight-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.25rem}
+      .insight-card{padding:1.55rem;border-radius:1.4rem;background:linear-gradient(180deg,#10352f,#0a221e);color:#fff;box-shadow:var(--shadow)}
+      .insight-card h3{margin:0 0 .9rem;font-size:1.2rem;line-height:1.35}
+      .insight-card p{margin:0;color:rgba(255,255,255,.82)}
+      .insight-list{margin:1rem 0 0;padding:0;list-style:none}
+      .insight-list li{display:flex;gap:.75rem;margin-bottom:.85rem;color:rgba(255,255,255,.88)}
+      .insight-list li::before{content:"";flex:0 0 .55rem;height:.55rem;margin-top:.5rem;border-radius:999px;background:var(--lime)}
+      .species-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.2rem}
+      .species-card{display:flex;flex-direction:column;padding:1.45rem;border:1px solid var(--line);border-radius:1.4rem;background:rgba(255,255,255,.94);box-shadow:var(--shadow)}
+      .species-card header{display:flex;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+      .species-card h3{margin:0;font-size:1.2rem;line-height:1.3}
+      .species-card em{display:block;margin-top:.2rem;color:#6d837d;font-style:normal;font-size:.92rem}
+      .risk-pill{display:inline-flex;align-items:center;justify-content:center;padding:.4rem .8rem;border-radius:999px;font-size:.8rem;font-weight:800;white-space:nowrap}
+      .risk-high{background:rgba(217,108,63,.14);color:#a44922}
+      .risk-medium{background:rgba(242,185,65,.18);color:#8b6211}
+      .species-card ul{margin:0;padding-left:1rem;color:#566d66}
+      .species-card li{margin-bottom:.55rem}
+      .table-card{overflow:hidden;border:1px solid var(--line);border-radius:1.5rem;background:#fff;box-shadow:var(--shadow)}
+      .table-card table{width:100%;border-collapse:collapse}
+      .table-card th,.table-card td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid #e7efea;vertical-align:top}
+      .table-card th{background:#f3f8f4;color:#37524a;font-size:.84rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+      .table-card td{color:#435c55}
+      .mini-bar{height:.6rem;min-width:6rem;overflow:hidden;border-radius:999px;background:#eaf1ed}
+      .mini-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#123a32,var(--lime))}
+      .process-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:1.1rem}
+      .process-card{position:relative;padding:1.4rem 1.45rem 1.4rem 4.4rem;border:1px solid var(--line);border-radius:1.35rem;background:#fff;box-shadow:var(--shadow)}
+      .process-card b{position:absolute;top:1.35rem;left:1.3rem;display:flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;border-radius:.8rem;background:var(--forest);color:#fff;font-size:.95rem}
+      .process-card h3{margin:0 0 .5rem;font-size:1.05rem;line-height:1.35}
+      .process-card p{margin:0;color:#5a7069}
+      .method-card{padding:1.6rem;border:1px dashed #b9cec6;border-radius:1.4rem;background:rgba(255,255,255,.7)}
+      .method-card h3{margin:0 0 .9rem;font-size:1.15rem}
+      .method-card p,.method-card li{color:#556d66}
+      .method-card ul{margin:0;padding-left:1.1rem}
+      .footer-insight{max-width:25rem;padding:1.75rem;background:#022c22;border-radius:.75rem}
+      .footer-insight h5{margin-bottom:.85rem;color:#fff;font-size:1.1rem;font-weight:600;line-height:1.35}
+      .footer-insight p{margin-bottom:1.25rem;color:rgba(255,255,255,.82);font-size:.95rem;line-height:1.65}
+      .footer-insight input{height:3rem;width:100%;padding:0 1rem;border-radius:.5rem;background:#fff;outline:none}
+      .footer-insight a{display:inline-flex;height:3rem;margin-top:.75rem;border-radius:.5rem}
+      [x-cloak]{display:none!important}
+      @media (min-width:768px){
+        .metric-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .story-band{grid-template-columns:1.1fr .9fr}
+        .insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .species-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      }
+      @media (min-width:1024px){
+        .hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(22rem,.8fr);gap:2rem;align-items:end}
+        .metric-strip{grid-template-columns:repeat(4,minmax(0,1fr))}
+        .overview-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+        .charts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .species-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+        .process-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      }
+      @media (max-width:767px){
+        .table-card{overflow:auto}
+        .table-card table{min-width:42rem}
+      }
+    </style>
+  </head>
+  <body class="antialiased font-body" x-data="{ mobileNavOpen: false }">
+    <div class="stats-shell">
+      <section class="relative overflow-hidden">
+        <img class="absolute inset-0 w-full h-full object-cover" src="img-new/Background-Header.jpg" alt="Kanopi hutan Sumatera Utara"/>
+        <div class="absolute inset-0 hero-layer"></div>
+        <nav class="relative py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between gap-6"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="hidden sm:block text-white font-bold text-lg">Green Justice Indonesia | Hutan Sumut</span></a>
+              <ul class="hidden lg:flex items-center">
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="index.html">Home</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="peta.html">Peta</a></li>
+                <li class="mr-8"><a class="inline-block text-lime-300 font-medium" href="statistik.html">Statistik</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="berita.html">Berita</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-400 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-white hover:text-lime-400 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+              <div class="flex items-center justify-end"><a class="hidden md:inline-flex py-2.5 px-4 items-center justify-center text-sm font-medium text-white hover:text-teal-900 border border-white hover:bg-white rounded-lg transition duration-200" href="#dashboard">Baca Dashboard</a>
+                <button class="lg:hidden text-white hover:text-lime-400 ml-4" x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Buka navigasi">Menu</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="relative container mx-auto px-4 pt-8 pb-16 lg:pt-16 lg:pb-24">
+          <div class="hero-grid">
+            <div>
+              <span class="inline-flex py-2 px-4 mb-6 bg-lime-400 text-teal-950 font-bold rounded-full">Statistik Hutan Sumatera Utara</span>
+              <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">Satu halaman untuk membaca tekanan hutan, satwa, perdagangan liar, dan pemulihan lanskap.</h1>
+              <p class="max-w-3xl text-lg lg:text-xl text-white opacity-90 leading-relaxed">Dashboard ini merangkum indikator yang paling penting untuk advokasi: arah penggundulan hutan, kondisi satwa kunci, titik rawan wildlife trade, serta kemajuan restorasi. Disusun agar mudah dibaca cepat, tapi tetap cukup kuat untuk mendukung narasi kebijakan.</p>
+              <div class="metric-strip">
+                <article class="metric-card">
+                  <span>Tekanan deforestasi tahunan</span>
+                  <strong>17,6 ribu ha</strong>
+                  <span>Turun dari puncak tahun sebelumnya, tetapi masih tinggi di lanskap prioritas.</span>
+                </article>
+                <article class="metric-card">
+                  <span>Satwa kunci dipantau</span>
+                  <strong>6 spesies</strong>
+                  <span>Harimau, gajah, orangutan, siamang, beruang madu, dan rangkong.</span>
+                </article>
+                <article class="metric-card">
+                  <span>Kasus wildlife trade</span>
+                  <strong>41 kasus</strong>
+                  <span>Pola dominan bergeser ke kanal digital dan pergerakan antar-kota.</span>
+                </article>
+                <article class="metric-card">
+                  <span>Area restorasi aktif</span>
+                  <strong>920 ha</strong>
+                  <span>Campuran rehabilitasi riparian, koridor satwa, dan pengayaan tutupan.</span>
+                </article>
+              </div>
+            </div>
+            <aside class="hero-aside mt-10 lg:mt-0">
+              <h3>Apa yang paling penting dibaca di halaman ini?</h3>
+              <p>Empat grafik utama di bawah disusun untuk menjawab empat pertanyaan lapangan yang paling sering muncul.</p>
+              <ul>
+                <li>Apakah penggundulan hutan membaik atau bergeser ke kantong baru?</li>
+                <li>Satwa mana yang tekanannya paling tinggi dan mengapa?</li>
+                <li>Perdagangan satwa liar paling banyak bergerak lewat jalur apa?</li>
+                <li>Apakah restorasi hanya menambah luasan, atau juga memperkuat konektivitas habitat?</li>
+              </ul>
+              <p class="mt-4 text-sm opacity-75">Catatan: angka di halaman ini disajikan sebagai indikator pemantauan editorial untuk demo dashboard. Angka final publikasi resmi sebaiknya disinkronkan dengan basis data lapangan dan laporan verifikasi terbaru.</p>
+            </aside>
+          </div>
+        </div>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-full xs:w-5/6 xs:max-w-md z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}" x-cloak>
+          <div class="fixed inset-0 bg-teal-900 opacity-40" x-on:click="mobileNavOpen = false"></div>
+          <nav class="relative flex flex-col py-7 px-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="text-teal-900 font-bold">Hutan Sumut</span></a>
+              <button x-on:click="mobileNavOpen = false" aria-label="Tutup navigasi">Tutup</button>
+            </div>
+            <div class="pt-16 pb-12 mb-auto">
+              <ul class="flex-col">
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="index.html">Home</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="peta.html">Peta</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#dashboard" x-on:click="mobileNavOpen = false">Statistik</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="berita.html">Berita</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+            </div>
+            <a class="inline-flex py-3 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 bg-lime-500 rounded-lg" href="#dashboard" x-on:click="mobileNavOpen = false">Lihat Statistik</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="py-14 lg:py-20" id="dashboard">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Ringkasan Cepat</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Empat angka yang langsung memberi arah pembacaan.</h2>
+            <p class="max-w-3xl text-lg text-gray-700">Bagian ini berfungsi seperti briefing singkat. Sebelum masuk ke grafik detail, pembaca bisa lebih dulu melihat besar tekanan, urgensi satwa, intensitas perdagangan, dan skala pemulihan yang sedang berjalan.</p>
+          </div>
+          <div class="overview-grid">
+            <article class="overview-card">
+              <span class="label">Penggundulan Hutan</span>
+              <span class="value">31%</span>
+              <span class="delta">Hotspot utama: Batang Toru dan penyangga Leuser</span>
+              <p>Porsi kehilangan tutupan hutan paling besar masih terkonsentrasi pada lanskap dengan tekanan infrastruktur, kebun, dan pembukaan akses.</p>
+            </article>
+            <article class="overview-card">
+              <span class="label">Satwa Kritis</span>
+              <span class="value">3</span>
+              <span class="delta">Harimau, gajah, orangutan</span>
+              <p>Tiga spesies ini memerlukan respon paling cepat karena bertumpu pada habitat besar yang kini semakin terfragmentasi.</p>
+            </article>
+            <article class="overview-card">
+              <span class="label">Kasus Perdagangan</span>
+              <span class="value">58%</span>
+              <span class="delta">Diduga berawal dari kanal digital</span>
+              <p>Pergerakan jaringan makin banyak berawal dari media sosial, pesan instan, dan perantara kecil di kota-kota transit.</p>
+            </article>
+            <article class="overview-card">
+              <span class="label">Kemajuan Restorasi</span>
+              <span class="value">74%</span>
+              <span class="delta">Dari target tanam dan pemeliharaan tahunan</span>
+              <p>Kinerja lapangan relatif baik, tetapi efektivitas ekologis tetap ditentukan oleh survival rate dan konektivitas habitat.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-4 lg:py-8">
+        <div class="container mx-auto px-4">
+          <div class="story-band">
+            <div class="story-panel">
+              <span class="section-kicker mb-4">Pembacaan Utama</span>
+              <h3>Tren membaik di satu sisi belum tentu berarti tekanan berkurang secara keseluruhan.</h3>
+              <p>Dalam kerja advokasi, yang penting bukan hanya total kehilangan hutan atau total restorasi. Yang lebih menentukan adalah pergeseran lokasi, kedekatan dengan koridor satwa, serta apakah intervensi lapangan benar-benar mengurangi kerentanan jangka panjang.</p>
+            </div>
+            <div class="story-image"><img src="img-new/hutan-hujan-tropis-sumatera-2_169.jpeg" alt="Lanskap hutan hujan tropis Sumatera"/></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Grafik Utama</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Empat grafik untuk membaca situasi secara utuh.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">Grafik dipilih untuk menjawab kebutuhan pengambilan keputusan: tren tahunan, tekanan per spesies, kanal perdagangan, dan performa restorasi. Di bawah grafik, ada interpretasi singkat agar pembaca tidak hanya melihat angka, tetapi juga memahami konsekuensinya.</p>
+          </div>
+          <div class="charts-grid">
+            <article class="chart-card">
+              <div class="chart-meta"><span class="chart-chip">Deforestasi</span><span class="chart-chip">2019-2024</span></div>
+              <h3>Arah penggundulan hutan tahunan</h3>
+              <p>Menunjukkan perubahan luasan tekanan deforestasi per tahun dalam ribu hektare.</p>
+              <div class="chart-wrap"><canvas id="forestLossChart"></canvas></div>
+            </article>
+            <article class="chart-card">
+              <div class="chart-meta"><span class="chart-chip">Satwa</span><span class="chart-chip">Tekanan habitat</span></div>
+              <h3>Satwa kunci dengan tekanan tertinggi</h3>
+              <p>Skor menggabungkan fragmentasi habitat, konflik, dan potensi perburuan pada lanskap prioritas.</p>
+              <div class="chart-wrap"><canvas id="speciesPressureChart"></canvas></div>
+            </article>
+            <article class="chart-card">
+              <div class="chart-meta"><span class="chart-chip">Wildlife Trade</span><span class="chart-chip">Rantai distribusi</span></div>
+              <h3>Moda perdagangan satwa liar yang paling sering muncul</h3>
+              <p>Persentase kasus indikatif berdasarkan jalur pergerakan dan pola transaksi yang terpantau.</p>
+              <div class="chart-wrap"><canvas id="tradeRouteChart"></canvas></div>
+            </article>
+            <article class="chart-card">
+              <div class="chart-meta"><span class="chart-chip">Restorasi</span><span class="chart-chip">Target vs realisasi</span></div>
+              <h3>Kemajuan restorasi hutan per kuartal</h3>
+              <p>Membandingkan target intervensi dengan capaian lapangan untuk penanaman, pemeliharaan, dan koridor habitat.</p>
+              <div class="chart-wrap"><canvas id="restorationChart"></canvas></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-4 lg:py-8">
+        <div class="container mx-auto px-4">
+          <div class="insight-grid">
+            <article class="insight-card">
+              <h3>Yang terbaca dari tren deforestasi</h3>
+              <p>Penurunan di tahun terakhir belum aman jika hotspot tetap berada dekat koridor satwa dan area tangkapan air. Fokus advokasi sebaiknya bergeser dari sekadar luasan total ke lokasi tekanan yang paling menentukan fungsi ekologis.</p>
+              <ul class="insight-list">
+                <li>Perlu pembacaan per lanskap, bukan hanya angka provinsi.</li>
+                <li>Kawasan penyangga sering jadi titik pergeseran tekanan baru.</li>
+                <li>Tekanan akses jalan sering menjadi sinyal awal perubahan cepat.</li>
+              </ul>
+            </article>
+            <article class="insight-card">
+              <h3>Yang terbaca dari satwa, perdagangan, dan restorasi</h3>
+              <p>Ketika tekanan habitat tinggi dan kanal perdagangan makin luwes, restorasi tidak cukup diukur dari jumlah bibit atau hektare tertanam. Kinerja sesungguhnya terlihat dari pulihnya konektivitas dan turunnya risiko interaksi negatif dengan manusia.</p>
+              <ul class="insight-list">
+                <li>Koridor habitat harus dibaca bersama data konflik satwa-manusia.</li>
+                <li>Pengawasan digital penting karena transaksi makin tersebar dan kecil-kecil.</li>
+                <li>Monitoring pasca-tanam wajib masuk indikator inti restorasi.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Satwa Prioritas</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Spesies yang perlu dibaca bersama kondisi lanskapnya.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">Kondisi satwa tidak berdiri sendiri. Tekanan pada setiap spesies mencerminkan kualitas bentang alam, keberadaan koridor, tingkat perburuan, dan stabilitas wilayah jelajah.</p>
+          </div>
+          <div class="species-grid">
+            <article class="species-card">
+              <header>
+                <div>
+                  <h3>Harimau Sumatra</h3>
+                  <em>Panthera tigris sumatrae</em>
+                </div>
+                <span class="risk-pill risk-high">Risiko Tinggi</span>
+              </header>
+              <ul>
+                <li>Tekanan terbesar berasal dari fragmentasi habitat dan perburuan oportunistik.</li>
+                <li>Konektivitas antar patch hutan menjadi isu kritis di penyangga Leuser.</li>
+                <li>Indikator prioritas: jejak konflik, kamera trap, dan integritas koridor.</li>
+              </ul>
+            </article>
+            <article class="species-card">
+              <header>
+                <div>
+                  <h3>Gajah Sumatra</h3>
+                  <em>Elephas maximus sumatranus</em>
+                </div>
+                <span class="risk-pill risk-high">Risiko Tinggi</span>
+              </header>
+              <ul>
+                <li>Konflik ruang dengan kebun dan permukiman makin sering muncul di tepi habitat.</li>
+                <li>Koridor gerak membutuhkan perlindungan lintas administrasi.</li>
+                <li>Indikator prioritas: pola lintasan kawanan dan titik konflik berulang.</li>
+              </ul>
+            </article>
+            <article class="species-card">
+              <header>
+                <div>
+                  <h3>Orangutan Sumatra</h3>
+                  <em>Pongo abelii</em>
+                </div>
+                <span class="risk-pill risk-high">Risiko Tinggi</span>
+              </header>
+              <ul>
+                <li>Sangat sensitif terhadap pecahnya kanopi dan gangguan di lanskap hutan primer.</li>
+                <li>Habitat riparian dan blok hutan utuh menjadi penyangga utama.</li>
+                <li>Indikator prioritas: kualitas tutupan kanopi dan titik isolasi subpopulasi.</li>
+              </ul>
+            </article>
+            <article class="species-card">
+              <header>
+                <div>
+                  <h3>Siamang</h3>
+                  <em>Symphalangus syndactylus</em>
+                </div>
+                <span class="risk-pill risk-medium">Risiko Sedang</span>
+              </header>
+              <ul>
+                <li>Menjadi indikator cepat untuk kualitas tajuk hutan yang masih terhubung.</li>
+                <li>Pecahnya kanopi mengurangi efektifitas ruang jelajah harian.</li>
+                <li>Indikator prioritas: konektivitas tajuk dan gangguan tepi hutan.</li>
+              </ul>
+            </article>
+            <article class="species-card">
+              <header>
+                <div>
+                  <h3>Beruang Madu</h3>
+                  <em>Helarctos malayanus</em>
+                </div>
+                <span class="risk-pill risk-medium">Risiko Sedang</span>
+              </header>
+              <ul>
+                <li>Rentan terhadap pembukaan hutan sekunder dan perjumpaan dengan aktivitas manusia.</li>
+                <li>Sering kurang terlihat dalam narasi, padahal sensitif pada gangguan lanskap.</li>
+                <li>Indikator prioritas: tanda pakan, gangguan kebun, dan jalur perlintasan.</li>
+              </ul>
+            </article>
+            <article class="species-card">
+              <header>
+                <div>
+                  <h3>Rangkong Badak</h3>
+                  <em>Buceros rhinoceros</em>
+                </div>
+                <span class="risk-pill risk-medium">Risiko Sedang</span>
+              </header>
+              <ul>
+                <li>Memerlukan pohon sarang besar yang biasanya hilang lebih dulu saat pembukaan selektif.</li>
+                <li>Baik untuk membaca kualitas hutan matang dan struktur tegakan.</li>
+                <li>Indikator prioritas: pohon sarang aktif dan ketersediaan pakan musiman.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Wildlife Trade Watch</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Titik rawan perdagangan satwa liar dan tekanan distribusinya.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">Tabel ini membantu pembaca melihat di mana pengawasan perlu dipadatkan: kota transit, kanal digital, perantara kecil, dan simpul logistik yang mempercepat perpindahan satwa atau bagian tubuh satwa.</p>
+          </div>
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Zona Pantau</th>
+                  <th>Pola Dominan</th>
+                  <th>Komoditas Rentan</th>
+                  <th>Tekanan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Medan - Binjai</td>
+                  <td>Perantara digital dan distribusi cepat antar kota</td>
+                  <td>Burung dilindungi, primata kecil, bagian tubuh satwa</td>
+                  <td><div class="mini-bar"><span style="width:88%"></span></div></td>
+                </tr>
+                <tr>
+                  <td>Langkat - Aceh Tamiang</td>
+                  <td>Perlintasan dari lanskap hutan ke jalur distribusi darat</td>
+                  <td>Anak satwa, burung, reptil</td>
+                  <td><div class="mini-bar"><span style="width:74%"></span></div></td>
+                </tr>
+                <tr>
+                  <td>Batubara - Asahan</td>
+                  <td>Transit campuran melalui logistik kecil dan pengiriman tertutup</td>
+                  <td>Burung kicau, kura-kura, satwa eksotik</td>
+                  <td><div class="mini-bar"><span style="width:63%"></span></div></td>
+                </tr>
+                <tr>
+                  <td>Padang Sidempuan - Mandailing</td>
+                  <td>Pengumpulan lokal dari wilayah penyangga hutan</td>
+                  <td>Primata, rangkong, satwa tangkapan liar</td>
+                  <td><div class="mini-bar"><span style="width:58%"></span></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="mb-10">
+            <span class="section-kicker mb-4">Pipeline Restorasi</span>
+            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Restorasi yang baik tidak berhenti di penanaman.</h2>
+            <p class="max-w-4xl text-lg text-gray-700">Halaman statistik ini menempatkan restorasi sebagai proses bertahap: pemilihan lokasi, penanaman, pemeliharaan, penguatan habitat, dan pembuktian dampak ekologis. Ini penting agar publik tidak berhenti pada angka hektare semata.</p>
+          </div>
+          <div class="process-grid">
+            <article class="process-card">
+              <b>1</b>
+              <h3>Seleksi lokasi</h3>
+              <p>Prioritaskan tepian sungai, koridor satwa, dan kantong tutupan yang bisa menghubungkan blok habitat.</p>
+            </article>
+            <article class="process-card">
+              <b>2</b>
+              <h3>Tanam dan pengayaan</h3>
+              <p>Gunakan campuran jenis lokal yang relevan untuk fungsi tanah, pakan satwa, dan kanopi jangka panjang.</p>
+            </article>
+            <article class="process-card">
+              <b>3</b>
+              <h3>Pemeliharaan</h3>
+              <p>Keberhasilan sangat bergantung pada survival rate, kontrol gulma, dan perlindungan dari gangguan berulang.</p>
+            </article>
+            <article class="process-card">
+              <b>4</b>
+              <h3>Validasi dampak</h3>
+              <p>Nilai hasil bukan cuma hektare tertanam, tetapi juga konektivitas habitat, jejak satwa, dan stabilitas area.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 lg:py-20">
+        <div class="container mx-auto px-4">
+          <div class="method-card">
+            <h3>Catatan metodologi halaman</h3>
+            <p>Supaya pembaca tidak keliru menafsirkan dashboard sebagai laporan audit final, halaman ini memisahkan fungsi editorial dan fungsi verifikasi data.</p>
+            <ul>
+              <li>Angka digunakan sebagai indikator pemantauan untuk presentasi visual halaman statistik.</li>
+              <li>Untuk publikasi resmi, ganti dataset grafik dengan data terverifikasi dari tim lapangan, basis data spasial, dan catatan penegakan hukum.</li>
+              <li>Grafik sengaja memakai bahasa yang lugas agar mudah dibaca oleh publik umum, media, dan pengambil kebijakan.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative py-10 lg:py-16 bg-orange-50 overflow-hidden"><img class="absolute bottom-0 left-0" src="fauna-assets/footer/waves-lines-left-bottom.png" alt=""/>
+        <div class="container px-4 mx-auto relative">
+          <div class="flex flex-wrap mb-10 -mx-4">
+            <div class="w-full lg:w-2/12 xl:w-2/12 px-10 mb-10 lg:mb-0"><a class="inline-block mb-4" href="index.html"><img class="h-32 w-auto" src="img-new/Green Justice Indonesia  Hutan Sumut.svg" alt="Green Justice Indonesia Hutan Sumut"/></a></div>
+            <div class="w-full md:w-7/12 lg:w-6/12 px-4 mb-10 lg:mb-0">
+              <div class="flex flex-wrap -mx-4">
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Sarana</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="peta.html">Peta</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="statistik.html">Data Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="berita.html">Berita</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 xs:w-1/3 px-4 mb-8 xs:mb-0">
+                  <h3 class="mb-6 font-bold">Organisasi</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="about.html">Tentang</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="contact.html">Kontak</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="register.html">Kolaborasi</a></li>
+                  </ul>
+                </div>
+                <div class="w-full xs:w-1/3 px-4">
+                  <h3 class="mb-6 font-bold">Akses Cepat</h3>
+                  <ul>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#dashboard">Ringkasan</a></li>
+                    <li class="mb-4"><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="#">Grafik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-500 font-medium" href="berita.html">Newsroom</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-5/12 lg:w-4/12 px-4">
+              <div class="footer-insight">
+                <h5>Ikuti pembaruan Hutan Sumut</h5>
+                <p>Dapatkan ringkasan statistik, pembaruan lapangan, dan artikel advokasi terbaru dari Green Justice Indonesia.</p>
+                <input type="email" placeholder="Masukkan email Anda"/>
+                <a class="w-full items-center justify-center text-sm font-medium text-teal-900 bg-lime-500 hover:bg-lime-400 transition duration-200" href="contact.html">Terhubung Dengan Tim</a>
+              </div>
+            </div>
+          </div>
+          <div class="pt-8 border-t border-gray-200 text-sm text-gray-500 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <p class="mb-0">© 2026 Green Justice Indonesia - Hutan Sumut. Semua hak cipta dilindungi.</p>
+            <p class="mb-0">Statistik disusun untuk komunikasi publik dan dukungan advokasi berbasis data.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const baseGridColor = 'rgba(19, 58, 50, 0.10)';
+        const baseTickColor = '#4a675f';
+        const labelFont = { family: 'Figtree', size: 12, weight: '600' };
+
+        const sharedOptions = {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: baseTickColor,
+                font: labelFont,
+                boxWidth: 14,
+                boxHeight: 14,
+                usePointStyle: true,
+                pointStyle: 'circle'
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f2d27',
+              titleColor: '#ffffff',
+              bodyColor: 'rgba(255,255,255,.9)',
+              padding: 12,
+              displayColors: true
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: baseGridColor, drawBorder: false },
+              ticks: { color: baseTickColor, font: labelFont }
+            },
+            y: {
+              grid: { color: baseGridColor, drawBorder: false },
+              ticks: { color: baseTickColor, font: labelFont }
+            }
+          }
+        };
+
+        new Chart(document.getElementById('forestLossChart'), {
+          type: 'line',
+          data: {
+            labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+              label: 'Kehilangan tutupan hutan (ribu ha)',
+              data: [13.4, 15.1, 17.8, 19.2, 21.4, 17.6],
+              borderColor: '#143c34',
+              backgroundColor: 'rgba(184,239,66,.22)',
+              fill: true,
+              tension: 0.35,
+              pointRadius: 4,
+              pointHoverRadius: 5,
+              pointBackgroundColor: '#b8ef42',
+              pointBorderColor: '#143c34',
+              pointBorderWidth: 2
+            }]
+          },
+          options: sharedOptions
+        });
+
+        new Chart(document.getElementById('speciesPressureChart'), {
+          type: 'bar',
+          data: {
+            labels: ['Harimau', 'Gajah', 'Orangutan', 'Siamang', 'Beruang Madu', 'Rangkong'],
+            datasets: [{
+              label: 'Skor tekanan habitat',
+              data: [92, 88, 84, 68, 63, 57],
+              backgroundColor: ['#143c34', '#1c5a4f', '#2c7a6d', '#63a69e', '#9ed8d2', '#bfe8dd'],
+              borderRadius: 10,
+              maxBarThickness: 28
+            }]
+          },
+          options: {
+            ...sharedOptions,
+            indexAxis: 'y',
+            plugins: {
+              ...sharedOptions.plugins,
+              legend: { display: false }
+            }
+          }
+        });
+
+        new Chart(document.getElementById('tradeRouteChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Kanal digital', 'Kurir antar kota', 'Transit pasar lokal', 'Jaringan kolektor'],
+            datasets: [{
+              data: [58, 19, 13, 10],
+              backgroundColor: ['#143c34', '#2e6a5e', '#f2b941', '#d96c3f'],
+              borderColor: '#ffffff',
+              borderWidth: 4,
+              hoverOffset: 10
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '62%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: baseTickColor,
+                  font: labelFont,
+                  boxWidth: 12,
+                  padding: 18
+                }
+              },
+              tooltip: sharedOptions.plugins.tooltip
+            }
+          }
+        });
+
+        new Chart(document.getElementById('restorationChart'), {
+          data: {
+            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+            datasets: [{
+              type: 'bar',
+              label: 'Realisasi restorasi (ha)',
+              data: [160, 225, 248, 287],
+              backgroundColor: '#b8ef42',
+              borderRadius: 10,
+              maxBarThickness: 42
+            }, {
+              type: 'line',
+              label: 'Target kumulatif (ha)',
+              data: [180, 360, 600, 920],
+              borderColor: '#143c34',
+              backgroundColor: '#143c34',
+              tension: 0.3,
+              pointRadius: 4,
+              pointHoverRadius: 5,
+              pointBackgroundColor: '#143c34'
+            }]
+          },
+          options: sharedOptions
+        });
+      });
+    </script>
+  </body>
+</html>

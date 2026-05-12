@@ -1,0 +1,286 @@
+<html lang="id">
+  <head>
+    <title>Hutan Sumut | Green Justice Indonesia</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Dashboard informasi hutan Sumatera Utara berbasis data spasial, peta interaktif, statistik, dan berita lingkungan dari Green Justice Indonesia."/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link rel="icon" type="image/png" href="img-new/Logo-GJI.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+    <style>
+      .grid{display:grid}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.gap-6{gap:1.5rem}.rounded-lg{border-radius:.5rem}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-90{opacity:.9}.pt-24{padding-top:6rem}.pb-28{padding-bottom:7rem}.py-20{padding-top:5rem;padding-bottom:5rem}.h-72{height:18rem}.w-1\/6{width:16.666667%}.max-w-3xl{max-width:48rem}.max-w-5xl{max-width:56rem}.border-gray-200{--tw-border-opacity:1;border-color:rgb(217 222 221/var(--tw-border-opacity))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(245 250 249/var(--tw-bg-opacity))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity))}.bg-teal-700{--tw-bg-opacity:1;background-color:rgb(6 95 70/var(--tw-bg-opacity))}.text-teal-700{--tw-text-opacity:1;color:rgb(6 95 70/var(--tw-text-opacity))}.hover\:bg-teal-800:hover{--tw-bg-opacity:1;background-color:rgb(6 78 59/var(--tw-bg-opacity))}.leaflet-map{height:430px;min-height:430px;width:100%;border-radius:.5rem;z-index:1}.map-note{font-size:.875rem;line-height:1.5;color:#4c524f}.chart-track{height:1rem;width:100%;overflow:hidden;border-radius:9999px;background:#edf2f1}.chart-fill{display:block;height:100%;border-radius:9999px}.chart-item{padding:1rem 0;border-bottom:1px solid #d9dedd}.chart-label{display:flex;justify-content:space-between;gap:1rem;margin-bottom:.5rem;font-weight:600}@media (min-width:640px){.sm\:block{display:block}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:768px){.md\:inline-flex{display:inline-flex}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:hidden{display:none}.lg\:flex{display:flex}.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:col-span-2{grid-column:span 2/span 2}.lg\:w-3\/12{width:25%}.lg\:w-5\/12{width:41.666667%}.lg\:w-7\/12{width:58.333333%}.lg\:py-20{padding-top:5rem;padding-bottom:5rem}.lg\:pb-48{padding-bottom:12rem}.lg\:text-8xl{font-size:6rem;line-height:.95}}
+    </style>
+  </head>
+  <body class="antialiased bg-body text-body font-body">
+    <div>
+      <section class="relative bg-teal-900 overflow-hidden" x-data="{ mobileNavOpen: false }"><img class="absolute top-0 left-0 w-full h-full object-cover opacity-70" src="img-new/Background-Header.jpg" alt="Hutan Sumatera Utara"/>
+        <div class="absolute top-0 left-0 w-full h-full bg-teal-900 opacity-60"></div>
+        <nav class="relative py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="hidden sm:block text-white font-bold text-lg">Green Justice Indonesia | Hutan Sumut</span></a>
+              <ul class="hidden lg:flex items-center">
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="index.html">Home</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="#peta">Peta</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="#grafik">Statistik</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="#berita">Berita</a></li>
+                <li class="mr-8"><a class="inline-block text-white hover:text-lime-500 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-white hover:text-lime-500 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+              <div class="flex items-center justify-end"><a class="hidden md:inline-flex py-2.5 px-4 items-center justify-center text-sm font-medium text-white hover:text-teal-900 border border-white hover:bg-white rounded-lg transition duration-200" href="#peta">Buka Dashboard</a>
+                <button class="lg:hidden text-white hover:text-lime-500 ml-4" x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Buka navigasi">Menu</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="relative pt-24 pb-28 lg:pt-36 lg:pb-48">
+          <div class="container mx-auto px-4">
+            <div class="max-w-5xl"><span class="inline-block py-2 px-4 mb-8 bg-lime-500 text-teal-900 font-bold rounded-lg">Dashboard Hutan Sumatera Utara</span>
+              <h1 class="font-heading text-5xl sm:text-6xl lg:text-8xl text-white mb-8">Data hutan yang lebih mudah dibaca, dipantau, dan ditindaklanjuti.</h1>
+              <p class="max-w-3xl text-lg lg:text-xl text-white opacity-90 mb-10">Platform visualisasi spasial untuk membantu pemantauan kawasan hutan, perubahan tutupan lahan, restorasi, dan isu lingkungan strategis di Sumatera Utara.</p>
+              <div class="flex flex-wrap"><a class="inline-flex py-4 px-6 mr-4 mb-4 items-center justify-center text-lg font-medium text-teal-900 border border-lime-500 hover:border-white bg-lime-500 hover:bg-white rounded-lg transition duration-200" href="#peta">Jelajahi Peta</a><a class="inline-flex py-4 px-6 mb-4 items-center justify-center text-lg font-medium text-white border border-white hover:text-teal-900 hover:bg-white rounded-lg transition duration-200" href="#berita">Lihat Berita</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-full xs:w-5/6 xs:max-w-md z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}">
+          <div class="fixed inset-0 bg-teal-900 opacity-40" x-on:click="mobileNavOpen = !mobileNavOpen"></div>
+          <nav class="relative flex flex-col py-7 px-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex items-center justify-between"><a class="inline-flex items-center space-x-3" href="index.html"><img class="h-12 w-auto" src="img-new/Logo-GJI.png" alt="Green Justice Indonesia"/><span class="text-teal-900 font-bold">Hutan Sumut</span></a>
+              <button x-on:click="mobileNavOpen = !mobileNavOpen" aria-label="Tutup navigasi">Tutup</button>
+            </div>
+            <div class="pt-16 pb-12 mb-auto">
+              <ul class="flex-col">
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="index.html">Home</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#peta" x-on:click="mobileNavOpen = false">Peta</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#grafik" x-on:click="mobileNavOpen = false">Statistik</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="#berita" x-on:click="mobileNavOpen = false">Berita</a></li>
+                <li class="mb-6"><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="about.html">Tentang</a></li>
+                <li><a class="inline-block text-teal-900 hover:text-teal-700 font-medium" href="contact.html">Kontak</a></li>
+              </ul>
+            </div><a class="inline-flex py-3 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 bg-lime-500 rounded-lg" href="#peta" x-on:click="mobileNavOpen = false">Buka Dashboard</a>
+          </nav>
+        </div>
+      </section>
+      <section class="py-12 lg:py-20">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-6 border border-gray-200 rounded-lg">
+              <h2 class="text-4xl lg:text-5xl font-bold mb-3">52</h2>
+              <p class="text-gray-700">Kasus illegal wildlife trade terdokumentasi.</p>
+            </div>
+            <div class="p-6 border border-gray-200 rounded-lg">
+              <h2 class="text-4xl lg:text-5xl font-bold mb-3">20,5+ Ha</h2>
+              <p class="text-gray-700">Luas kehilangan tutupan hutan terpantau.</p>
+            </div>
+            <div class="p-6 border border-gray-200 rounded-lg">
+              <h2 class="text-4xl lg:text-5xl font-bold mb-3">150,6+ Ha</h2>
+              <p class="text-gray-700">Area restorasi hutan dalam pemantauan.</p>
+            </div>
+            <div class="p-6 border border-gray-200 rounded-lg">
+              <h2 class="text-4xl lg:text-5xl font-bold mb-3">15%</h2>
+              <p class="text-gray-700">Indikasi perubahan tutupan hutan prioritas.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="p-4 bg-white" id="peta">
+        <div class="py-16 lg:py-24 px-5 xs:px-8 xl:px-12 bg-lime-500 rounded-lg">
+          <div class="container mx-auto px-4">
+            <div class="flex flex-wrap mb-4 items-center"><span class="inline-block mr-3 mb-3 py-2 px-3 text-sm font-medium bg-white rounded-lg">Sumatera Utara</span><span class="inline-block mr-3 mb-3 py-2 px-3 text-sm font-medium bg-white rounded-lg">Aceh</span><span class="inline-block mr-3 mb-3 py-2 px-3 text-sm font-medium bg-white rounded-lg">Ekosistem Leuser</span><span class="inline-block mb-3 py-2 px-3 text-sm font-medium bg-white rounded-lg">SM Rawa Singkil</span></div>
+            <div class="border-t border-teal-900 border-opacity-25 pt-12">
+              <div class="flex flex-wrap -mx-4 items-end mb-12">
+                <div class="w-full lg:w-7/12 px-4 mb-6 lg:mb-0">
+                  <h2 class="font-heading text-4xl sm:text-6xl mb-6">Peta Kawasan Hutan</h2>
+                  <p class="text-lg max-w-3xl">Peta diarahkan ke kawasan Taman Nasional Gunung Leuser sebagai titik awal pemantauan hutan Sumatera Utara dan bentang alam Leuser.</p>
+                </div>
+                <div class="w-full lg:w-5/12 px-4 lg:text-right"><a class="inline-flex py-3 px-5 items-center justify-center font-medium text-white bg-teal-900 hover:bg-teal-800 rounded-lg transition duration-200" href="#!">Buka Peta Interaktif</a></div>
+              </div>
+              <div class="p-4 bg-white rounded-lg mb-12">
+                <div id="leuser-map" class="leaflet-map"></div>
+                <p class="map-note mt-4">Titik pusat peta memakai koordinat indikatif kawasan Gunung Leuser: 3.6833 LU, 97.7000 BT. Area hijau adalah gambaran fokus pemantauan, bukan batas resmi kawasan.</p>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 bg-white rounded-lg">
+                  <h3 class="text-2xl font-medium mb-3">Peta Kawasan Hutan Sumut</h3>
+                  <p class="text-gray-700 mb-6">Informasi batas kawasan, wilayah berhutan, dan titik pemantauan yang perlu dilihat secara berkala.</p><a class="inline-block text-lg font-medium text-teal-900 hover:text-teal-700" href="#!">Lihat layer</a>
+                </div>
+                <div class="p-6 bg-white rounded-lg">
+                  <h3 class="text-2xl font-medium mb-3">Peta Kehilangan Tutupan Hutan</h3>
+                  <p class="text-gray-700 mb-6">Ringkasan perubahan tutupan hutan untuk mendukung analisis risiko dan prioritas lapangan.</p><a class="inline-block text-lg font-medium text-teal-900 hover:text-teal-700" href="#grafik">Lihat grafik</a>
+                </div>
+                <div class="p-6 bg-white rounded-lg">
+                  <h3 class="text-2xl font-medium mb-3">Peta Restorasi</h3>
+                  <p class="text-gray-700 mb-6">Area pemulihan yang dapat dipantau sebagai dasar evaluasi ekologis dan sosial.</p><a class="inline-block text-lg font-medium text-teal-900 hover:text-teal-700" href="#!">Telusuri area</a>
+                </div>
+                <div class="p-6 bg-white rounded-lg">
+                  <h3 class="text-2xl font-medium mb-3">Database Lapangan</h3>
+                  <p class="text-gray-700 mb-6">Catatan spasial, dokumentasi visual, dan indikator penting yang bisa dikembangkan menjadi basis data.</p><a class="inline-block text-lg font-medium text-teal-900 hover:text-teal-700" href="contact.html">Hubungi tim</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 lg:py-24" id="grafik">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mb-14"><span class="inline-block mb-4 text-sm font-bold text-teal-700">Statistik</span>
+            <h2 class="font-heading text-4xl sm:text-6xl mb-6">Grafik ringkas untuk membaca arah perubahan lanskap.</h2>
+            <p class="text-lg text-gray-700">Bagian ini disiapkan untuk menampilkan grafik kehilangan hutan, sisa luas hutan, area restorasi, dan tren laporan lapangan.</p>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 p-6 border border-gray-200 rounded-lg">
+              <div class="chart-item">
+                <div class="chart-label"><span>Sisa tutupan hutan</span><span>84%</span></div>
+                <div class="chart-track"><span class="chart-fill bg-teal-900" style="width:84%"></span></div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-label"><span>Area restorasi terpantau</span><span>150,6 Ha</span></div>
+                <div class="chart-track"><span class="chart-fill bg-lime-500" style="width:68%"></span></div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-label"><span>Kehilangan tutupan hutan</span><span>20,5 Ha</span></div>
+                <div class="chart-track"><span class="chart-fill bg-teal-700" style="width:24%"></span></div>
+              </div>
+              <div class="pt-4 text-sm text-gray-700">Grafik dibaca dari kiri ke kanan: semakin panjang bar, semakin besar nilai indikator.</div>
+            </div>
+            <div class="p-6 bg-teal-900 text-white rounded-lg">
+              <h3 class="text-2xl font-medium mb-4">Prioritas data</h3>
+              <ul class="text-white opacity-90">
+                <li class="mb-3">Perubahan tutupan hutan tahunan</li>
+                <li class="mb-3">Luas restorasi dan pemulihan</li>
+                <li class="mb-3">Sebaran kasus perdagangan satwa</li>
+                <li>Risiko konflik ruang dan ekologi</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 lg:py-24 overflow-hidden">
+        <div class="container mx-auto px-4">
+          <div class="max-w-6xl mx-auto mb-12 text-center">
+            <h2 class="font-heading text-4xl sm:text-6xl mb-6">Ruang hidup, hutan, dan data lapangan.</h2>
+            <p class="text-lg text-gray-700">Visualisasi ini membantu cerita lapangan dibaca lebih jelas: di mana perubahan terjadi, siapa yang terdampak, dan tindakan apa yang perlu diprioritaskan.</p>
+          </div>
+          <div class="flex justify-center">
+            <div class="flex-shrink-0 h-full max-w-xs sm:max-w-md md:max-w-xl mr-4 sm:mr-8"><img class="block w-full rounded-lg" src="img-new/hutan-hujan-tropis-sumatera-2_169.jpeg" alt="Hutan hujan tropis Sumatera"/></div>
+            <div class="flex-shrink-0 h-full max-w-xs sm:max-w-md md:max-w-xl mr-4 sm:mr-8"><img class="block w-full rounded-lg" src="img-new/kazuend-19SC2oaVZW0-unsplash (1).jpg" alt="Lanskap hutan"/></div>
+            <div class="flex-shrink-0 h-full max-w-xs sm:max-w-md md:max-w-xl"><img class="block w-full rounded-lg" src="img-new/Background-Header.jpg" alt="Kanopi hutan"/></div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 lg:py-24 bg-gray-50" id="berita" x-data="{ activeSlide: 1, slideCount: 3 }">
+        <div class="container mx-auto px-4">
+          <div class="max-w-6xl mx-auto mb-14 text-center"><span class="inline-block mb-4 text-sm font-bold text-teal-700">Berita Terkini</span>
+            <h2 class="font-heading text-4xl sm:text-6xl mb-6">Kabar terbaru dari kerja advokasi dan pemantauan.</h2><a class="inline-flex py-3 px-5 items-center justify-center font-medium text-white bg-teal-900 hover:bg-lime-500 hover:text-teal-900 rounded-lg transition duration-200" href="blog.html">Baca Semua Berita</a>
+          </div>
+          <div class="flex flex-wrap items-center -mx-4">
+            <div class="w-full md:w-1/2 px-4 mb-12 md:mb-0">
+              <div class="max-w-lg mx-auto md:mx-0 overflow-hidden rounded-lg">
+                <div class="flex transition-transform duration-500" :style="'transform: translateX(-' + (activeSlide - 1) * 100 + '%)'"><img class="block flex-shrink-0 w-full" src="img-new/news/Desain tanpa judul (24).png" alt="Berita Green Justice Indonesia"/><img class="block flex-shrink-0 w-full" src="img-new/news/Desain tanpa judul (25).png" alt="Berita lingkungan"/><img class="block flex-shrink-0 w-full" src="img-new/news/Desain tanpa judul (26).png" alt="Berita hutan"/></div>
+              </div>
+            </div>
+            <div class="w-full md:w-1/2 px-4">
+              <div class="max-w-lg mx-auto md:mr-0 overflow-hidden">
+                <div class="flex transition-transform duration-500" :style="'transform: translateX(-' + (activeSlide - 1) * 100 + '%)'">
+                  <div class="flex-shrink-0 w-full">
+                    <h3 class="text-3xl lg:text-4xl font-medium mb-8">Pusat Adat Simardangiang sebagai simbol kedaulatan ruang hidup dan solusi krisis iklim.</h3><span class="block text-xl font-medium">Green Justice Indonesia</span><span class="block mb-12 text-lg text-gray-700">Advokasi ruang hidup dan keadilan ekologis</span>
+                  </div>
+                  <div class="flex-shrink-0 w-full">
+                    <h3 class="text-3xl lg:text-4xl font-medium mb-8">Data spasial membantu masyarakat membaca perubahan lanskap dengan lebih terang.</h3><span class="block text-xl font-medium">Tim Hutan Sumut</span><span class="block mb-12 text-lg text-gray-700">Pemantauan kawasan hutan</span>
+                  </div>
+                  <div class="flex-shrink-0 w-full">
+                    <h3 class="text-3xl lg:text-4xl font-medium mb-8">Restorasi hutan membutuhkan catatan lapangan, peta, dan kolaborasi lintas pihak.</h3><span class="block text-xl font-medium">Kolaborasi GJI</span><span class="block mb-12 text-lg text-gray-700">Restorasi dan perlindungan ekosistem</span>
+                  </div>
+                </div>
+                <div>
+                  <button class="inline-block mr-4 text-gray-700 hover:text-lime-500" x-on:click="activeSlide = activeSlide &gt; 1 ? activeSlide - 1 : slideCount" aria-label="Berita sebelumnya">Sebelumnya</button>
+                  <button class="inline-block text-gray-700 hover:text-lime-500" x-on:click="activeSlide = activeSlide &lt; slideCount ? activeSlide + 1 : 1" aria-label="Berita berikutnya">Berikutnya</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="relative py-12 lg:py-24 bg-orange-50 overflow-hidden"><img class="absolute bottom-0 left-0 opacity-60" src="fauna-assets/footer/waves-lines-left-bottom.png" alt=""/>
+        <div class="container px-4 mx-auto relative">
+          <div class="flex flex-wrap mb-16 -mx-4">
+            <div class="w-full lg:w-3/12 px-4 mb-12 lg:mb-0"><a class="inline-block mb-6" href="index.html"><img class="h-32 w-auto" src="img-new/Green Justice Indonesia  Hutan Sumut.svg" alt="Green Justice Indonesia Hutan Sumut"/></a>
+              <p class="text-gray-700">Platform pemantauan hutan, data spasial, dan kabar kerja lingkungan di Sumatera Utara.</p>
+            </div>
+            <div class="w-full md:w-6/12 lg:w-5/12 px-4 mb-12 lg:mb-0">
+              <div class="flex flex-wrap -mx-4">
+                <div class="w-1/2 px-4 mb-8">
+                  <h3 class="mb-5 font-bold">Navigasi</h3>
+                  <ul>
+                    <li class="mb-3"><a class="inline-block text-gray-600 hover:text-lime-600 font-medium" href="#peta">Peta</a></li>
+                    <li class="mb-3"><a class="inline-block text-gray-600 hover:text-lime-600 font-medium" href="#grafik">Statistik</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-600 font-medium" href="#berita">Berita</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 px-4 mb-8">
+                  <h3 class="mb-5 font-bold">Profil</h3>
+                  <ul>
+                    <li class="mb-3"><a class="inline-block text-gray-600 hover:text-lime-600 font-medium" href="about.html">Tentang</a></li>
+                    <li class="mb-3"><a class="inline-block text-gray-600 hover:text-lime-600 font-medium" href="contact.html">Kontak</a></li>
+                    <li><a class="inline-block text-gray-600 hover:text-lime-600 font-medium" href="blog.html">Pustaka</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-6/12 lg:w-4/12 px-4">
+              <div class="max-w-sm p-8 bg-teal-900 rounded-lg mx-auto md:mr-0">
+                <h3 class="text-xl font-medium text-white mb-4">Kolaborasi data dan pemantauan hutan.</h3>
+                <p class="text-sm text-white opacity-80 leading-normal mb-8">Kirim pesan untuk pengembangan peta, data, dan publikasi hutan Sumatera Utara.</p><a class="h-12 inline-flex py-1 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 hover:border-white bg-lime-500 hover:bg-white rounded-lg transition duration-200" href="contact.html">Hubungi GJI</a>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap -mb-3 justify-between">
+            <p class="text-sm text-gray-500 mb-3">Copyright 2026 GJI - Green Justice Indonesia. All rights reserved.</p>
+            <p class="text-sm text-gray-500 mb-3">Green Justice Indonesia | Hutan Sumut</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var mapElement = document.getElementById('leuser-map');
+        if (!mapElement || typeof L === 'undefined') return;
+
+        var leuserCenter = [3.6833, 97.7];
+        var map = L.map('leuser-map', {
+          scrollWheelZoom: false
+        }).setView(leuserCenter, 9);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker(leuserCenter)
+          .addTo(map)
+          .bindPopup('<strong>Taman Nasional Gunung Leuser</strong><br/>Titik pusat indikatif kawasan Gunung Leuser.')
+          .openPopup();
+
+        L.marker([3.5476, 98.1229])
+          .addTo(map)
+          .bindPopup('<strong>Bukit Lawang, Langkat</strong><br/>Gerbang wisata dan pemantauan Leuser di Sumatera Utara.');
+
+        L.polygon([
+          [4.25, 97.05],
+          [4.1, 98.05],
+          [3.35, 98.3],
+          [3.05, 97.55],
+          [3.45, 96.95]
+        ], {
+          color: '#022C22',
+          weight: 2,
+          fillColor: '#BEF264',
+          fillOpacity: 0.28
+        }).addTo(map).bindPopup('Area fokus indikatif pemantauan Leuser.');
+      });
+    </script>
+  </body>
+</html>
